@@ -1,5 +1,8 @@
-#include "CustomerController.h"
-#include "../models/CustomerModel.h"
+#include "controllers/CustomerController.h"
+
+#include <iostream>
+
+#include "models/CustomerModel.h"
 
 void CustomerController::addCustomer(name, tel, birthDate)
 {

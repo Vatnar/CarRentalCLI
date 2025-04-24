@@ -1,9 +1,4 @@
-//
-// Created by peter on 24/04/2025.
-//
-
-#ifndef IMPORTEXPORTVIEW_H
-#define IMPORTEXPORTVIEW_H
+#pragma once
 #include <string>
 
 
@@ -22,7 +17,3 @@ protected:
 Please enter your choice:
 )MENU";
 };
-
-
-
-#endif //IMPORTEXPORTVIEW_H

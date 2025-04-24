@@ -6,21 +6,17 @@ add_library(sqlite3 STATIC vendor/sqlite3/sqlite3.c)
 target_include_directories(sqlite3 PUBLIC vendor/sqlite3)
 
 include_directories(vendor/sqlite_orm)
-add_executable(CarRentalGUI src/main.cpp
-        include/storage.h
-        src/Customer.cpp
-        include/Customer.h
-        src/Car.cpp
-        include/Car.h
-        src/views/MainView.cpp
-        include/views/MainView.h
-        include/Utils.h
-        src/views/CustomerView.cpp
-        include/views/CustomerView.h
-        models/CustomerModel.cpp
-        models/CustomerModel.h
-        models/CarModel.cpp
-        models/CarModel.h)
+
+file(GLOB_RECURSE SOURCES
+        src/*.cpp
+)
+
+file(GLOB_RECURSE HEADERS
+        *.h
+        include/*.h
+)
+add_executable(CarRentalGUI ${SOURCES} ${HEADERS})
+
 
 
 target_include_directories(CarRentalGUI PRIVATE include)

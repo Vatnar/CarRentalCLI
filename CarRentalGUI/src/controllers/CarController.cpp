@@ -1,5 +1,7 @@
-#include "CarController.h"
-#include "../models/CarModel.h"
+#pragma once
+#include "controllers/CarController.h"
+#include <iostream>
+#include "models/CarModel.h"
 
 void CarController::addCar(regNo, brand, model)
 {
