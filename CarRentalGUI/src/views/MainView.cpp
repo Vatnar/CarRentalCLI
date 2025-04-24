@@ -1,11 +1,11 @@
 //
 // Created by peter on 24/04/2025.
 //
-#include "MainMenuView.h"
+#include "MainView.h"
 #include "Utils.h"
 
 
-MainMenuView::MainMenuView() {
+MainView::MainView() {
 
     std::cout << mainMenu;
 

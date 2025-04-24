@@ -8,9 +8,9 @@
 #include <ostream>
 
 
-class MainMenuView {
+class MainView {
 public:
-    MainMenuView();
+    MainView();
 
 protected:
     std::string mainMenu = R"MENU(
