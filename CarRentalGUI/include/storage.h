@@ -1,9 +1,7 @@
-#ifndef STORAGE_H
-#define STORAGE_H
-
+#pragma once
 #include <sqlite_orm.h>
-#include "../models/CarModel.h"
-#include "CustomerModel.h"
+#include "models/CarModel.h"
+#include "models/CustomerModel.h"
 using namespace sqlite_orm;
 
 
@@ -29,4 +27,3 @@ inline auto init_storage()
     return storage;
 }
 using Storage = decltype(init_storage());
-#endif //STORAGE_H

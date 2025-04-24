@@ -1,9 +1,4 @@
-//
-// Created by peter on 24/04/2025.
-//
-
-#ifndef CUSTOMERVIEW_H
-#define CUSTOMERVIEW_H
+#pragma once
 #include <string>
 
 
@@ -23,7 +18,3 @@ protected:
 Please enter your choice:
 )MENU";
 };
-
-
-
-#endif //CUSTOMERVIEW_H

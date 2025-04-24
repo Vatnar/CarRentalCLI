@@ -1,11 +1,5 @@
-//
-// Created by peter on 24/04/2025.
-//
-
-#ifndef CUSTOMER_H
-#define CUSTOMER_H
+#pragma once
 #include <string>
-
 
 class CustomerModel
 {
@@ -16,6 +10,3 @@ public:
     std::string birthDate;
 };
 
-
-
-#endif //CUSTOMER_H

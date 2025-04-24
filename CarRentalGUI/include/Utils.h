@@ -1,9 +1,4 @@
-//
-// Created by peter on 24/04/2025.
-//
-
-#ifndef UTILS_H
-#define UTILS_H
+#pragma once
 #include <iostream>
 
 
@@ -24,4 +19,3 @@ public:
         return input;
     }
 };
-#endif //UTILS_H

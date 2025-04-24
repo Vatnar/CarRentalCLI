@@ -1,6 +1,3 @@
-//
-// Created by peter on 24/04/2025.
-//
 #include "views/MainView.h"
 #include "Utils.h"
 #include "views/CarView.h"
