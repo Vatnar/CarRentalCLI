@@ -2,15 +2,15 @@
 // Created by peter on 24/04/2025.
 //
 
-#include "views/CustomerView.h"
+#include "views/CarView.h"
 
 #include <iostream>
 
 #include "Utils.h"
 
-CustomerView::CustomerView()
+CarView::CarView()
 {
-    std::cout << customerMenu;
+    std::cout << carMenu;
     switch (Input::getInput(1, 4))
     {
         case 1:
@@ -18,7 +18,7 @@ CustomerView::CustomerView()
         case 2:
             break;
         case 3:
-        break;
+            break;
         case 4:
             return;
     }

@@ -19,9 +19,10 @@ protected:
 ==================================
         1. Customer Menu
         2. Car Menu
-        3. Rental Menu
-        4. Import/Export
-        5. Exit
+        3. Manage rentals
+        4. Display statistics
+        5. Import/Export
+        6. Exit
 ==================================
 Please enter your choice:
 )MENU";
