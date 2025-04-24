@@ -17,10 +17,10 @@ add_executable(CarRentalGUI src/main.cpp
         include/Utils.h
         src/views/CustomerView.cpp
         include/views/CustomerView.h
-        src/CustomerModel.cpp
-        include/CustomerModel.h
-        src/CarModel.cpp
-        include/CarModel.h)
+        models/CustomerModel.cpp
+        models/CustomerModel.h
+        models/CarModel.cpp
+        models/CarModel.h)
 
 
 target_include_directories(CarRentalGUI PRIVATE include)
