@@ -8,10 +8,10 @@ target_include_directories(sqlite3 PUBLIC vendor/sqlite3)
 include_directories(vendor/sqlite_orm)
 add_executable(CarRentalGUI src/main.cpp
         include/storage.h
-        src/Customer.cpp
-        include/Customer.h
-        src/Car.cpp
-        include/Car.h)
+        src/CustomerModel.cpp
+        include/CustomerModel.h
+        src/CarModel.cpp
+        include/CarModel.h)
 
 target_include_directories(CarRentalGUI PRIVATE include)
 target_link_libraries(CarRentalGUI PRIVATE sqlite3)

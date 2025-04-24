@@ -7,7 +7,7 @@
 #include <string>
 
 
-class Customer
+class CustomerModel
 {
 public:
     int customerID;
