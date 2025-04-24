@@ -1,8 +1,0 @@
-//
-// Created by roem0 on 24.04.2025.
-//
-
-#ifndef CUSTOMERCONTROLLER_H
-#define CUSTOMERCONTROLLER_H
-
-#endif //CUSTOMERCONTROLLER_H
