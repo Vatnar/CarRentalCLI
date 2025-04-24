@@ -7,7 +7,7 @@
 #include <string>
 
 
-class Car
+class CarModel
 {
 public:
     int carID;

@@ -2,8 +2,8 @@
 #define STORAGE_H
 
 #include <sqlite_orm.h>
-#include "Car.h"
-#include "Customer.h"
+#include "CarModel.h"
+#include "CustomerModel.h"
 using namespace sqlite_orm;
 
 
@@ -12,18 +12,18 @@ inline auto init_storage()
 {
     auto storage = make_storage("CarRental.sqlite",
                                 make_table("Customer",
-                                    make_column("customerID", &Customer::customerID, primary_key().autoincrement()),
-                                    make_column("name", &Customer::name, not_null()),
-                                    make_column("tel", &Customer::tel),
-                                    make_column("birthdate", &Customer::birthDate)
+                                    make_column("customerID", &CustomerModel::customerID, primary_key().autoincrement()),
+                                    make_column("name", &CustomerModel::name, not_null()),
+                                    make_column("tel", &CustomerModel::tel),
+                                    make_column("birthdate", &CustomerModel::birthDate)
                                 ),
                                 make_table("Car",
-                                    make_column("carID",&Car::carID, primary_key().autoincrement()),
-                                    make_column("regNo", &Car::regNo),
-                                    make_column("brand", &Car::brand),
-                                    make_column("model", &Car::model),
-                                    make_column("customerID", &Car::customerID),
-                                    foreign_key(&Car::customerID).references(&Customer::customerID)
+                                    make_column("carID",&CarModel::carID, primary_key().autoincrement()),
+                                    make_column("regNo", &CarModel::regNo),
+                                    make_column("brand", &CarModel::brand),
+                                    make_column("model", &CarModel::model),
+                                    make_column("customerID", &CarModel::customerID),
+                                    foreign_key(&CarModel::customerID).references(&CustomerModel::customerID)
                                 ));
 
     return storage;

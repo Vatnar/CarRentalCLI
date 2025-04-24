@@ -16,7 +16,12 @@ add_executable(CarRentalGUI src/main.cpp
         include/views/MainView.h
         include/Utils.h
         src/views/CustomerView.cpp
-        include/views/CustomerView.h)
+        include/views/CustomerView.h
+        src/CustomerModel.cpp
+        include/CustomerModel.h
+        src/CarModel.cpp
+        include/CarModel.h)
+
 
 target_include_directories(CarRentalGUI PRIVATE include)
 target_link_libraries(CarRentalGUI PRIVATE sqlite3)
