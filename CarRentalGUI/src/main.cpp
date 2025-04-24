@@ -1,12 +1,12 @@
 #include <iostream>
 #include <sqlite3.h>
 #include "storage.h"
-#include "Menu.h"
+#include "MainMenuView.h"
 int main()
 {
-    Menu menu;
     auto storage = init_storage();
+    MainMenuView menu;
 
-    std::cout << "Hello, World!" << std::endl;
+    // std::cout << "Hello, World!" << std::endl;
     return 0;
 }
