@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 class CarModel
 {
 public:
@@ -9,5 +8,4 @@ public:
     std::string regNo;
     std::string brand;
     std::string model;
-    int customerID;
 };
