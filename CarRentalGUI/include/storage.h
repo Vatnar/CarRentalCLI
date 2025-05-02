@@ -2,6 +2,7 @@
 #include <sqlite_orm.h>
 #include "models/CarModel.h"
 #include "models/CustomerModel.h"
+#include "models/rentalModel.h"
 using namespace sqlite_orm;
 
 inline auto init_storage()
@@ -17,16 +18,14 @@ inline auto init_storage()
                                     make_column("carID",&CarModel::carID, primary_key().autoincrement()),
                                     make_column("regNo", &CarModel::regNo),
                                     make_column("brand", &CarModel::brand),
-                                    make_column("model", &CarModel::model),
-                                    make_column("customerID", &CarModel::customerID),
-                                    foreign_key(&CarModel::customerID).references(&CustomerModel::customerID)
+                                    make_column("model", &CarModel::model)
                                 ),
                                 make_table("Rental",
                                     make_column("rentalID", &RentalModel::rentalID, primary_key().autoincrement()),
                                     make_column("customerID", &RentalModel::customerID, not_null()),
                                     make_column("carID", &RentalModel::carID, not_null()),
                                     make_column("dateRented", &RentalModel::dateRented),
-                                    make_column("dateReturned", &RentalModel::dateReturned),
+                                    make_column("dateReturned", &RentalModel::dateReturned)
                                 ));
     return storage;
 }

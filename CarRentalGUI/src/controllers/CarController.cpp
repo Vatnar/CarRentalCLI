@@ -2,8 +2,9 @@
 #include "controllers/CarController.h"
 #include <iostream>
 #include "models/CarModel.h"
+#include "storage.h"
 
-void CarController::addCar(regNo, brand, model)
+void CarController::addCar(std::string regNo, std::string brand, std::string model)
 {
     CarModel newCar {-1, regNo, brand, model};
 
@@ -11,7 +12,7 @@ void CarController::addCar(regNo, brand, model)
         std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CarController::editCar(id, regNo, brand, model)
+void CarController::editCar(int id, std::string regNo, std::string brand, std::string model)
 {
     auto car = storage.get<Car>(id);
 
@@ -19,11 +20,11 @@ void CarController::editCar(id, regNo, brand, model)
     car.brand = brand;
     car.model = model;
 
-    if (storage.update(customer))
+    if (storage.update(car))
         std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CarController::removeCar(id)
+void CarController::removeCar(int id)
 {
     auto car = storage.get<Car>(id);
 
@@ -31,7 +32,7 @@ void CarController::removeCar(id)
         std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CarController::countCars()
+void CarController::countCars(int id)
 {
     auto carCount = storage.select(count(id));
 }

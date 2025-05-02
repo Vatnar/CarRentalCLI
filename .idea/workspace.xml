@@ -18,16 +18,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca13a358-f92d-4753-b496-0d917d6926b5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CarRentalGUI/include/models/RentalModel.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CarRentalGUI/src/models/RentalModel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalGUI/include/models/CarModel.h" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/include/models/CarModel.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalGUI/include/models/CustomerModel.h" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/include/models/CustomerModel.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRentalGUI/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRentalGUI/include/controllers/CarController.h" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/include/controllers/CarController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CarRentalGUI/include/storage.h" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/include/storage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalGUI/src/models/CarModel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/src/models/CarModel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalGUI/src/models/CustomerModel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/src/models/CustomerModel.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRentalGUI/src/controllers/CarController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/src/controllers/CarController.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +84,7 @@
       <workItem from="1745923891192" duration="250000" />
       <workItem from="1746012787832" duration="1875000" />
       <workItem from="1746019177282" duration="1129000" />
-      <workItem from="1746183724838" duration="2665000" />
+      <workItem from="1746183724838" duration="3375000" />
     </task>
     <servers />
   </component>

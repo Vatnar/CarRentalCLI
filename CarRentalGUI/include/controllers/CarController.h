@@ -1,10 +1,11 @@
 #pragma once
+#include <string>
 
 class CarController
 {
 protected:
-    void addCar();
-    void editCar();
-    void removeCar();
-    void countCars();
+    void addCar(std::string regNo, std::string brand, std::string model);
+    void editCar(int id, std::string regNo, std::string brand, std::string model);
+    void removeCar(int id);
+    void countCars(int id);
 };
