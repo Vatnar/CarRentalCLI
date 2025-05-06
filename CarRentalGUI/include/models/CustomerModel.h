@@ -7,6 +7,5 @@ public:
     int customerID;
     std::string name;
     std::string tel;
-    std::string birthDate;
+    std::string email;
 };
-

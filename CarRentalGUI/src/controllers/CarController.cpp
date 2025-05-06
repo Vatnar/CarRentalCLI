@@ -1,37 +1,39 @@
-#pragma once
 #include "controllers/CarController.h"
 #include <iostream>
 #include "models/CarModel.h"
+#include "storage.h"
 
-void CarController::addCar(regNo, brand, model)
+void CarController::addCar(std::string regNo, std::string brand, std::string model)
 {
     CarModel newCar {-1, regNo, brand, model};
 
-    if (newCar.id = storage.insert(newCar))
-        std::cout << "Storage updated successfully" << std::endl;
+    if ((newCar.carID = storage.insert(newCar)))
+        std::cout << __FILE__ << "Car inserted successfully" << std::endl;
 }
 
-void CarController::editCar(id, regNo, brand, model)
+void CarController::editCar(int id, std::string regNo, std::string brand, std::string model)
 {
-    auto car = storage.get<Car>(id);
+    auto car = storage.get<CarModel>(id);
 
     car.regNo = regNo;
     car.brand = brand;
     car.model = model;
 
-    if (storage.update(customer))
-        std::cout << "Storage updated successfully" << std::endl;
+    // TODO needs to be fixed
+    // if (storage.update(car))
+        // std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CarController::removeCar(id)
+void CarController::removeCar(int id)
 {
-    auto car = storage.get<Car>(id);
+    auto car = storage.get<CarModel>(id);
 
-    if (storage.remove(car))
-        std::cout << "Storage updated successfully" << std::endl;
+    // TODO needs fix
+    // if (storage.remove(car))
+        // std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CarController::countCars()
+void CarController::countCars(int id)
 {
     auto carCount = storage.select(count(id));
 }
