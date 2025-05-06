@@ -9,9 +9,9 @@
 class CustomerController
 {
 public:
-    void addCustomer(const std::string& name, const std::string& tel, const std::string& email);
-    void editCustomer(int id, std::string& name, std::string& tel, std::string& email);
-    void removeCustomer(int id);
+    bool addCustomer(const std::string& name, const std::string& tel, const std::string& email);
+    bool editCustomer(int id, std::string& name, std::string& tel, std::string& email);
+    bool removeCustomer(int id);
 
     int countCustomers();
 

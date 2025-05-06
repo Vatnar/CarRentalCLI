@@ -3,15 +3,20 @@
 #include "storage.h"
 #include <iostream>
 
-void CustomerController::addCustomer(const std::string& name, const std::string& tel, const std::string& email)
+bool CustomerController::addCustomer(const std::string& name, const std::string& tel, const std::string& email)
 {
     CustomerModel newCustomer {-1, name, tel, email};
 
-    newCustomer.customerID = storage.insert(newCustomer);
-    std::cout << __FILE__ << "Storage updated successfully" << std::endl;
+    try {
+        newCustomer.customerID = storage.insert(newCustomer);
+        return true;
+    }
+    catch (const std::exception& e) {
+        return false;
+    }
 }
 
-void CustomerController::editCustomer(int customerID, std::string& name, std::string& tel, std::string& email)
+bool CustomerController::editCustomer(int customerID, std::string& name, std::string& tel, std::string& email)
 {
     auto customer = storage.get<CustomerModel>(customerID);
 
@@ -19,27 +24,32 @@ void CustomerController::editCustomer(int customerID, std::string& name, std::st
     customer.tel = tel;
     customer.email = email;
 
-    storage.update(customer);
-    std::cout << "Storage updated successfully" << std::endl;
+    try {
+        storage.update(customer);
+        return true;
+    }
+    catch (const std::exception& e) {
+        return false;
+    }
 }
 
-void CustomerController::removeCustomer(int customerID)
+bool CustomerController::removeCustomer(int customerID)
 {
     auto customer = storage.get<CustomerModel>(customerID);
 
-    // TODO Trenger error handling i customer og
-    storage.remove<CustomerModel>(customerID);
-    std::cout << "Storage updated successfully" << std::endl;
+    try {
+        storage.remove<CustomerModel>(customerID);
+        return true;
+    }
+    catch (const std::exception& e) {
+        return false;
+    }
 }
 
 int CustomerController::countCustomers()
 {
-    // Endret på denne, vet ikke om det er riktig da
-    auto result = storage.select(count(&CustomerModel::customerID));
-    if (!result.empty()) {
-        std::cout << __FILE__ << ': Customer count: ' << result.front();
-        return result.front();
-    }
+    auto customerCount = storage.count<CustomerModel>();
+    return customerCount;
 }
 
 std::vector<CustomerModel> CustomerController::searchCustomer(const std::string& searchPhrase)
@@ -48,5 +58,6 @@ std::vector<CustomerModel> CustomerController::searchCustomer(const std::string&
     std::vector<CustomerModel> customerVector = storage.get_all<CustomerModel>(
         where(like(&CustomerModel::name, likePhrase))
     );
+
     return customerVector;
 }
