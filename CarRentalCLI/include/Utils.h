@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-
+#include <conio.h>
 /**
 * @brief Provides static methods to get user input
 * All function within class provides error handling
@@ -57,4 +57,5 @@ public:
 
         return input;
     }
+
 };
