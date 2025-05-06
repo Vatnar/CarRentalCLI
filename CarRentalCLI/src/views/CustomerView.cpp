@@ -4,6 +4,7 @@
 
 #include "Utils.h"
 
+
 CustomerView::CustomerView()
 {
     std::cout << customerMenu;
@@ -20,6 +21,40 @@ CustomerView::CustomerView()
     }
 }
 
+
+void CustomerView::getName(std::string &name) {
+    std::cout << "Enter name: ";
+    name = Input::getString();
+    if (name.empty())
+    {
+        std::cout << "\n Invalid name, Try again";
+        getName(name);
+    }
+}
+
+
+void CustomerView::getTel(std::string &tel) {
+    std::cout << "\n Enter telephone number: ";
+    tel = Input::getString(false);
+    if (tel.empty())
+    {
+        std::cout << "\n Invalid telephone number;";
+        getTel(tel);
+    }
+}
+
+
+void CustomerView::getEmail(std::string &email) {
+    std::cout << "\n Enter email: ";
+    email = Input::getString(false, '@');
+    if (email.empty())
+    {
+        std::cout << "\n Invalid email, Try again. Format: example@example.org";
+        getEmail(email);
+    }
+}
+
+
 void CustomerView::addCustomer()
 {
     std::cout << R"MENU(
@@ -27,10 +62,12 @@ void CustomerView::addCustomer()
             Add customer
 ==================================
 )MENU" << std::endl;
-    std::cout << "Enter name: ";
-    std::string name = Input::getString();
-    std::string tel = Input::getString(false);
-    std::string email = Input::getString(false, '@');
+    std::string name, tel, email;
+    getName(name);
+    getTel(tel);
+    getEmail(email);
 
-    customerController.addCustomer(std::move(name), std::move(tel), std::move(email));
+    // if (customerController.addCustomer(name, tel, email))
+    {
+    }
 }
