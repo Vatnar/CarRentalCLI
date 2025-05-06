@@ -9,4 +9,6 @@ public:
     void removeCar(int id);
 
     int countCars();
+
+    void searchCar();
 };
