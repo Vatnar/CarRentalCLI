@@ -4,10 +4,11 @@
 
 int RentalController::countActiveRentals()
 {
-    auto rentalCount = storage.count<RentalModel>(
-        where(is_not_null(&RentalModel::dateRented) and is_null(&RentalModel::dateReturned))
-    );
-    return rentalCount;
+    // auto rentalCount = storage.count<RentalModel>(
+    //     where(is_not_null(&RentalModel::dateRented) and is_null(&RentalModel::dateReturned))
+    // );
+    // return rentalCount;
+    return 0;
 }
 
 int RentalController::countCompletedRentals()

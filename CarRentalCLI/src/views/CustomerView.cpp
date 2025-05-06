@@ -68,3 +68,7 @@ void CustomerView::addCustomer()
     getEmail(email);
     customerController.addCustomer(name, tel, email);
 }
+
+void CustomerView::editCustomer() {}
+
+void CustomerView::removeCustomer() {}

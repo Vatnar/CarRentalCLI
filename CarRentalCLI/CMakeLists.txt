@@ -15,8 +15,7 @@ file(GLOB_RECURSE HEADERS
         *.h
         include/*.h
 )
-add_executable(CarRentalCLI ${SOURCES} ${HEADERS}
-        src/test.cpp)
+add_executable(CarRentalCLI ${SOURCES} ${HEADERS})
 
 
 
