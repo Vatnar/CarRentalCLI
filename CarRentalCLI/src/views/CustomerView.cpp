@@ -28,5 +28,9 @@ void CustomerView::addCustomer()
 ==================================
 )MENU" << std::endl;
     std::cout << "Enter name: ";
+    std::string name = Input::getString();
+    std::string tel = Input::getString(false);
+    std::string email = Input::getString(false, '@');
 
+    customerController.addCustomer(std::move(name), std::move(tel), std::move(email));
 }
