@@ -3,7 +3,7 @@
 #include "storage.h"
 #include <iostream>
 
-void CustomerController::addCustomer(std::string name, std::string tel, std::string email)
+void CustomerController::addCustomer(std::string& name, std::string& tel, std::string& email)
 {
     CustomerModel newCustomer {-1, name, tel, email};
 
@@ -11,7 +11,7 @@ void CustomerController::addCustomer(std::string name, std::string tel, std::str
         std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CustomerController::editCustomer(int id, std::string name, std::string tel, std::string email)
+void CustomerController::editCustomer(int id, std::string& name, std::string& tel, std::string& email)
 {
     auto customer = storage.get<CustomerModel>(id);
 
@@ -19,18 +19,17 @@ void CustomerController::editCustomer(int id, std::string name, std::string tel,
     customer.tel = tel;
     customer.email = email;
 
-    // TODO Need to be fixed
-    // if (storage.update(customer))
-        // std::cout << "Storage updated successfully" << std::endl;
+    storage.update(customer);
+    std::cout << "Storage updated successfully" << std::endl;
 }
 
 void CustomerController::removeCustomer(int id)
 {
     auto customer = storage.get<CustomerModel>(id);
 
-    // TODO Need to be fixed
-    // if (storage.remove(customer))
-        // std::cout << "Storage updated successfully" << std::endl;
+    // TODO Trenger error handling i customer og
+    storage.remove<CustomerModel>(id);
+    std::cout << "Storage updated successfully" << std::endl;
 }
 
 int CustomerController::countCustomers()
@@ -45,3 +44,10 @@ int CustomerController::countCustomers()
     return -1;
 }
 
+std::vector<CustomerModel> CustomerController::searchCustomer(std::string& searchPhrase)
+{
+    std::vector<CustomerModel> customerVector = storage.get_all<CustomerModel>(
+        where(like(&CustomerModel::name, searchPhrase))
+    );
+    return customerVector;
+}
