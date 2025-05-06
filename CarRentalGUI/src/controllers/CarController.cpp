@@ -1,8 +1,14 @@
-#pragma once
-#include "controllers/CarController.h"
+#include "CarController.h"
 #include <iostream>
-#include "models/CarModel.h"
+#include "CarModel.h"
 #include "storage.h"
+
+#pragma region Forklaring på algoritmen
+// Dette er en lang forklaring
+// som forklarer hvorfor denne algoritmen
+// fungerer og hva som skjer i hvert steg.
+// Den kan foldes sammen i CLion.
+#pragma endregion
 
 void CarController::addCar(std::string regNo, std::string brand, std::string model)
 {
@@ -30,9 +36,4 @@ void CarController::removeCar(int id)
 
     if (storage.remove(car))
         std::cout << "Storage updated successfully" << std::endl;
-}
-
-void CarController::countCars(int id)
-{
-    auto carCount = storage.select(count(id));
 }
