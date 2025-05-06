@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+/**
+ * @brief Modifies and reads the Customer table
+ */
 class CustomerController
 {
 public:

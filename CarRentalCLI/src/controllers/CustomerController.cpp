@@ -7,13 +7,13 @@ void CustomerController::addCustomer(std::string& name, std::string& tel, std::s
 {
     CustomerModel newCustomer {-1, name, tel, email};
 
-    if (newCustomer.customerID = storage.insert(newCustomer))
-        std::cout << "Storage updated successfully" << std::endl;
+    newCustomer.customerID = storage.insert(newCustomer);
+    std::cout << __FILE__ << "Storage updated successfully" << std::endl;
 }
 
-void CustomerController::editCustomer(int id, std::string& name, std::string& tel, std::string& email)
+void CustomerController::editCustomer(int customerID, std::string& name, std::string& tel, std::string& email)
 {
-    auto customer = storage.get<CustomerModel>(id);
+    auto customer = storage.get<CustomerModel>(customerID);
 
     customer.name = name;
     customer.tel = tel;
@@ -23,12 +23,12 @@ void CustomerController::editCustomer(int id, std::string& name, std::string& te
     std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CustomerController::removeCustomer(int id)
+void CustomerController::removeCustomer(int customerID)
 {
-    auto customer = storage.get<CustomerModel>(id);
+    auto customer = storage.get<CustomerModel>(customerID);
 
     // TODO Trenger error handling i customer og
-    storage.remove<CustomerModel>(id);
+    storage.remove<CustomerModel>(customerID);
     std::cout << "Storage updated successfully" << std::endl;
 }
 
