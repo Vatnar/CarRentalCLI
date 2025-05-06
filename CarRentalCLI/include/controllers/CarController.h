@@ -7,9 +7,9 @@
 class CarController
 {
 public:
-    void addCar(const std::string& regNo, const std::string& brand, const std::string& model);
-    void editCar(int id, const std::string& regNo, const std::string& brand, const std::string& model);
-    void removeCar(int id);
+    bool addCar(const std::string& regNo, const std::string& brand, const std::string& model);
+    bool editCar(int id, const std::string& regNo, const std::string& brand, const std::string& model);
+    bool removeCar(int id);
 
     int countCars();
 

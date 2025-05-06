@@ -3,7 +3,7 @@
 #include "storage.h"
 #include "iostream"
 
-void RentalController::rentCar(const int customerID, const int carID, const std::string& rentalDate)
+void RentalController::rentCar(int customerID, int carID, const std::string& rentalDate)
 {
     RentalModel newRental {-1, customerID, carID, rentalDate};
 
@@ -11,7 +11,7 @@ void RentalController::rentCar(const int customerID, const int carID, const std:
     std::cout << __FILE__ << "Rental registered successfully" << std::endl;
 }
 
-void RentalController::returnCar(const int rentalID, const std::string& returnDate)
+void RentalController::returnCar(int rentalID, const std::string& returnDate)
 {
     auto rent = storage.get<RentalModel>(rentalID);
 
