@@ -1,10 +1,21 @@
 #pragma once
 #include <iostream>
 
-
+/**
+* @brief Provides static methods to get user input
+* All function within class provides error handling
+*/
 class Input
 {
 public:
+
+    /**
+    * @brief Handles integer input from user.
+    *
+    * @param min The minimum allowed value.
+    * @param max The maximum allowed value.
+    * @return A valid integer input from the user.
+    */
     static int getInt(int min, int max)
     {
         int input;
@@ -18,6 +29,14 @@ public:
 
         return input;
     }
+
+    /**
+     * @brief Prompts the user to enter a string.
+     *
+     * @param allowSpaces Whether spaces are allowed in the string (default is true).
+     * @param includeChar A character that must be included in the string (default is '\0', meaning no specific character required).
+     * @return A valid string input from the user.
+     */
     static std::string getString(bool allowSpaces = true, char includeChar = '\0')
     {
         std::string input;
