@@ -29,5 +29,6 @@ inline auto init_storage()
                                 ));
     return storage;
 }
+
 using Storage = decltype(init_storage());
 inline auto storage = init_storage();

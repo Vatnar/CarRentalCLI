@@ -39,7 +39,7 @@ int CustomerController::countCustomers()
     auto result = storage.select(count(&CustomerModel::customerID));
     if (!result.empty()) {
         // TODO char constant too long for type
-        std::cout << __FILE__ << ': Customer count: ' << result.front();
+        std::cout << __FILE__ << ": Customer count: " << result.front();
         return result.front();
     }
     return -1;

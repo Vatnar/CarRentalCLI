@@ -7,7 +7,7 @@
 CarView::CarView()
 {
     std::cout << carMenu;
-    switch (Input::getInput(1, 4))
+    switch (Input::getInt(1, 4))
     {
         case 1:
             break;

@@ -1,3 +1,5 @@
 CarRentalGUI\cmake-build-debug
 CarRentalCLI\.idea\editor.xml
 .idea\workspace.xml
+CarRentalCLI/.idea/codeStyles/codeStyleConfig.xml
+CarRentalCLI/test.exe

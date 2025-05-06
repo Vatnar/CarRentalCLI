@@ -7,15 +7,26 @@
 CustomerView::CustomerView()
 {
     std::cout << customerMenu;
-    switch (Input::getInput(1, 4))
+    switch (Input::getInt(1, 4))
     {
         case 1:
-            break;
+            addCustomer(); break;
         case 2:
-            break;
+            editCustomer(); break;
         case 3:
-        break;
+            removeCustomer(); break;
         case 4:
             return;
     }
+}
+
+void CustomerView::addCustomer()
+{
+    std::cout << R"MENU(
+==================================
+            Add customer
+==================================
+)MENU" << std::endl;
+    std::cout << "Enter name: ";
+
 }

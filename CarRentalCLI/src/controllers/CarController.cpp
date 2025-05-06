@@ -41,9 +41,13 @@ void CarController::removeCar(int id)
         // std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CarController::countCars(int id)
+int CarController::countCars()
 {
-    auto carCount = storage.select(count(id));
-    //if (storage.remove(car))
-      //  std::cout << "Storage updated successfully" << std::endl;
+    auto result = storage.select(count(&CarModel::carID));
+    if (!result.empty()) {
+        // TODO char constant too long for type
+        std::cout << __FILE__ << ": Customer count: " << result.front();
+        return result.front();
+    }
+    return -1;
 }
