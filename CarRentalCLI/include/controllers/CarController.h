@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 
+/**
+ * @brief Modifies and reads the Car table
+ */
 class CarController
 {
 public:

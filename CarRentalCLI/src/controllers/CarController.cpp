@@ -7,13 +7,13 @@ void CarController::addCar(std::string regNo, std::string brand, std::string mod
 {
     CarModel newCar {-1, regNo, brand, model};
 
-    if ((newCar.carID = storage.insert(newCar)))
-        std::cout << __FILE__ << "Car inserted successfully" << std::endl;
+    newCar.carID = storage.insert(newCar);
+    std::cout << __FILE__ << "Car inserted successfully" << std::endl;
 }
 
-void CarController::editCar(int id, std::string regNo, std::string brand, std::string model)
+void CarController::editCar(int carID, std::string regNo, std::string brand, std::string model)
 {
-    auto car = storage.get<CarModel>(id);
+    auto car = storage.get<CarModel>(carID);
 
     car.regNo = regNo;
     car.brand = brand;
@@ -23,13 +23,13 @@ void CarController::editCar(int id, std::string regNo, std::string brand, std::s
     std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CarController::removeCar(int id)
+void CarController::removeCar(int carID)
 {
-    auto car = storage.get<CarModel>(id);
+    auto car = storage.get<CarModel>(carID);
 
     //TODO Du får steke litt med den error handlingen
 
-    storage.remove<CarModel>(id);
+    storage.remove<CarModel>(carID);
     std::cout << "Storage updated successfully" << std::endl;
 }
 
