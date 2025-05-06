@@ -1,9 +1,7 @@
 #include "controllers/CustomerController.h"
-
-#include <iostream>
-
 #include "models/CustomerModel.h"
 #include "storage.h"
+#include <iostream>
 
 void CustomerController::addCustomer(std::string name, std::string tel, std::string email)
 {

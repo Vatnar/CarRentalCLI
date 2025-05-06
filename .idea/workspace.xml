@@ -19,10 +19,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ca13a358-f92d-4753-b496-0d917d6926b5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalGUI/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/.idea/editor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalGUI/include/controllers/CarController.h" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/include/controllers/CarController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalGUI/include/storage.h" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/include/storage.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CarRentalGUI/src/controllers/CarController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/src/controllers/CarController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRentalGUI/src/models/CarModel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalGUI/src/models/CarModel.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpdatedUML.qea" beforeDir="false" afterPath="$PROJECT_DIR$/UpdatedUML.qea" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +35,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/CarRentalGUI/include/models/RentalModel.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CarRentalGUI/include/models/RentalModel.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -63,6 +62,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.folding",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -84,7 +84,8 @@
       <workItem from="1745923891192" duration="250000" />
       <workItem from="1746012787832" duration="1875000" />
       <workItem from="1746019177282" duration="1129000" />
-      <workItem from="1746183724838" duration="3375000" />
+      <workItem from="1746183724838" duration="3376000" />
+      <workItem from="1746533833741" duration="1604000" />
     </task>
     <servers />
   </component>
