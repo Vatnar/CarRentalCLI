@@ -71,3 +71,7 @@ void CustomerView::addCustomer()
     {
     }
 }
+
+void CustomerView::editCustomer() {}
+
+void CustomerView::removeCustomer() {}
