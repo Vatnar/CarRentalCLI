@@ -3,7 +3,7 @@
 #include "storage.h"
 #include <iostream>
 
-void CustomerController::addCustomer(std::string name, std::string tel, std::string email)
+void CustomerController::addCustomer(std::string& name, std::string& tel, std::string& email)
 {
     CustomerModel newCustomer {-1, name, tel, email};
 
@@ -11,7 +11,7 @@ void CustomerController::addCustomer(std::string name, std::string tel, std::str
         std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CustomerController::editCustomer(int id, std::string name, std::string tel, std::string email)
+void CustomerController::editCustomer(int id, std::string& name, std::string& tel, std::string& email)
 {
     auto customer = storage.get<CustomerModel>(id);
 
@@ -42,3 +42,10 @@ int CustomerController::countCustomers()
     }
 }
 
+std::vector<CustomerModel> CustomerController::searchCustomer(std::string& searchPhrase)
+{
+    std::vector<CustomerModel> customerVector = storage.get_all<CustomerModel>(
+        where(like(&CustomerModel::name, searchPhrase))
+    );
+    return customerVector;
+}
