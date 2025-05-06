@@ -5,14 +5,6 @@
 #include "controllers/CustomerController.h"
 #include "views/MainView.h"
 #include <filesystem>
-
-int main()
-{
-    MainView menu;
-
-    return 0;
-}
-
 void addSampleData()
 {
 
@@ -35,3 +27,11 @@ void addSampleData()
 
     // TODO Verify that it adds stuff
 }
+int main()
+{
+    addSampleData();
+    MainView menu;
+
+    return 0;
+}
+
