@@ -8,27 +8,29 @@ void CarController::addCar(std::string regNo, std::string brand, std::string mod
     CarModel newCar {-1, regNo, brand, model};
 
     if ((newCar.carID = storage.insert(newCar)))
-        std::cout << __FILE__ << "Storage updated successfully" << std::endl;
+        std::cout << __FILE__ << "Car inserted successfully" << std::endl;
 }
 
 void CarController::editCar(int id, std::string regNo, std::string brand, std::string model)
 {
-    auto car = storage.get<Car>(id);
+    auto car = storage.get<CarModel>(id);
 
     car.regNo = regNo;
     car.brand = brand;
     car.model = model;
 
-    if (storage.update(car))
-        std::cout << "Storage updated successfully" << std::endl;
+    // TODO needs to be fixed
+    // if (storage.update(car))
+        // std::cout << "Storage updated successfully" << std::endl;
 }
 
 void CarController::removeCar(int id)
 {
-    auto car = storage.get<Car>(id);
+    auto car = storage.get<CarModel>(id);
 
-    if (storage.remove(car))
-        std::cout << "Storage updated successfully" << std::endl;
+    // TODO needs fix
+    // if (storage.remove(car))
+        // std::cout << "Storage updated successfully" << std::endl;
 }
 
 void CarController::countCars(int id)
