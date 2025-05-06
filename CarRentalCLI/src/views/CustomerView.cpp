@@ -74,9 +74,9 @@ void CustomerView::addCustomer()
 
 void CustomerView::editCustomer() {
         std::cout << R"MENU(
-    ==================================
-                Edit customer
-    ==================================
+==================================
+            Edit customer
+==================================
     )MENU" << std::endl;
 
     std::string searchString;
@@ -94,7 +94,7 @@ void CustomerView::editCustomer() {
     int index = 0;
     for (const auto& customer : customers)
     {
-        std::cout << index++ << ".\t " << customer.name << "\t" << customer.tel << "\t" << customer.email << std::endl;
+        std::cout << index++ << ".\t " << customer.name << "\t\t" << customer.tel << "\t\t" << customer.email << std::endl;
     }
     std::cout << "Enter number to choose: ";
     auto indexCustomer = Input::getInt(0, customers.size());
