@@ -66,5 +66,8 @@ void CustomerView::addCustomer()
     getName(name);
     getTel(tel);
     getEmail(email);
-    customerController.addCustomer(name, tel, email);
+
+    // if (customerController.addCustomer(name, tel, email))
+    {
+    }
 }
