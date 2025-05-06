@@ -3,36 +3,45 @@
 #include <iostream>
 
 #include "models/CustomerModel.h"
+#include "storage.h"
 
-void CustomerController::addCustomer(name, tel, birthDate)
+void CustomerController::addCustomer(std::string name, std::string tel, std::string email)
 {
-    CustomerModel newCustomer {-1, name, tel, birthDate};
+    CustomerModel newCustomer {-1, name, tel, email};
 
-    if (newCustomer.id = storage.insert(newCustomer))
+    if (newCustomer.customerID = storage.insert(newCustomer))
         std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CustomerController::editCustomer(id, name, tel, birthDate)
+void CustomerController::editCustomer(int id, std::string name, std::string tel, std::string email)
 {
-    auto customer = storage.get<Customer>(id);
+    auto customer = storage.get<CustomerModel>(id);
 
     customer.name = name;
     customer.tel = tel;
-    customer.birthDate = birthDate;
+    customer.email = email;
 
-    if (storage.update(customer))
-        std::cout << "Storage updated successfully" << std::endl;
+    // TODO Need to be fixed
+    // if (storage.update(customer))
+        // std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CustomerController::removeCustomer(id)
+void CustomerController::removeCustomer(int id)
 {
-    auto customer = storage.get<Customer>(id);
+    auto customer = storage.get<CustomerModel>(id);
 
-    if (storage.remove(customer))
-        std::cout << "Storage updated successfully" << std::endl;
+    // TODO Need to be fixed
+    // if (storage.remove(customer))
+        // std::cout << "Storage updated successfully" << std::endl;
 }
 
-void CustomerController::countCustomers()
+int CustomerController::countCustomers()
 {
-    auto customerCount = storage.select(count(id));
+    // Endret på denne, vet ikke om det er riktig da
+    auto result = storage.select(count(&CustomerModel::customerID));
+    if (!result.empty()) {
+        std::cout << __FILE__ << ': Customer count: ' << result.front();
+        return result.front();
+    }
 }
+

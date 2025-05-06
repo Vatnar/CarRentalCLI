@@ -1,4 +1,3 @@
-#pragma once
 #include "controllers/CarController.h"
 #include <iostream>
 #include "models/CarModel.h"
@@ -8,8 +7,8 @@ void CarController::addCar(std::string regNo, std::string brand, std::string mod
 {
     CarModel newCar {-1, regNo, brand, model};
 
-    if (newCar.id = storage.insert(newCar))
-        std::cout << "Storage updated successfully" << std::endl;
+    if ((newCar.carID = storage.insert(newCar)))
+        std::cout << __FILE__ << "Storage updated successfully" << std::endl;
 }
 
 void CarController::editCar(int id, std::string regNo, std::string brand, std::string model)
