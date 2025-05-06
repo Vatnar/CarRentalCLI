@@ -3,7 +3,7 @@
 #include "models/CarModel.h"
 #include "storage.h"
 
-void CarController::addCar(std::string regNo, std::string brand, std::string model)
+void CarController::addCar(const std::string& regNo, const std::string& brand, const std::string& model)
 {
     CarModel newCar {-1, regNo, brand, model};
 
@@ -11,7 +11,7 @@ void CarController::addCar(std::string regNo, std::string brand, std::string mod
     std::cout << __FILE__ << "Car inserted successfully" << std::endl;
 }
 
-void CarController::editCar(int carID, std::string regNo, std::string brand, std::string model)
+void CarController::editCar(int carID, const std::string& regNo, const std::string& brand, const std::string& model)
 {
     auto car = storage.get<CarModel>(carID);
 
