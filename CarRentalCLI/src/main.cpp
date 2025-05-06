@@ -4,23 +4,34 @@
 #include "controllers/CarController.h"
 #include "controllers/CustomerController.h"
 #include "views/MainView.h"
+#include <filesystem>
 
 int main()
 {
     MainView menu;
 
-    // std::cout << "Hello, World!" << std::endl;
     return 0;
 }
 
 void addSampleData()
 {
-    CustomerController::addCustomer("Alice Johnson", "555-1234", "alice@example.com");
-    CustomerController::addCustomer("Bob Smith", "555-5678", "bob.smith@example.com");
-    CustomerController::addCustomer("Charlie Brown", "555-9012", "charlie@brownmail.com");
 
-    CarController::addCar("AB12345", "Toyota", "Corolla");
-    CarController::addCar("CD67890", "Ford", "Mustang");
-    CarController::addCar("EF11223", "Tesla", "Model 3");
+    // TODO Add sample data to rental controller
 
+    std::filesystem::remove("CarRental.sqlite");
+
+    storage.sync_schema();
+    CustomerController customerController;
+    CarController carController;
+    customerController.addCustomer("name1", "tel1", "email1");
+    customerController.addCustomer("name2", "tel2", "email2");
+    customerController.addCustomer("nam3", "tel3", "email3");
+
+    carController.addCar("Reg1", "Brand1", "Model1");
+    carController.addCar("Reg2", "Brand2", "Model2");
+    carController.addCar("Reg3", "Brand3", "Model3");
+
+    std::cout << "Adding sample data" << std::endl;
+
+    // TODO Verify that it adds stuff
 }

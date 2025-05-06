@@ -12,7 +12,7 @@ MainView::MainView() {
     {
         std::cout << mainMenu;
 
-        switch (Input::getInput(1, 6))
+        switch (Input::getInt(1, 6))
         {
             case 0: // not allowed
                 break;

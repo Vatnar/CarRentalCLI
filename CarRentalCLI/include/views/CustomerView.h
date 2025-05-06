@@ -17,4 +17,7 @@ protected:
 ==================================
 Please enter your choice:
 )MENU";
+    void addCustomer();
+    void editCustomer();
+    void removeCustomer();
 };
