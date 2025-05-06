@@ -1,4 +1,0 @@
-C:/IKT103/Exam/CarRentalGUI/CarRentalGUI/cmake-build-debug/CMakeFiles/sqlite3.dir
-C:/IKT103/Exam/CarRentalGUI/CarRentalGUI/cmake-build-debug/CMakeFiles/CarRentalGUI.dir
-C:/IKT103/Exam/CarRentalGUI/CarRentalGUI/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/IKT103/Exam/CarRentalGUI/CarRentalGUI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
