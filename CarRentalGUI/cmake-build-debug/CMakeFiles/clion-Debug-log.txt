@@ -1,4 +1,0 @@
-C:\Users\roem0\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -S C:\IKT103\Exam\CarRentalGUI\CarRentalGUI -B C:\IKT103\Exam\CarRentalGUI\CarRentalGUI\cmake-build-debug
--- Configuring done (0.8s)
--- Generating done (0.1s)
--- Build files have been written to: C:/IKT103/Exam/CarRentalGUI/CarRentalGUI/cmake-build-debug
