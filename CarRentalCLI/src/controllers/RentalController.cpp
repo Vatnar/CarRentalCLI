@@ -23,10 +23,11 @@ void RentalController::returnCar(const int rentalID, const std::string& returnDa
 
 int RentalController::countActiveRentals()
 {
-    auto activeRentalCount = storage.count<RentalModel>(
-        where(is_not_null(&RentalModel::dateRented) and is_null(&RentalModel::dateReturned))
-    );
-    return activeRentalCount;
+    // auto activeRentalCount = storage.count<RentalModel>(
+    //     where(is_not_null(&RentalModel::dateRented) and is_null(&RentalModel::dateReturned))
+    // );
+    // return activeRentalCount;
+    return 0;
 }
 
 int RentalController::countCompletedRentals()

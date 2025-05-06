@@ -69,6 +69,20 @@ void CustomerView::addCustomer()
     customerController.addCustomer(name, tel, email);
 }
 
-void CustomerView::editCustomer() {}
+void CustomerView::editCustomer() {
+    std::cout << R"MENU(
+==================================
+            Edit customer
+==================================
+)MENU" << std::endl;
+
+    std::string searchString;
+    searchString = Input::getString();
+    auto customers = customerController.searchCustomer(searchString);
+
+    for (auto customer : customers)
+    {
+    }
+}
 
 void CustomerView::removeCustomer() {}

@@ -1,4 +1,4 @@
-#pragma once
+        #pragma once
 #include <string>
 
 /**
@@ -8,7 +8,7 @@ class RentalController
 {
     public:
     void rentCar(int customerID, int carID, const std::string& rentalDate);
-    void returnCar(int customerID, int carID, const std::string& returnDate);
+    void returnCar(const int rentalID, const std::string& returnDate);
 
     int countActiveRentals();
     int countCompletedRentals();
