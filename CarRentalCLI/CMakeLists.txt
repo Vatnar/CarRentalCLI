@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30)
-project(CarRentalGUI)
+project(CarRentalCLI)
 
 set(CMAKE_CXX_STANDARD 20)
 add_library(sqlite3 STATIC vendor/sqlite3/sqlite3.c)
@@ -15,9 +15,9 @@ file(GLOB_RECURSE HEADERS
         *.h
         include/*.h
 )
-add_executable(CarRentalGUI ${SOURCES} ${HEADERS})
+add_executable(CarRentalCLI ${SOURCES} ${HEADERS})
 
 
 
-target_include_directories(CarRentalGUI PRIVATE include)
-target_link_libraries(CarRentalGUI PRIVATE sqlite3)
+target_include_directories(CarRentalCLI PRIVATE include)
+target_link_libraries(CarRentalCLI PRIVATE sqlite3)
