@@ -40,8 +40,10 @@ int CustomerController::countCustomers()
     // Endret på denne, vet ikke om det er riktig da
     auto result = storage.select(count(&CustomerModel::customerID));
     if (!result.empty()) {
+        // TODO char constant too long for type
         std::cout << __FILE__ << ': Customer count: ' << result.front();
         return result.front();
     }
+    return -1;
 }
 
