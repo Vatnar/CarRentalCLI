@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+#include "controllers/CustomerController.h"
+
 
 class CustomerView {
 public:
@@ -17,6 +19,7 @@ protected:
 ==================================
 Please enter your choice:
 )MENU";
+    CustomerController customerController;
     void addCustomer();
     void editCustomer();
     void removeCustomer();
