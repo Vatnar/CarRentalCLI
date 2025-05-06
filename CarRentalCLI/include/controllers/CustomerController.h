@@ -9,11 +9,11 @@
 class CustomerController
 {
 public:
-    void addCustomer(std::string& name, std::string& tel, std::string& email);
+    void addCustomer(const std::string& name, const std::string& tel, const std::string& email);
     void editCustomer(int id, std::string& name, std::string& tel, std::string& email);
     void removeCustomer(int id);
 
     int countCustomers();
 
-    std::vector<CustomerModel> searchCustomer(std::string& searchPhrase);
+    std::vector<CustomerModel> searchCustomer(const std::string& searchPhrase);
 };

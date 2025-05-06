@@ -3,7 +3,7 @@
 #include "storage.h"
 #include <iostream>
 
-void CustomerController::addCustomer(std::string& name, std::string& tel, std::string& email)
+void CustomerController::addCustomer(const std::string& name, const std::string& tel, const std::string& email)
 {
     CustomerModel newCustomer {-1, name, tel, email};
 
@@ -44,7 +44,7 @@ int CustomerController::countCustomers()
     return -1;
 }
 
-std::vector<CustomerModel> CustomerController::searchCustomer(std::string& searchPhrase)
+std::vector<CustomerModel> CustomerController::searchCustomer(const std::string& searchPhrase)
 {
     std::vector<CustomerModel> customerVector = storage.get_all<CustomerModel>(
         where(like(&CustomerModel::name, searchPhrase))

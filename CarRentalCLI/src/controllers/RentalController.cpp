@@ -3,7 +3,7 @@
 #include "storage.h"
 #include "iostream"
 
-void RentalController::rentCar(int customerID, int carID, std::string& rentalDate)
+void RentalController::rentCar(const int customerID, const int carID, const std::string& rentalDate)
 {
     RentalModel newRental {-1, customerID, carID, rentalDate};
 
@@ -11,7 +11,7 @@ void RentalController::rentCar(int customerID, int carID, std::string& rentalDat
     std::cout << __FILE__ << "Rental registered successfully" << std::endl;
 }
 
-void RentalController::returnCar(int rentalID, std::string& returnDate)
+void RentalController::returnCar(const int rentalID, const std::string& returnDate)
 {
     auto rent = storage.get<RentalModel>(rentalID);
 
@@ -23,18 +23,17 @@ void RentalController::returnCar(int rentalID, std::string& returnDate)
 
 int RentalController::countActiveRentals()
 {
-    // auto rentalCount = storage.count<RentalModel>(
-    //     where(is_not_null(&RentalModel::dateRented) and is_null(&RentalModel::dateReturned))
-    // );
-    // return rentalCount;
-    return 0;
+    auto activeRentalCount = storage.count<RentalModel>(
+        where(is_not_null(&RentalModel::dateRented) and is_null(&RentalModel::dateReturned))
+    );
+    return activeRentalCount;
 }
 
 int RentalController::countCompletedRentals()
 {
     // TODO kan fort hende det krever noen modifikasjoner
-    auto rentalCount = storage.count<RentalModel>(
+    auto completedRentalCount = storage.count<RentalModel>(
         where(is_not_null(&RentalModel::dateReturned))
     );
-    return rentalCount;
+    return completedRentalCount;
 }
