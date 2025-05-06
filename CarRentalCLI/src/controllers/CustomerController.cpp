@@ -44,7 +44,7 @@ int CustomerController::countCustomers()
     return -1;
 }
 
-std::vector<CustomerModel> CustomerController::searchCustomer(const std::string& searchPhrase)
+std::vector<CustomerModel> CustomerController:: searchCustomer(const std::string& searchPhrase)
 {
     std::string likePhrase = "%" + searchPhrase + "%";
     std::vector<CustomerModel> customerVector = storage.get_all<CustomerModel>(

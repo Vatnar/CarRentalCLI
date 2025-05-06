@@ -73,19 +73,38 @@ void CustomerView::addCustomer()
 }
 
 void CustomerView::editCustomer() {
-    std::cout << R"MENU(
-==================================
-            Edit customer
-==================================
-)MENU" << std::endl;
+        std::cout << R"MENU(
+    ==================================
+                Edit customer
+    ==================================
+    )MENU" << std::endl;
 
     std::string searchString;
+    std::cout << "Input search string: ";
     searchString = Input::getString();
-    auto customers = customerController.searchCustomer(searchString);
+    std::cout << searchString << std::endl;
 
-    for (auto customer : customers)
+    auto customers = customerController.searchCustomer(searchString);
+    if (customers.empty())
     {
+        std::cout << "\n Customer not found. Try again";
+        editCustomer();
     }
+    std::cout << "Found " << customers.size() << " out of " << customerController.countCustomers() << std::endl;
+    int index = 0;
+    for (const auto& customer : customers)
+    {
+        std::cout << index++ << ".\t " << customer.name << "\t" << customer.tel << "\t" << customer.email << std::endl;
+    }
+    std::cout << "Enter number to choose: ";
+    auto indexCustomer = Input::getInt(0, customers.size());
+    auto customerID = customers[indexCustomer].customerID;
+
+    std::string name, tel, email;
+    getName(name);
+    getTel(tel);
+    getEmail(email);
+    customerController.editCustomer(customerID, name, tel, email);
 }
 
 void CustomerView::removeCustomer() {}
