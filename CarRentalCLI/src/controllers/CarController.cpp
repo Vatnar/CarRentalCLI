@@ -52,3 +52,24 @@ int CarController::countCars()
     auto carCount = storage.count<CarModel>();
     return carCount;
 }
+
+std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, int field)
+{
+    std::string likePhrase = "%" + searchPhrase + "%";
+    std::vector<CarModel> cars;
+
+    switch (field)
+    {
+        case 0:
+            cars = storage.get_all<CarModel>(
+          where(like(&CarModel::regNo, likePhrase))); break;
+        case 1:
+            cars = storage.get_all<CarModel>(
+          where(like(&CarModel::brand, likePhrase))); break;
+        case 2:
+            cars = storage.get_all<CarModel>(
+          where(like(&CarModel::model, likePhrase))); break;
+        default: std::cerr << "Invalid field";
+    }
+    return cars;
+}

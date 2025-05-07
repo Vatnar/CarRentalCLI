@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <bits/stl_vector.h>
+
+#include "models/CarModel.h"
 
 /**
  * @brief Modifies and reads the Car table
@@ -13,5 +16,5 @@ public:
 
     int countCars();
 
-    void searchCar();
+    std::vector<CarModel> searchCar(const std::string &searchPhrase, int field);
 };

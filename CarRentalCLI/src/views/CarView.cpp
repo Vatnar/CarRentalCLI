@@ -77,7 +77,7 @@ int CarView::getCarID()
     searchString = Input::getString();
     std::cout << searchString << std::endl;
 
-    std::vector<CarModel> cars = carController.searchCar(searchString);
+    std::vector<CarModel> cars = carController.searchCar(searchString, TODO);
     if (cars.empty())
     {
         std::cout << "\n Car not found. Try again";
