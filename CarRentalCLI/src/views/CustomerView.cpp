@@ -105,10 +105,7 @@ void CustomerView::removeCustomer()
     CustomerView();
 }
 
-/**
- * @brief Allows user to search and chose a customerID
- * @return Customer ID chosen by user
- */
+
 int CustomerView::getCustomerID() {
     std::string searchString;
     std::cout << "Input search string. Press Enter to search. Press enter without search string to list all\n ";

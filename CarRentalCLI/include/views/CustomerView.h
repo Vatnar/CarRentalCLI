@@ -11,6 +11,7 @@ public:
  */
     CustomerView();
 
+protected:
     /**
  * @brief Prompts the user until a valid name is entered
  * @param name Reference to input name string
@@ -29,8 +30,28 @@ public:
  */
     void getEmail(std::string &email);
 
-protected:
-    std::string customerMenu = R"MENU(
+   /**
+ * @brief Allows user to search and choose a customerID
+ * @return Customer ID chosen by user
+ */
+   int getCustomerID();
+
+   /**
+* @brief Prompts user for information about a new customer and dispatches it to controller
+*/
+   void addCustomer();
+
+    /**
+     * @brief Searches for customer based on searchphrase and edits the selected customer
+     */
+    void editCustomer();
+
+    /**
+     * @brief Searches for customer based on searchphrase and removes the selected customer
+     */
+    void removeCustomer();
+
+   std::string customerMenu = R"MENU(
 ==================================
             CUSTOMERS
 ==================================
@@ -41,15 +62,5 @@ protected:
 ==================================
 Please enter your choice:
 )MENU";
-    CustomerController customerController;
-
-    /**
- * @brief Prompts user for information about a new customer and dispatches it to controller
- */
-    void addCustomer();
-
-    int getCustomerID();
-
-    void editCustomer();
-    void removeCustomer();
+   CustomerController customerController;
 };
