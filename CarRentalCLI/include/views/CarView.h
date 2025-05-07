@@ -69,8 +69,8 @@ protected:
 ==================================
 Please enter your choice:
 )MENU";
-};
     CarController carController;
+};
 
 
 #endif //CARVIEW_H

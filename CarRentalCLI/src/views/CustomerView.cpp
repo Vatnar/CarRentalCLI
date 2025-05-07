@@ -19,6 +19,7 @@ CustomerView::CustomerView()
         case 4:
             return;
     }
+    CustomerView cw;
 }
 
 
@@ -68,7 +69,6 @@ void CustomerView::addCustomer()
     getEmail(email);
 
     customerController.addCustomer(name, tel, email);
-    CustomerView();
 }
 
 
@@ -88,7 +88,6 @@ void CustomerView::editCustomer() {
     getEmail(email);
 
     customerController.editCustomer(customerID, name, tel, email);
-    CustomerView();
 }
 
 void CustomerView::removeCustomer()
@@ -102,7 +101,6 @@ void CustomerView::removeCustomer()
     int customerID = getCustomerID();
 
     customerController.removeCustomer(customerID);
-    CustomerView();
 }
 
 

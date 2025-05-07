@@ -20,6 +20,7 @@ CarView::CarView()
         case 4:
             return;
     }
+    CarView cw;
 }
 
 bool CarView::isValid(const std::string& s) {
