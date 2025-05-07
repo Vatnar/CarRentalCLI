@@ -9,8 +9,53 @@
 
 class CarView {
 public:
+
+
+
     CarView();
 protected:
+    
+    /**
+     * @brief Prompts the user until a valid registration number is entered
+     * @param reg Reference to input registration number string
+     */
+    void getReg(std::string& reg);
+
+    /**
+     * @brief Prompts the user until a valid brand name is entered
+     * @param brand Reference to input brand string
+     */
+    void getBrand(std::string& brand);
+
+    /**
+     * @brief Prompts the user until a valid model name is entered
+     * @param model Reference to input model string
+     */
+    void getModel(std::string& model);
+
+    /**
+     * Allows user to search and choose a customerID
+     * @return Car ID chosen by user
+     */
+    int getCarID();
+
+    /**
+     * @brief Prompts the user for information about a new customer and dispatches it to controller
+     */
+    void addCar();
+
+    /**
+     * Searches for car based on searchphrase and edits the selected car
+     */
+    void editCar();
+
+    /**
+     * Searches for car based on searchphrase and removes the selected car
+     */
+    void removeCar();
+
+
+
     std::string carMenu = R"MENU(
 ==================================
               CARS

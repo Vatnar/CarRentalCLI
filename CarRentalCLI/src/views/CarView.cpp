@@ -10,12 +10,18 @@ CarView::CarView()
     switch (Input::getInt(1, 4))
     {
         case 1:
-            break;
+            addCar(); break;
         case 2:
-            break;
+            editCar(); break;
         case 3:
-            break;
+            removeCar(); break;
         case 4:
             return;
     }
 }
+
+int CarView::getCarID() {}
+
+void CarView::addCar() {}
+void CarView::editCar() {}
+void CarView::removeCar() {}
