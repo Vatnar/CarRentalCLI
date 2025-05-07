@@ -6,15 +6,17 @@
 #define CARVIEW_H
 #include <string>
 
+#include "controllers/CarController.h"
+
 
 class CarView {
 public:
-
-
-
     CarView();
+
+    bool isValid(const std::string &s);
+
 protected:
-    
+
     /**
      * @brief Prompts the user until a valid registration number is entered
      * @param reg Reference to input registration number string
@@ -68,7 +70,7 @@ protected:
 Please enter your choice:
 )MENU";
 };
-
+    CarController carController;
 
 
 #endif //CARVIEW_H

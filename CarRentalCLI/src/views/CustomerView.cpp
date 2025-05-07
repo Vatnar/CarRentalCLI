@@ -112,7 +112,7 @@ int CustomerView::getCustomerID() {
     searchString = Input::getString();
     std::cout << searchString << std::endl;
 
-    auto customers = customerController.searchCustomer(searchString);
+    std::vector<CustomerModel> customers = customerController.searchCustomer(searchString);
     if (customers.empty())
     {
         std::cout << "\n Customer not found. Try again" << std::endl;
