@@ -115,8 +115,8 @@ int CustomerView::getCustomerID() {
     auto customers = customerController.searchCustomer(searchString);
     if (customers.empty())
     {
-        std::cout << "\n Customer not found. Try again";
-        editCustomer();
+        std::cout << "\n Customer not found. Try again" << std::endl;
+        getCustomerID();
     }
     std::cout << "Found " << customers.size() << " out of " << customerController.countCustomers() << std::endl;
     int index = 0;
