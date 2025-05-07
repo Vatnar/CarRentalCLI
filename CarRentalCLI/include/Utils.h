@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <conio.h>
+#include <limits>
 /**
 * @brief Provides static methods to get user input
 * All function within class provides error handling
@@ -21,10 +22,13 @@ public:
         int input;
         std::cin.clear();
         std::cin >> input;
+        // Remove leftover newline
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         if (input < min || input > max)
         {
-            std::cerr << "Invalid input." << std::endl;
-            return 0;
+            std::cerr << "Invalid input. Choose another: " << std::endl;
+            return getInt(min, max);
         }
 
         return input;
@@ -40,7 +44,7 @@ public:
     static std::string getString(bool allowSpaces = true, char includeChar = '\0')
     {
         std::string input;
-        std::cin.ignore();
+
         std::getline(std::cin, input);
 
         if (!allowSpaces && input.find(' ') != std::string::npos)
