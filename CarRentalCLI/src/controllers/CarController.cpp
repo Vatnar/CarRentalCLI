@@ -1,5 +1,7 @@
 #include "controllers/CarController.h"
 #include <iostream>
+#include <unordered_set>
+
 #include "models/CarModel.h"
 #include "storage.h"
 
@@ -53,23 +55,54 @@ int CarController::countCars()
     return carCount;
 }
 
-std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, int field)
+std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, int field,
+                                               const std::string& startDate, const std::string& endDate)
 {
     std::string likePhrase = "%" + searchPhrase + "%";
-    std::vector<CarModel> cars;
+    std::vector<CarModel> allMatchingCars;
 
     switch (field)
     {
         case 0:
-            cars = storage.get_all<CarModel>(
-          where(like(&CarModel::regNo, likePhrase))); break;
+            allMatchingCars = storage.get_all<CarModel>(
+                where(like(&CarModel::regNo, likePhrase)));
+        break;
         case 1:
-            cars = storage.get_all<CarModel>(
-          where(like(&CarModel::brand, likePhrase))); break;
+            allMatchingCars = storage.get_all<CarModel>(
+                where(like(&CarModel::brand, likePhrase)));
+        break;
         case 2:
-            cars = storage.get_all<CarModel>(
-          where(like(&CarModel::model, likePhrase))); break;
-        default: std::cerr << "Invalid field";
+            allMatchingCars = storage.get_all<CarModel>(
+                where(like(&CarModel::model, likePhrase)));
+        break;
+        default:
+            std::cerr << "Invalid field\n";
+        return {};
     }
-    return cars;
+
+    if (startDate.empty() || endDate.empty())
+        return allMatchingCars;
+
+    // Rentals that are within the time frame
+    auto conflictingRentals = storage.get_all<RentalModel>(
+        where(c(&RentalModel::dateRented) <= endDate &&
+              c(&RentalModel::dateReturned) >= startDate));
+
+    // IDs of unavailable cars
+    std::unordered_set<int> unavailableCarIDs;
+    for (const auto& rental : conflictingRentals)
+        unavailableCarIDs.insert(rental.carID);
+
+    // Remove unavailable
+    std::vector<CarModel> availableCars;
+    for (const auto& car : allMatchingCars)
+    {
+        if (unavailableCarIDs.find(car.carID) == unavailableCarIDs.end())
+            availableCars.push_back(car);
+    }
+
+    return availableCars;
 }
+
+
+

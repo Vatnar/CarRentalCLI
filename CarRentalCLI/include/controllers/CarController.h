@@ -16,5 +16,6 @@ public:
 
     int countCars();
 
-    std::vector<CarModel> searchCar(const std::string &searchPhrase, int field);
+    std::vector<CarModel> searchCar(const std::string &searchPhrase, int field, const std::string &startDate = "", const
+                                    std::string &endDate = "");
 };
