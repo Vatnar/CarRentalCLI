@@ -19,9 +19,9 @@ void addSampleData()
     customerController.addCustomer("Name2", "Tel2", "email2@example.com");
     customerController.addCustomer("Name3", "Tel3", "email3@example.com");
 
-    carController.addCar("Reg1", "Brand1", "Model1");
-    carController.addCar("Reg2", "Brand2", "Model2");
-    carController.addCar("Reg3", "Brand3", "Model3");
+    carController.addCar("AA00000", "Brand1", "Model1");
+    carController.addCar("AA00001", "Brand2", "Model2");
+    carController.addCar("AA00002", "Brand3", "Model3");
 
     std::cout << "Adding sample data" << std::endl;
 
@@ -29,6 +29,8 @@ void addSampleData()
 }
 int main()
 {
+
+    // TODO run checks for integrity, check dates and return cars
     addSampleData();
     MainView menu;
 
