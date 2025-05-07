@@ -4,3 +4,4 @@ CarRentalCLI\.idea\editor.xml
 CarRentalCLI/.idea/codeStyles/codeStyleConfig.xml
 CarRentalCLI/test.exe
 CarRental.sqlite
+*.xml
