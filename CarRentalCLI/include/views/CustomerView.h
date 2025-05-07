@@ -47,6 +47,9 @@ Please enter your choice:
  * @brief Prompts user for information about a new customer and dispatches it to controller
  */
     void addCustomer();
+
+    int getCustomerID();
+
     void editCustomer();
     void removeCustomer();
 };

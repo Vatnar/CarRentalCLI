@@ -50,7 +50,7 @@ void CustomerView::getEmail(std::string &email) {
     if (email.empty())
     {
         std::cout << "\n Invalid email, Try again. Format: example@example.org";
-        getEmail(email);
+        return getEmail(email);
     }
 }
 
@@ -67,20 +67,51 @@ void CustomerView::addCustomer()
     getTel(tel);
     getEmail(email);
 
-    // if (customerController.addCustomer(name, tel, email))
-    {
-    }
+    customerController.addCustomer(name, tel, email);
+    CustomerView();
 }
 
+
+
 void CustomerView::editCustomer() {
-        std::cout << R"MENU(
+    std::cout << R"MENU(
 ==================================
             Edit customer
 ==================================
     )MENU" << std::endl;
 
+    int customerID = getCustomerID();
+    std::string name, tel, email;
+
+    getName(name);
+    getTel(tel);
+    getEmail(email);
+
+    customerController.editCustomer(customerID, name, tel, email);
+    CustomerView();
+}
+
+void CustomerView::removeCustomer()
+{
+    std::cout << R"MENU(
+==================================
+            Remove customer
+==================================
+    )MENU" << std::endl;
+
+    int customerID = getCustomerID();
+
+    customerController.removeCustomer(customerID);
+    CustomerView();
+}
+
+/**
+ * @brief Allows user to search and chose a customerID
+ * @return Customer ID chosen by user
+ */
+int CustomerView::getCustomerID() {
     std::string searchString;
-    std::cout << "Input search string: ";
+    std::cout << "Input search string. Press Enter to search. Press enter without search string to list all\n ";
     searchString = Input::getString();
     std::cout << searchString << std::endl;
 
@@ -97,14 +128,6 @@ void CustomerView::editCustomer() {
         std::cout << index++ << ".\t " << customer.name << "\t\t" << customer.tel << "\t\t" << customer.email << std::endl;
     }
     std::cout << "Enter number to choose: ";
-    auto indexCustomer = Input::getInt(0, customers.size());
-    auto customerID = customers[indexCustomer].customerID;
-
-    std::string name, tel, email;
-    getName(name);
-    getTel(tel);
-    getEmail(email);
-    customerController.editCustomer(customerID, name, tel, email);
+    auto indexCustomer = Input::getInt(0, customers.size()-1); // -1 cuz of 0 index
+    return customers[indexCustomer].customerID;
 }
-
-void CustomerView::removeCustomer() {}
