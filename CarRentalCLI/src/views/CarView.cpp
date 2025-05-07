@@ -73,11 +73,15 @@ void CarView::removeCar() {}
 int CarView::getCarID()
 {
     std::string searchString;
-    std::cout << "Input search string. Press Enter to search. Press enter without search string to list all\n ";
+    int field = 0;
+    std::cout << "0: RegNo. 1: Brand. 2: Model: ";
+    field = Input::getInt(0, 2);
+
+    std::cout << "\nInput search string. Press Enter to search. Press enter without search string to list all\n ";
     searchString = Input::getString();
     std::cout << searchString << std::endl;
 
-    std::vector<CarModel> cars = carController.searchCar(searchString, TODO);
+    std::vector<CarModel> cars = carController.searchCar(searchString, field);
     if (cars.empty())
     {
         std::cout << "\n Car not found. Try again";
