@@ -67,15 +67,55 @@ void CarView::getModel(std::string &model)
 }
 
 
-void CarView::addCar() {}
-void CarView::editCar() {}
-void CarView::removeCar() {}
+void CarView::addCar()
+{
+    std::cout << R"MENU(
+==================================
+            Add Car
+==================================
+)MENU" << std::endl;
+    std::string reg, brand, model;
+    getReg(reg);
+    getBrand(brand);
+    getModel(model);
+
+    carController.addCar(reg, brand, model);
+}
+void CarView::editCar()
+{
+    std::cout << R"MENU(
+==================================
+            Edit Car
+==================================
+    )MENU" << std::endl;
+
+    int customerID = getCarID();
+    std::string reg, brand, model;
+    // TODO get car and list it for preview
+    getReg(reg);
+    getBrand(brand);
+    getModel(model);
+
+    carController.editCar(customerID, reg, brand, model);
+}
+void CarView::removeCar()
+{
+    std::cout << R"MENU(
+==================================
+            Remove Car
+==================================
+    )MENU" << std::endl;
+
+    int carID = getCarID();
+
+    carController.removeCar(carID);
+}
 
 int CarView::getCarID()
 {
     std::string searchString;
     int field = 0;
-    std::cout << "0: RegNo. 1: Brand. 2: Model: ";
+    std::cout << "Press 0, 1, or 2 to select search field\n0: RegNo\n1: Brand\n2: Model\n:";
     field = Input::getInt(0, 2);
 
     std::cout << "\nInput search string. Press Enter to search. Press enter without search string to list all\n ";
