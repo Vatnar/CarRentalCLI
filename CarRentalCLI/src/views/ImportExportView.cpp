@@ -6,14 +6,22 @@
 
 ImportExportView::ImportExportView()
 {
-    std::cout << importExportMenu;
-    switch (Input::getInt(1, 4))
+
+}
+
+void ImportExportView::Run()
+{
+    while (true)
     {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            return;
+        std::cout << importExportMenu;
+        switch (Input::getInt(1, 4))
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
+        }
     }
 }

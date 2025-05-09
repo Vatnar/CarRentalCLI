@@ -1,10 +1,13 @@
 #pragma once
 #include <string>
 
+#include "View.h"
 
-class ImportExportView {
+
+class ImportExportView : View {
 public:
     ImportExportView();
+    void Run() override;
 protected:
     std::string importExportMenu = R"MENU(
 ==================================

@@ -1,7 +1,9 @@
 #pragma once
+#include "View.h"
 
-class StatisticsView {
+class StatisticsView: View {
 public:
     StatisticsView();
+    void Run() override;
 protected:
 };

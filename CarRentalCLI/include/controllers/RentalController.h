@@ -15,6 +15,8 @@ class RentalController
                  endDate);
     void returnCar(const int rentalID, const std::string& returnDate);
 
+    int CountRentals();
+
     int countActiveRentals();
     int countCompletedRentals();
 

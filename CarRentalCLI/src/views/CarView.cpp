@@ -93,14 +93,14 @@ void CarView::editCar()
 ==================================
     )MENU" << std::endl;
 
-    int customerID = getCarID();
+    int carID = getCarID();
     std::string reg, brand, model;
     // TODO get car and list it for preview
     getReg(reg);
     getBrand(brand);
     getModel(model);
 
-    carController.editCar(customerID, reg, brand, model);
+    carController.editCar(carID, reg, brand, model);
 }
 void CarView::removeCar()
 {

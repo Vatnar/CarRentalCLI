@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+#include "CarView.h"
+#include "CustomerView.h"
 #include "View.h"
 #include "controllers/CarController.h"
 #include "controllers/CustomerController.h"
@@ -9,8 +11,7 @@
 
 class RentalView : public View {
 public:
-    RentalView();
-
+    RentalView(const CustomerView &customerView, const CarView &carView);
     /**
      * @brief Run's the GUI of the view and logic
      */
@@ -19,6 +20,12 @@ public:
 protected:
     int getCustomerID();
 
+    /**
+     * @brief Lists cars based on string input and dates
+     * @param startDate start of rental
+     * @param endDate end of rental
+     * @return ID of car
+     */
     int getCarID(const std::string &startDate, const std::string &endDate);
 
     bool matchesPattern(const std::string &s);
@@ -49,7 +56,9 @@ Please enter your choice:
 )MENU";
     RentalController rentalController;
     CustomerController customerController;
+    CustomerView customerView;
     CarController carController;
+    CarView carView;
 };
 
 

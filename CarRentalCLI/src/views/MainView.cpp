@@ -1,7 +1,9 @@
 #include "views/MainView.h"
 #include "Utils.h"
 
-MainView::MainView() = default;
+MainView::MainView() : rentalView(customerView, carView)
+{}
+;
 
 void MainView::Run()
 {
@@ -14,17 +16,19 @@ void MainView::Run()
             case 0: // not allowed
                 break;
             case 1:
-            {customerView.Run(); break;}
+            customerView.Run(); break;
             case 2:
-            {carView.Run(); break;}
+            carView.Run(); break;
             case 3:
-            {rentalView.Run(); break;}
+            rentalView.Run(); break;
             case 4:
-            {StatisticsView statisticsView; break;}
+            statisticsView.Run(); break;
             case 5:
-            {ImportExportView importExportView; break;}
+            importExportView.Run(); break;
+            case 6:
+                std::cout << "Exiting program...\n"; exit(0);
             default:
-                std::cout << "Exiting program...\n";exit(0);
+                break;
         }
         std::cout << std::endl;
     }

@@ -14,6 +14,11 @@ public:
      */
     void Run() override;
 
+    /**
+     * Allows user to search and choose a customerID
+     * @return Car ID chosen by user
+     */
+    int getCarID();
 
 protected:
     /**
@@ -41,11 +46,7 @@ protected:
      */
     void getModel(std::string& model);
 
-    /**
-     * Allows user to search and choose a customerID
-     * @return Car ID chosen by user
-     */
-    int getCarID();
+
 
     /**
      * @brief Prompts the user for information about a new customer and dispatches it to controller

@@ -17,6 +17,11 @@ public:
      */
     void Run() override;
 
+   /**
+ * @brief Allows user to search and choose a customerID
+ * @return Customer ID chosen by user
+ */
+   int getCustomerID();
 protected:
     /**
  * @brief Prompts the user until a valid name is entered
@@ -36,11 +41,7 @@ protected:
  */
     void getEmail(std::string &email);
 
-   /**
- * @brief Allows user to search and choose a customerID
- * @return Customer ID chosen by user
- */
-   int getCustomerID();
+
 
    /**
 * @brief Prompts user for information about a new customer and dispatches it to controller

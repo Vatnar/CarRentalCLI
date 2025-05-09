@@ -15,18 +15,23 @@ void RentalController::returnCar(int rentalID, const std::string& returnDate)
 {
     auto rent = storage.get<RentalModel>(rentalID);
 
-    rent.dateReturned = returnDate;
+    rent.endDate = returnDate;
 
     storage.update(rent);
     std::cout << "Storage updated successfully" << std::endl;
 }
 
+int RentalController::CountRentals()
+{
+
+    return storage.count<RentalModel>();
+}
 int RentalController::countActiveRentals()
 {
     //TODO Fix this
 
     // auto activeRentalCount = storage.count<RentalModel>(
-    // where(is_not_null(&RentalModel::dateRented) and is_null(&RentalModel::dateReturned))
+    // where(is_not_null(&RentalModel::startDate) and is_null(&RentalModel::endDate))
     // );
     // return activeRentalCount;
     return 0;
@@ -36,7 +41,7 @@ int RentalController::countCompletedRentals()
 {
     // TODO kan fort hende det krever noen modifikasjoner
     auto completedRentalCount = storage.count<RentalModel>(
-        where(is_not_null(&RentalModel::dateReturned))
+        where(is_not_null(&RentalModel::endDate))
     );
     return completedRentalCount;
 }
@@ -53,15 +58,20 @@ std::vector<RentalModel> RentalController::search(
         case 0:
             rentals = storage.get_all<RentalModel>(
                 where((&RentalModel::customerID, ID)));
-        break;
+            break;
         case 1:
             rentals = storage.get_all<RentalModel>(
-                where(like(&RentalModel::carID, likePhrase)));
-        break;
+                where((&RentalModel::carID, ID)));
+            break;
         case 2:
             rentals = storage.get_all<RentalModel>(
-                where(like(&RentalModel::dateRented, likePhrase)));
-        break;
+                where(like(&RentalModel::startDate, likePhrase)));
+            break;
+        case 3:
+            rentals = storage.get_all<RentalModel>(
+                where(like(&RentalModel::endDate, likePhrase)));
+        case 4:
+            rentals = storage.get_all<RentalModel>();
         default:
             std::cerr << "Invalid field\n";
         return {};
@@ -70,3 +80,6 @@ std::vector<RentalModel> RentalController::search(
 
     return rentals;
 }
+
+// TODO Add func to edit rentals
+// TODO add func to remove rental
