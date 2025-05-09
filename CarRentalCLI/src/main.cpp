@@ -33,6 +33,7 @@ int main()
     // TODO run checks for integrity, check dates and return cars
     addSampleData();
     MainView menu;
+    menu.Run();
 
     return 0;
 }

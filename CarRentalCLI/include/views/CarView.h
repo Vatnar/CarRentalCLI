@@ -1,21 +1,27 @@
-//
-// Created by peter on 24/04/2025.
-//
-
-#ifndef CARVIEW_H
-#define CARVIEW_H
+#pragma once
 #include <string>
 
+#include "View.h"
 #include "controllers/CarController.h"
 
 
-class CarView {
+class CarView : public View{
 public:
     CarView();
 
-    bool isValid(const std::string &s);
+    /**
+     * @brief Run's the GUI of the view and logic
+     */
+    void Run() override;
+
 
 protected:
+    /**
+     * Checks wether or not input regNo is valid
+     * @param s string to check
+     * @return true if regNo is valid
+     */
+    bool isValidReg(const std::string &s);
 
     /**
      * @brief Prompts the user until a valid registration number is entered
@@ -71,6 +77,3 @@ Please enter your choice:
 )MENU";
     CarController carController;
 };
-
-
-#endif //CARVIEW_H

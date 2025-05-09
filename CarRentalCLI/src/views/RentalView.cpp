@@ -7,22 +7,25 @@
 #include "Utils.h"
 #include "views/CustomerView.h"
 
-class RentalModel;
 
-RentalView::RentalView() {
-    std::cout << rentalMenu;
-    switch (Input::getInt(1, 4))
+RentalView::RentalView() = default;
+
+void RentalView::Run()
+{
+    while (true)
     {
-        case 1:
-            addRental(); break;
-        case 2:
-            editRental(); break;
-        case 3:
-            removeRental(); break;
-        case 4:
-            return;
+        std::cout << rentalMenu;
+        switch (Input::getInt(1, 4))
+        {
+            case 1:
+                addRental(); break;
+            case 2:
+                editRental(); break;
+            case 3:
+                removeRental(); break;
+            default: return;
+        }
     }
-    RentalView rw;
 }
 
 int RentalView::getCustomerID()

@@ -6,24 +6,28 @@
 #include "Utils.h"
 #include "models/CarModel.h"
 
-CarView::CarView()
+CarView::CarView() = default;
+
+void CarView::Run()
 {
-    std::cout << carMenu;
-    switch (Input::getInt(1, 4))
+    while (true)
     {
-        case 1:
-            addCar(); break;
-        case 2:
-            editCar(); break;
-        case 3:
-            removeCar(); break;
-        case 4:
-            return;
+        std::cout << carMenu;
+        switch (Input::getInt(1, 4))
+        {
+            case 1:
+                addCar(); break;
+            case 2:
+                editCar(); break;
+            case 3:
+                removeCar(); break;
+            default:
+                return;
+        }
     }
-    CarView cw;
 }
 
-bool CarView::isValid(const std::string& s) {
+bool CarView::isValidReg(const std::string& s) {
     return s.length() == 7 &&
            std::isalpha(s[0]) &&
            std::isalpha(s[1]) &&
@@ -39,7 +43,7 @@ void CarView::getReg(std::string &reg)
     std::cout << "Enter the registration number";
     reg = Input::getString(false);
 
-    if (reg.empty() || !isValid(reg))
+    if (reg.empty() || !isValidReg(reg))
     {
         std::cout << "Invalid brand, Try again (LJ12345): ";
         getBrand(reg);

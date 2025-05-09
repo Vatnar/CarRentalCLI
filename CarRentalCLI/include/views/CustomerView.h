@@ -1,15 +1,21 @@
 #pragma once
 #include <string>
 
+#include "View.h"
 #include "controllers/CustomerController.h"
 
 
-class CustomerView {
+class CustomerView : public View {
 public:
     /**
  * @brief Draws a customer menu from which a user can decide to add edit or remove customers
  */
-    CustomerView();
+   CustomerView();
+
+    /**
+     * @brief Run's the GUI of the view and logic
+     */
+    void Run() override;
 
 protected:
     /**

@@ -1,17 +1,18 @@
-//
-// Created by peter on 24/04/2025.
-//
-
-#ifndef MENU_H
-#define MENU_H
+#pragma once
 #include <iostream>
 #include <ostream>
 
+#include "CarView.h"
+#include "CustomerView.h"
+#include "ImportExportView.h"
+#include "RentalView.h"
+#include "StatisticsView.h"
 
-class MainView {
+
+class MainView : public View {
 public:
     MainView();
-
+    void Run() override;
 protected:
     std::string mainMenu = R"MENU(
 ==================================
@@ -26,8 +27,11 @@ protected:
 ==================================
 Please enter your choice:
 )MENU";
+    CustomerView customerView;
+    CarView carView;
+    RentalView rentalView;
+    StatisticsView statisticsView;
+    ImportExportView importExportView;
+
 };
 
-
-
-#endif //MENU_H

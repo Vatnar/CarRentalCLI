@@ -1,13 +1,10 @@
 #include "views/MainView.h"
 #include "Utils.h"
-#include "views/CarView.h"
-#include "views/CustomerView.h"
-#include "views/RentalView.h"
-#include "views/StatisticsView.h"
-#include "views/ImportExportView.h"
 
-MainView::MainView() {
+MainView::MainView() = default;
 
+void MainView::Run()
+{
     while (true)
     {
         std::cout << mainMenu;
@@ -17,18 +14,17 @@ MainView::MainView() {
             case 0: // not allowed
                 break;
             case 1:
-                {CustomerView customerView; break;}
+            {customerView.Run(); break;}
             case 2:
-                {CarView carView; break;}
+            {carView.Run(); break;}
             case 3:
-                {RentalView rentalView; break;}
+            {rentalView.Run(); break;}
             case 4:
-                {StatisticsView statisticsView; break;}
+            {StatisticsView statisticsView; break;}
             case 5:
-                {ImportExportView importExportView; break;}
-            case 6:
-                std::cout << "Exiting program...\n";
-            exit(0);
+            {ImportExportView importExportView; break;}
+            default:
+                std::cout << "Exiting program...\n";exit(0);
         }
         std::cout << std::endl;
     }

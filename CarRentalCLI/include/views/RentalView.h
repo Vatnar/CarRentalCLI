@@ -1,15 +1,20 @@
-#ifndef RENTALVIEW_H
-#define RENTALVIEW_H
+#pragma once
 #include <string>
 
+#include "View.h"
 #include "controllers/CarController.h"
 #include "controllers/CustomerController.h"
 #include "controllers/RentalController.h"
 
 
-class RentalView {
+class RentalView : public View {
 public:
     RentalView();
+
+    /**
+     * @brief Run's the GUI of the view and logic
+     */
+    void Run() override;
 
 protected:
     int getCustomerID();
@@ -49,4 +54,3 @@ Please enter your choice:
 
 
 
-#endif //RENTALVIEW_H

@@ -5,21 +5,25 @@
 #include "Utils.h"
 
 
-CustomerView::CustomerView()
+CustomerView::CustomerView() = default;
+
+void CustomerView::Run()
 {
-    std::cout << customerMenu;
-    switch (Input::getInt(1, 4))
+    while (true)
     {
-        case 1:
-            addCustomer(); break;
-        case 2:
-            editCustomer(); break;
-        case 3:
-            removeCustomer(); break;
-        case 4:
-            return;
+        std::cout << customerMenu;
+        switch (Input::getInt(1, 4))
+        {
+            case 1:
+                addCustomer(); break;
+            case 2:
+                editCustomer(); break;
+            case 3:
+                removeCustomer(); break;
+            default:
+                return;
+        }
     }
-    CustomerView cw;
 }
 
 
