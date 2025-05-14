@@ -23,6 +23,4 @@ class RentalController
 
     bool EditRental(int rentalID, const std::string& startDate, const std::string& endDate, int customerID, int carID);
     bool RemoveRental(int rentalID);
-
-    bool ExportRentalsToCSV(const std::string& filename);
 };

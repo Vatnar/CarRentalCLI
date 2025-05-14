@@ -18,6 +18,4 @@ public:
 
     std::optional<CustomerModel> getCustomerByID(int customerID);
     std::vector<CustomerModel> searchCustomer(const std::string& searchPhrase);
-
-    bool ExportCustomersToCSV(const std::string& filename);
 };

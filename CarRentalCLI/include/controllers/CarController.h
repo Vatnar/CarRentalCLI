@@ -20,6 +20,4 @@ public:
     std::optional<CarModel> getCarByID(int carID);
     std::vector<CarModel> searchCar(const std::string &searchPhrase, int field, const std::string &startDate = "",
         const std::string &endDate = "");
-
-    bool ExportCarsToCSV(const std::string& filename);
 };
