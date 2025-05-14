@@ -97,7 +97,13 @@ void CarView::editCar()
 
     int carID = getCarID();
     std::string reg, brand, model;
-    // TODO get car and list it for preview
+
+    const auto car = carController.getCarByID(carID);
+    if ( car == std::nullopt)
+    {
+        std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
+    }
+    std::cout << car->regNo << "\t\t" << car->brand << "\t\t" << car->model << std::endl;
     getReg(reg);
     getBrand(brand);
     getModel(model);

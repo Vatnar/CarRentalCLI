@@ -89,6 +89,13 @@ void CustomerView::editCustomer() {
     int customerID = getCustomerID();
     std::string name, tel, email;
     // TODO get customer and list it for preview
+     const auto customer = customerController.getCustomerByID(customerID);
+    if ( customer == std::nullopt)
+    {
+        std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
+    }
+    std::cout << customer->name << "\t\t" << customer->tel << "\t\t" << customer->email << std::endl;
+
     getName(name);
     getTel(tel);
     getEmail(email);

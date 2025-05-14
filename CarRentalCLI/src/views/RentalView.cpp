@@ -190,6 +190,12 @@ void RentalView::editRental()
 
     int rentalID = getRentalID();
     // TODO List the current for preview
+    // const auto rental = rentalController.getRentalByID(rentalID);
+    if ( rental == std::nullopt)
+    {
+        std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
+    }
+    std::cout << rental->rentalID << "\t" << rental->customerID << "\t\t" << rental->carID << "\t\t" << rental->startDate << "\t\t" << rental->endDate << std::endl;
 
 
     int customerID = getCustomerID();
@@ -197,8 +203,7 @@ void RentalView::editRental()
     std::string startDate = getStartdate();
     std::string endDate = getEndDate();
 
-    // TODO edit rental
-
+    rentalController.EditRental(rentalID, startDate, endDate, customerID, carID);
 }
 void RentalView::removeRental()
 {
@@ -210,8 +215,8 @@ void RentalView::removeRental()
 
     int rentalID = getRentalID();
 
-    // TODO remove
-    //rentalController.removeRental();
+
+    rentalController.RemoveRental(rentalID);
 }
 
 void RentalView::listRentals() {
