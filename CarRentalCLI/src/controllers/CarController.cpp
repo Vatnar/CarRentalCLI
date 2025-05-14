@@ -1,9 +1,11 @@
 #include "controllers/CarController.h"
+
+#include <fstream>
 #include <iostream>
 #include <unordered_set>
 
-#include "models/CarModel.h"
 #include "storage.h"
+#include "rapidcsv.h"
 
 
 /**
@@ -175,5 +177,44 @@ std::optional<CarModel> CarController::getCarByID(int id)
     {
         std::cerr << "Error in getCarByID: " << e.what() << std::endl;
         return std::nullopt;
+    }
+}
+
+
+/**
+ * @brief Exports all cars from the database to a CSV file.
+ *
+ * @param filename Name of the CSV file to create (e.g., "cars.csv").
+ * @return true if export succeeds, false otherwise.
+ */
+bool CarController::ExportCarsToCSV(const std::string& filename)
+{
+    try
+    {
+        std::vector<CarModel> cars = storage.get_all<CarModel>();
+
+        std::ofstream file(filename);
+        if (!file.is_open())
+        {
+            std::cerr << "Failed to create file: " << filename << std::endl;
+            return false;
+        }
+
+        file << "carID,regNo,brand,model\n";
+        for (const auto& car : cars)
+        {
+            file << car.carID << ","
+                 << car.regNo << ","
+                 << car.brand << ","
+                 << car.model << "\n";
+        }
+
+        file.close();
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error exporting cars to CSV: " << e.what() << std::endl;
+        return false;
     }
 }

@@ -2,8 +2,9 @@
 #include "models/RentalModel.h"
 #include "storage.h"
 #include "iostream"
-#include "chrono"
 #include "Utils.h"
+#include "rapidcsv.h"
+#include <fstream>
 
 
 /**
@@ -240,5 +241,46 @@ std::optional<RentalModel> RentalController::getRentalByID(int rentalID)
     catch (const std::exception&)
     {
         return std::nullopt;
+    }
+}
+
+
+/**
+ * @brief Exports all rentals from the database to a CSV file.
+ *
+ * @param filename Name of the CSV file to create (e.g., "rentals.csv").
+ * @return true if export succeeds, false otherwise.
+ */
+bool RentalController::ExportRentalsToCSV(const std::string& filename)
+{
+    try
+    {
+        std::vector<RentalModel> rentals = storage.get_all<RentalModel>();
+
+        std::ofstream file(filename);
+        if (!file.is_open())
+        {
+            std::cerr << "Failed to create file: " << filename << std::endl;
+            return false;
+        }
+
+        file << "rentalID,customerID,carID,startDate,endDate\n";
+
+        for (const auto& rental : rentals)
+        {
+            file << rental.rentalID << ","
+                 << rental.customerID << ","
+                 << rental.carID << ","
+                 << rental.startDate << ","
+                 << rental.endDate << "\n";
+        }
+
+        file.close();
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error exporting rentals to CSV: " << e.what() << std::endl;
+        return false;
     }
 }

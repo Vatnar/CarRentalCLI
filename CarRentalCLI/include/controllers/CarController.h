@@ -15,12 +15,11 @@ public:
     bool editCar(int id, const std::string& regNo, const std::string& brand, const std::string& model);
     bool removeCar(int id);
 
-    std::optional<CarModel> getCarByID(int carID);
-
     int countCars();
 
-    std::vector<CarModel> searchCar(const std::string &searchPhrase, int field, const std::string &startDate = "", const
-                                    std::string &endDate = "");
+    std::optional<CarModel> getCarByID(int carID);
+    std::vector<CarModel> searchCar(const std::string &searchPhrase, int field, const std::string &startDate = "",
+        const std::string &endDate = "");
 
-
+    bool CarController::ExportCarsToCSV(const std::string& filename);
 };

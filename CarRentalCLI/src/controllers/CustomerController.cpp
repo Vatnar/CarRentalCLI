@@ -2,6 +2,8 @@
 #include "models/CustomerModel.h"
 #include "storage.h"
 #include <iostream>
+#include "rapidcsv.h"
+#include <fstream>
 
 
 /**
@@ -129,5 +131,44 @@ std::optional<CustomerModel> CustomerController::getCustomerByID(int id)
     {
         std::cerr << "Error in getCustomerByID: " << e.what() << std::endl;
         return std::nullopt;
+    }
+}
+
+
+/**
+ * @brief Exports all customers from the database to a CSV file.
+ *
+ * @param filename Name of the CSV file to create (e.g., "customers.csv").
+ * @return true if export succeeds, false otherwise.
+ */
+bool CustomerController::ExportCustomersToCSV(const std::string& filename)
+{
+    try
+    {
+        std::vector<CustomerModel> customers = storage.get_all<CustomerModel>();
+
+        std::ofstream file(filename);
+        if (!file.is_open())
+        {
+            std::cerr << "Failed to create file: " << filename << std::endl;
+            return false;
+        }
+
+        file << "customerID,name,tel,email\n";
+        for (const auto& customer : customers)
+        {
+            file << customer.customerID << ","
+                 << customer.name << ","
+                 << customer.tel << ","
+                 << customer.email << "\n";
+        }
+
+        file.close();
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error exporting customers to CSV: " << e.what() << std::endl;
+        return false;
     }
 }

@@ -14,9 +14,10 @@ public:
     bool editCustomer(int id, std::string& name, std::string& tel, std::string& email);
     bool removeCustomer(int id);
 
-    std::optional<CustomerModel> getCustomerByID(int customerID);
-
     int countCustomers();
 
+    std::optional<CustomerModel> getCustomerByID(int customerID);
     std::vector<CustomerModel> searchCustomer(const std::string& searchPhrase);
+
+    bool CustomerController::ExportCustomersToCSV(const std::string& filename);
 };

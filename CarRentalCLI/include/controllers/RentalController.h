@@ -19,9 +19,10 @@ class RentalController
     int CountCompletedRentals();
 
     std::optional<RentalModel> getRentalByID(int rentalID);
-
     std::vector<RentalModel> Search(const std::string &searchPhrase, int field, int ID = -1);
 
     bool EditRental(int rentalID, const std::string& startDate, const std::string& endDate, int customerID, int carID);
     bool RemoveRental(int rentalID);
+
+    bool RentalController::ExportRentalsToCSV(const std::string& filename)
 };
