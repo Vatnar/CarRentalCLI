@@ -1,8 +1,10 @@
 #include "views/ImportExportView.h"
 
 #include <iostream>
+#include <string>
 
 #include "Utils.h"
+#include "controllers/CSVController.h"
 
 ImportExportView::ImportExportView()
 {
@@ -38,6 +40,5 @@ void ImportExportView::Export()
     std::cout << "Please enter name of file to export. File will be exported next to .exe:";
     std::string exportFile = Input::getString();
 
-
-    // CSVController.export(exportFile)
+    csvController.ExportToCSV(exportFile);
 }

@@ -2,6 +2,7 @@
 #include <string>
 
 #include "View.h"
+#include "controllers/CSVController.h"
 
 
 class ImportExportView : View {
@@ -21,4 +22,5 @@ Please enter your choice:
 )MENU";
     void Import();
     void Export();
+    CSVController csvController;
 };
