@@ -10,8 +10,9 @@ void MainView::Run()
     while (true)
     {
         std::cout << mainMenu;
+        int choice = Input::getInt(1, 6);
 
-        switch (Input::getInt(1, 6))
+        switch (choice)
         {
             case 0: // not allowed
                 break;

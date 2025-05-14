@@ -20,19 +20,33 @@ public:
     static int getInt(int min, int max)
     {
         int input;
-        std::cin.clear();
-        std::cin >> input;
-        // Remove leftover newline
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        if (input < min || input > max)
+        while (true)
         {
-            std::cerr << "Invalid input. Choose another: " << std::endl;
-            return getInt(min, max);
-        }
+            std::cout << "Enter a number (" << min << " - " << max << "): ";
 
-        return input;
+            if (std::cin >> input)
+            {
+                if (input >= min && input <= max)
+                {
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    return input;
+                }
+                else
+                {
+                    std::cerr << "Invalid input. Please enter a number between "
+                              << min << " and " << max << ".\n";
+                }
+            }
+            else
+            {
+                std::cerr << "Invalid input (not a number).\n";
+                std::cin.clear(); // Clear error flags
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+        }
     }
+
 
     /**
      * @brief Prompts the user to enter a string.
