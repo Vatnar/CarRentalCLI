@@ -57,7 +57,7 @@ bool RentalController::returnCar(int rentalID, const std::string& returnDate)
  *
  * @return Total number of rentals.
  */
-int RentalController::CountRentals()
+int RentalController::countRentals()
 {
     try
     {
@@ -75,7 +75,7 @@ int RentalController::CountRentals()
  *
  * @return Number of active rentals.
  */
-int RentalController::CountActiveRentals()
+int RentalController::countActiveRentals()
 {
     try
     {
@@ -97,7 +97,7 @@ int RentalController::CountActiveRentals()
  * @param currentDate The current date to compare against (format: YYYY-MM-DD hh-mm).
  * @return Number of completed rentals.
  */
-int RentalController::CountCompletedRentals(const std::string& currentDate)
+int RentalController::countCompletedRentals(const std::string& currentDate)
 {
     try
     {
@@ -121,7 +121,7 @@ int RentalController::CountCompletedRentals(const std::string& currentDate)
  * @param ID Used when searching customerID or carID.
  * @return A vector of matching RentalModel entries.
  */
-std::vector<RentalModel> RentalController::Search(
+std::vector<RentalModel> RentalController::search(
     const std::string &searchPhrase, int field, int ID)
 {
     try
@@ -167,7 +167,7 @@ std::vector<RentalModel> RentalController::Search(
  * @param newCarID New car ID.
  * @return true if the rental was successfully updated, false otherwise.
  */
-bool RentalController::EditRental(int rentalID, const std::string& newStartDate, const std::string& newEndDate, int newCustomerID, int newCarID)
+bool RentalController::editRental(int rentalID, const std::string& newStartDate, const std::string& newEndDate, int newCustomerID, int newCarID)
 {
     try
     {
@@ -195,7 +195,7 @@ bool RentalController::EditRental(int rentalID, const std::string& newStartDate,
  * @param rentalID ID of the rental to remove.
  * @return true if the rental was successfully removed, false otherwise.
  */
-bool RentalController::RemoveRental(int rentalID)
+bool RentalController::removeRental(int rentalID)
 {
     try
     {
