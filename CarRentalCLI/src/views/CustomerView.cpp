@@ -88,7 +88,6 @@ void CustomerView::editCustomer() {
 
     int customerID = getCustomerID();
     std::string name, tel, email;
-    // TODO get customer and list it for preview
      const auto customer = customerController.getCustomerByID(customerID);
     if ( customer == std::nullopt)
     {
