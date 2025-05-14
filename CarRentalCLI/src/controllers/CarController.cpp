@@ -159,10 +159,10 @@ std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, 
 
 
 /**
- * @brief Henter en bil med gitt ID fra databasen.
+ * @brief Retrieves a car by its ID.
  *
- * @param id ID-en til bilen som skal hentes.
- * @return std::optional<CarModel> Bilen hvis den finnes, ellers std::nullopt.
+ * @param carID The ID of the car to retrieve.
+ * @return The CarModel if found, or std::nullopt if not found.
  */
 std::optional<CarModel> CarController::getCarByID(int id)
 {

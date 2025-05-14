@@ -113,10 +113,10 @@ std::vector<CustomerModel> CustomerController:: searchCustomer(const std::string
 
 
 /**
- * @brief Henter en kunde med gitt ID fra databasen.
+ * @brief Retrieves a customer by its ID.
  *
- * @param id ID-en til kunden som skal hentes.
- * @return std::optional<CustomerModel> Kunden hvis den finnes, ellers std::nullopt.
+ * @param customerID The ID of the customer to retrieve.
+ * @return The CustomerModel if found, or std::nullopt if not found.
  */
 std::optional<CustomerModel> CustomerController::getCustomerByID(int id)
 {

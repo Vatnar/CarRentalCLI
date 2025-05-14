@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <optional>
 
 #include "models/rentalModel.h"
 
@@ -16,6 +17,8 @@ class RentalController
     int CountRentals();
     int CountActiveRentals();
     int CountCompletedRentals();
+
+    std::optional<RentalModel> getRentalByID(int rentalID);
 
     std::vector<RentalModel> Search(const std::string &searchPhrase, int field, int ID = -1);
 

@@ -189,8 +189,7 @@ void RentalView::editRental()
 
 
     int rentalID = getRentalID();
-    // TODO List the current for preview
-    // const auto rental = rentalController.getRentalByID(rentalID);
+     const auto rental = rentalController.getRentalByID(rentalID);
     if ( rental == std::nullopt)
     {
         std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
@@ -198,7 +197,10 @@ void RentalView::editRental()
     std::cout << rental->rentalID << "\t" << rental->customerID << "\t\t" << rental->carID << "\t\t" << rental->startDate << "\t\t" << rental->endDate << std::endl;
 
 
+    std::cout << "Choose customer" << std::endl;
     int customerID = getCustomerID();
+
+    std::cout << "Choose car" << std::endl;
     int carID = carView.getCarID();
     std::string startDate = getStartdate();
     std::string endDate = getEndDate();
@@ -220,7 +222,7 @@ void RentalView::removeRental()
 }
 
 void RentalView::listRentals() {
-    std::vector<RentalModel> rentals = rentalController.Search("", 0);
+    std::vector<RentalModel> rentals = rentalController.Search("", 3);
     if (rentals.empty())
     {
         std::cout << " No rentals in system\n";
