@@ -15,7 +15,7 @@ private:
 ==================================
         1. IMPORT
         2. EXPORT
-        3. Exit
+        3. RETURN TO MENU
 ==================================
 Please enter your choice:
 )MENU";

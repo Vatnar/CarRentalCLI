@@ -13,7 +13,7 @@ void CarView::Run()
     while (true)
     {
         std::cout << carMenu;
-        switch (Input::getInt(1, 4))
+        switch (Input::getInt(1, 5))
         {
             case 1:
                 addCar(); break;
@@ -21,6 +21,8 @@ void CarView::Run()
                 editCar(); break;
             case 3:
                 removeCar(); break;
+            case 4:
+                listCars();
             default:
                 return;
         }
@@ -115,6 +117,22 @@ void CarView::removeCar()
     carController.removeCar(carID);
 }
 
+void CarView::listCars()
+{
+    std::vector<CarModel> cars = carController.searchCar("", 1);
+    if (cars.empty())
+    {
+        std::cout << " No cars in system\n";
+        return;
+    }
+    std::cout << cars.size() << " Cars" << std::endl;
+    int index = 0;
+    for (const auto& car : cars)
+    {
+        std::cout << index++ << ".\t " << car.regNo << "\t\t" << car.brand << "\t\t" << car.model << std::endl;
+    }
+}
+
 int CarView::getCarID()
 {
     std::string searchString;
@@ -130,7 +148,7 @@ int CarView::getCarID()
     if (cars.empty())
     {
         std::cout << "\n Car not found. Try again";
-        getCarID();
+        return getCarID();
     }
     std::cout << "Found " << cars.size() << " out of " << carController.countCars() << std::endl;
     int index = 0;

@@ -9,6 +9,7 @@ class CarView : public View{
 public:
     CarView();
 
+
     /**
      * @brief Run's the GUI of the view and logic
      */
@@ -64,6 +65,9 @@ protected:
     void removeCar();
 
 
+    void listCars();
+
+
 
     std::string carMenu = R"MENU(
 ==================================
@@ -72,7 +76,8 @@ protected:
         1. ADD CAR
         2. EDIT CAR
         3. REMOVE CAR
-        4. Exit
+        4. LIST CARS
+        5. RETURN TO MENU
 ==================================
 Please enter your choice:
 )MENU";

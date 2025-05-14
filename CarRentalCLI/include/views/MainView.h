@@ -23,7 +23,7 @@ protected:
         3. Manage rentals
         4. Display statistics
         5. Import/Export
-        6. Exit
+        6. EXIT
 ==================================
 Please enter your choice:
 )MENU";
