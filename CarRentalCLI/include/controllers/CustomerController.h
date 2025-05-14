@@ -14,7 +14,7 @@ public:
     bool editCustomer(int id, std::string& name, std::string& tel, std::string& email);
     bool removeCustomer(int id);
 
-    std::optional<CustomerModel> getCustomerByID(int id);
+    std::optional<CustomerModel> getCustomerByID(int customerID);
 
     int countCustomers();
 
