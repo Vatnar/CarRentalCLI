@@ -20,8 +20,6 @@ void ImportExportView::Run()
                 Import(); break;
             case 2:
                 Export(); break;
-            case 3:
-                exit(0);
             default: break;
         }
     }
