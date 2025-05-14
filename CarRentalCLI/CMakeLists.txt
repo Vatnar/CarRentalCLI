@@ -6,7 +6,7 @@ add_library(sqlite3 STATIC vendor/sqlite3/sqlite3.c)
 target_include_directories(sqlite3 PUBLIC vendor/sqlite3)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
 
-include_directories(vendor/sqlite_orm)
+include_directories(vendor/sqlite_orm vendor/rapidcsv)
 
 file(GLOB_RECURSE SOURCES
         src/*.cpp
