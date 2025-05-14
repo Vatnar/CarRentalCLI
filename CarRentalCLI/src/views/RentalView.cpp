@@ -40,7 +40,6 @@ int RentalView::getCustomerID()
 }
 int RentalView::getCarID(const std::string& startDate, const std::string& endDate)
 {
-    // TODO only list cars that are available
 
     std::string searchString;
     int field = 0;
