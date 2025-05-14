@@ -2,6 +2,7 @@
 #include "models/CustomerModel.h"
 #include <string>
 #include <vector>
+#include <optional>
 
 /**
  * @brief Modifies and reads the Customer table
@@ -12,7 +13,7 @@ public:
     bool addCustomer(const std::string& name, const std::string& tel, const std::string& email);
     bool editCustomer(int id, std::string& name, std::string& tel, std::string& email);
     bool removeCustomer(int id);
-    // TODO getter to get a car by ID
+    std::optional<CustomerModel> getCustomerByID(int id);
     int countCustomers();
 
     std::vector<CustomerModel> searchCustomer(const std::string& searchPhrase);

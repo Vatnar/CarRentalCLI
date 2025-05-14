@@ -5,6 +5,7 @@
 #include "chrono"
 #include "Utils.h"
 
+
 /**
  * @brief Registers a new car rental in the database.
  *
@@ -30,6 +31,7 @@ bool RentalController::rentCar(int customerID, int carID, const std::string& sta
     }
 }
 
+
 /**
  * @brief Returns a car by setting the end date of a rental.
  *
@@ -54,6 +56,7 @@ bool RentalController::returnCar(int rentalID, const std::string& returnDate)
     }
 }
 
+
 /**
  * @brief Counts all registered rentals.
  *
@@ -71,6 +74,7 @@ int RentalController::CountRentals()
         return 0;
     }
 }
+
 
 /**
  * @brief Counts currently active rentals (with a start date, but no end date).
@@ -119,6 +123,7 @@ int RentalController::CountCompletedRentals()
     }
 }
 
+
 /**
  * @brief Searches for rentals based on a specified field and search value.
  *
@@ -163,6 +168,7 @@ std::vector<RentalModel> RentalController::Search(
     }
 }
 
+
 /**
  * @brief Updates an existing rental with new values.
  *
@@ -194,6 +200,7 @@ bool RentalController::EditRental(int rentalID, const std::string& newStartDate,
         return false;
     }
 }
+
 
 /**
  * @brief Deletes a rental from the database.

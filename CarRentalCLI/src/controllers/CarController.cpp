@@ -5,6 +5,18 @@
 #include "models/CarModel.h"
 #include "storage.h"
 
+
+/**
+ * @brief Adds a new car to the storage.
+ *
+ * This function creates a new car with the provided details and inserts it into the storage.
+ * The car will be assigned a unique carID upon successful insertion.
+ *
+ * @param regNo The registration number of the car.
+ * @param brand The brand of the car.
+ * @param model The model of the car.
+ * @return true if the car was added successfully, false if an error occurred.
+ */
 bool CarController::addCar(const std::string& regNo, const std::string& brand, const std::string& model)
 {
     CarModel newCar {-1, regNo, brand, model};
@@ -18,6 +30,19 @@ bool CarController::addCar(const std::string& regNo, const std::string& brand, c
     }
 }
 
+
+/**
+ * @brief Edits an existing car's details.
+ *
+ * This function updates the details of an existing car with the provided new information.
+ * The car is identified by its carID, and its registration number, brand, and model are updated.
+ *
+ * @param carID The ID of the car to be edited.
+ * @param newRegNo The new registration number for the car.
+ * @param newBrand The new brand for the car.
+ * @param newModel The new model for the car.
+ * @return true if the car was successfully updated, false if an error occurred.
+ */
 bool CarController::editCar(int carID, const std::string& newRegNo, const std::string& newBrand, const std::string& newModel)
 {
     auto car = storage.get<CarModel>(carID);
@@ -35,6 +60,15 @@ bool CarController::editCar(int carID, const std::string& newRegNo, const std::s
     }
 }
 
+
+/**
+ * @brief Removes a car from the storage.
+ *
+ * This function deletes a car from the storage using the car's unique carID.
+ *
+ * @param carID The ID of the car to be removed.
+ * @return true if the car was successfully removed, false if an error occurred.
+ */
 bool CarController::removeCar(int carID)
 {
     try
@@ -47,12 +81,33 @@ bool CarController::removeCar(int carID)
     }
 }
 
+
+/**
+ * @brief Counts the total number of cars in the storage.
+ *
+ * This function returns the total count of cars currently stored.
+ *
+ * @return The total number of cars in the storage.
+ */
 int CarController::countCars()
 {
     auto carCount = storage.count<CarModel>();
     return carCount;
 }
 
+
+/**
+ * @brief Searches for cars based on various fields.
+ *
+ * This function allows searching for cars by registration number, brand, or model.
+ * Optionally, it can also filter the cars based on a date range for rental availability.
+ *
+ * @param searchPhrase The phrase to search for in the chosen field.
+ * @param field The field to search in (0 for regNo, 1 for brand, 2 for model).
+ * @param startDate The start date of the rental period (optional).
+ * @param endDate The end date of the rental period (optional).
+ * @return A vector of cars matching the search criteria, including availability based on the rental dates.
+ */
 std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, int field,
                                                const std::string& startDate, const std::string& endDate)
 {
@@ -103,4 +158,22 @@ std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, 
 }
 
 
-
+/**
+ * @brief Henter en bil med gitt ID fra databasen.
+ *
+ * @param id ID-en til bilen som skal hentes.
+ * @return std::optional<CarModel> Bilen hvis den finnes, ellers std::nullopt.
+ */
+std::optional<CarModel> CarController::getCarByID(int id)
+{
+    try
+    {
+        auto car = storage.get<CarModel>(id);
+        return car;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in getCarByID: " << e.what() << std::endl;
+        return std::nullopt;
+    }
+}
