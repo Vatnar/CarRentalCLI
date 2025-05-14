@@ -7,6 +7,6 @@ public:
 	int rentalID;
 	int customerID;
 	int carID;
-	std::string startDate;
-	std::string endDate;
+	std::string dateRented;
+	std::string dateReturned;
 };

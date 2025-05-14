@@ -138,8 +138,8 @@ std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, 
 
     // Rentals that are within the time frame
     auto conflictingRentals = storage.get_all<RentalModel>(
-        where(c(&RentalModel::startDate) <= endDate &&
-              c(&RentalModel::endDate) >= startDate));
+        where(c(&RentalModel::dateRented) <= endDate &&
+              c(&RentalModel::dateReturned) >= startDate));
 
     // IDs of unavailable cars
     std::unordered_set<int> unavailableCarIDs;

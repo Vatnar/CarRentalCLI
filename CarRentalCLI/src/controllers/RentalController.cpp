@@ -45,7 +45,7 @@ bool RentalController::returnCar(int rentalID, const std::string& returnDate)
     try
     {
         auto rent = storage.get<RentalModel>(rentalID);
-        rent.endDate = returnDate;
+        rent.dateReturned = returnDate;
         storage.update(rent);
         std::cout << "Storage updated successfully" << std::endl;
         return true;
@@ -89,7 +89,7 @@ int RentalController::CountActiveRentals()
         const std::string currentTime = Time::getCurrentTime();
 
         auto count = storage.count<RentalModel>(where(
-            c(&RentalModel::endDate) > currentTime)
+            c(&RentalModel::dateReturned) > currentTime)
             );
         return count;
     }
@@ -113,7 +113,7 @@ int RentalController::CountCompletedRentals()
     try
     {
         auto completedRentalCount = storage.count<RentalModel>(
-            where(c(&RentalModel::endDate) < currentTime)
+            where(c(&RentalModel::dateReturned) < currentTime)
         );
         return completedRentalCount;
     }
@@ -151,10 +151,10 @@ std::vector<RentalModel> RentalController::Search(
                 where(c(&RentalModel::carID) == ID));
         case 2:
             return storage.get_all<RentalModel>(
-                where(like(&RentalModel::startDate, likePhrase)));
+                where(like(&RentalModel::dateRented, likePhrase)));
         case 3:
             return storage.get_all<RentalModel>(
-                where(like(&RentalModel::endDate, likePhrase)));
+                where(like(&RentalModel::dateReturned, likePhrase)));
         case 4:
             return storage.get_all<RentalModel>();
         default:
@@ -186,8 +186,8 @@ bool RentalController::EditRental(int rentalID, const std::string& newStartDate,
     {
         auto rent = storage.get<RentalModel>(rentalID);
 
-        rent.startDate = newStartDate;
-        rent.endDate = newEndDate;
+        rent.dateRented = newStartDate;
+        rent.dateReturned = newEndDate;
         rent.customerID = newCustomerID;
         rent.carID = newCarID;
         storage.update(rent);

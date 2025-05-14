@@ -122,3 +122,103 @@ bool CSVController::ExportRentalsToCSV(const std::string& filename)
         return false;
     }
 }
+
+
+/**
+ * @brief Imports car data from a CSV file and inserts it into the database.
+ *
+ * @param filename Name of the CSV file to read (e.g., "cars.csv").
+ * @return true if import succeeds, false otherwise.
+ */
+bool CSVController::ImportCarsFromCSV(const std::string& filename)
+{
+    try
+    {
+        rapidcsv::Document doc(filename, rapidcsv::LabelParams(0, -1));
+
+        std::vector<int> carIDs = doc.GetColumn<int>("carID");
+        std::vector<std::string> regNos = doc.GetColumn<std::string>("regNo");
+        std::vector<std::string> brands = doc.GetColumn<std::string>("brand");
+        std::vector<std::string> models = doc.GetColumn<std::string>("model");
+
+        for (size_t i = 0; i < carIDs.size(); ++i)
+        {
+            CarModel car { carIDs[i], regNos[i], brands[i], models[i] };
+            storage.insert(car);
+        }
+
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error importing cars from CSV: " << e.what() << std::endl;
+        return false;
+    }
+}
+
+
+/**
+ * @brief Imports customer data from a CSV file and inserts it into the database.
+ *
+ * @param filename Name of the CSV file to read (e.g., "customers.csv").
+ * @return true if import succeeds, false otherwise.
+ */
+bool CSVController::ImportCustomersFromCSV(const std::string& filename)
+{
+    try
+    {
+        rapidcsv::Document doc(filename, rapidcsv::LabelParams(0, -1));
+
+        std::vector<int> customerIDs = doc.GetColumn<int>("customerID");
+        std::vector<std::string> names = doc.GetColumn<std::string>("name");
+        std::vector<std::string> tels = doc.GetColumn<std::string>("tel");
+        std::vector<std::string> emails = doc.GetColumn<std::string>("email");
+
+        for (size_t i = 0; i < customerIDs.size(); ++i)
+        {
+            CustomerModel customer { customerIDs[i], names[i], tels[i], emails[i] };
+            storage.insert(customer);
+        }
+
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error importing customers from CSV: " << e.what() << std::endl;
+        return false;
+    }
+}
+
+
+/**
+ * @brief Imports rental data from a CSV file and inserts it into the database.
+ *
+ * @param filename Name of the CSV file to read (e.g., "rentals.csv").
+ * @return true if import succeeds, false otherwise.
+ */
+bool CSVController::ImportRentalsFromCSV(const std::string& filename)
+{
+    try
+    {
+        rapidcsv::Document doc(filename, rapidcsv::LabelParams(0, -1));
+
+        std::vector<int> rentalIDs = doc.GetColumn<int>("rentalID");
+        std::vector<int> customerIDs = doc.GetColumn<int>("customerID");
+        std::vector<int> carIDs = doc.GetColumn<int>("carID");
+        std::vector<std::string> startDates = doc.GetColumn<std::string>("startDate");
+        std::vector<std::string> endDates = doc.GetColumn<std::string>("endDate");
+
+        for (size_t i = 0; i < rentalIDs.size(); ++i)
+        {
+            RentalModel rental { rentalIDs[i], customerIDs[i], carIDs[i], startDates[i], endDates[i] };
+            storage.insert(rental);
+        }
+
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error importing rentals from CSV: " << e.what() << std::endl;
+        return false;
+    }
+}

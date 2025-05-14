@@ -151,7 +151,7 @@ int RentalView::getRentalID()
     int index = 0;
     for (const auto& rental : rentals)
     {
-        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.startDate << "\t\t" << rental.endDate << std::endl;
+        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.dateRented << "\t\t" << rental.dateReturned << std::endl;
     }
     std::cout << "Enter number to choose: ";
     auto indexCustomer = Input::getInt(0, rentals.size()-1); // -1 cuz of 0 index
@@ -194,7 +194,7 @@ void RentalView::editRental()
     {
         std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
     }
-    std::cout << rental->rentalID << "\t" << rental->customerID << "\t\t" << rental->carID << "\t\t" << rental->startDate << "\t\t" << rental->endDate << std::endl;
+    std::cout << rental->rentalID << "\t" << rental->customerID << "\t\t" << rental->carID << "\t\t" << rental->dateRented << "\t\t" << rental->dateReturned << std::endl;
 
 
     std::cout << "Choose customer" << std::endl;
@@ -232,6 +232,6 @@ void RentalView::listRentals() {
     int index = 0;
     for (const auto& rental : rentals)
     {
-        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.startDate << "\t\t" << rental.endDate << std::endl;
+        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.dateRented << "\t\t" << rental.dateReturned << std::endl;
     }
 }
