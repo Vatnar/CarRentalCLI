@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 
 #include "CarView.h"
@@ -30,7 +31,6 @@ protected:
 
     bool matchesPattern(const std::string &s);
 
-    std::string getCurrentDateTime();
 
     std::string getEndDate();
 
@@ -43,6 +43,9 @@ protected:
     void editRental();
 
     void removeRental();
+
+    void listRentals();
+
     std::string rentalMenu = R"MENU(
 ==================================
             RENTALS
@@ -50,7 +53,8 @@ protected:
         1. ADD NEW RENTAL
         2. EDIT RENTAL
         3. REMOVE RENTAL
-        4. Exit
+        4. LIST RENTALS
+        5. RETURN TO MENU
 ==================================
 Please enter your choice:
 )MENU";

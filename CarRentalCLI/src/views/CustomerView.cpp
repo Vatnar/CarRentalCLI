@@ -12,7 +12,7 @@ void CustomerView::Run()
     while (true)
     {
         std::cout << customerMenu;
-        switch (Input::getInt(1, 4))
+        switch (Input::getInt(1, 5))
         {
             case 1:
                 addCustomer(); break;
@@ -20,6 +20,8 @@ void CustomerView::Run()
                 editCustomer(); break;
             case 3:
                 removeCustomer(); break;
+            case 4:
+                listCustomers(); break;
             default:
                 return;
         }
@@ -87,6 +89,13 @@ void CustomerView::editCustomer() {
     int customerID = getCustomerID();
     std::string name, tel, email;
     // TODO get customer and list it for preview
+     const auto customer = customerController.getCustomerByID(customerID);
+    if ( customer == std::nullopt)
+    {
+        std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
+    }
+    std::cout << customer->name << "\t\t" << customer->tel << "\t\t" << customer->email << std::endl;
+
     getName(name);
     getTel(tel);
     getEmail(email);
@@ -107,6 +116,21 @@ void CustomerView::removeCustomer()
     customerController.removeCustomer(customerID);
 }
 
+void CustomerView::listCustomers() {
+    std::vector<CustomerModel> customers = customerController.searchCustomer("");
+    if (customers.empty())
+    {
+        std::cout << " No customers in system\n";
+        return;
+    }
+    std::cout << customers.size() << " Customers" << std::endl;
+    int index = 0;
+    for (const auto& customer : customers)
+    {
+        std::cout << index++ << ".\t " << customer.name << "\t\t" << customer.tel << "\t\t" << customer.email << std::endl;
+    }
+}
+
 
 int CustomerView::getCustomerID() {
     std::string searchString;
@@ -118,7 +142,7 @@ int CustomerView::getCustomerID() {
     if (customers.empty())
     {
         std::cout << "\n Customer not found. Try again" << std::endl;
-        getCustomerID();
+        return getCustomerID();
     }
     std::cout << "Found " << customers.size() << " out of " << customerController.countCustomers() << std::endl;
     int index = 0;

@@ -57,15 +57,17 @@ protected:
      * @brief Searches for customer based on searchphrase and removes the selected customer
      */
     void removeCustomer();
+   void listCustomers();
 
-   std::string customerMenu = R"MENU(
+    std::string customerMenu = R"MENU(
 ==================================
             CUSTOMERS
 ==================================
         1. ADD CUSTOMER
         2. EDIT CUSTOMER
         3. REMOVE CUSTOMER
-        4. Exit
+        4. LIST CUSTOMERS
+        5. RETURN TO MENU
 ==================================
 Please enter your choice:
 )MENU";
