@@ -21,5 +21,5 @@ public:
     std::vector<CarModel> searchCar(const std::string &searchPhrase, int field, const std::string &startDate = "",
         const std::string &endDate = "");
 
-    bool CarController::ExportCarsToCSV(const std::string& filename);
+    bool ExportCarsToCSV(const std::string& filename);
 };

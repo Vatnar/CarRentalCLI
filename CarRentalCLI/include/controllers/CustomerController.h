@@ -19,5 +19,5 @@ public:
     std::optional<CustomerModel> getCustomerByID(int customerID);
     std::vector<CustomerModel> searchCustomer(const std::string& searchPhrase);
 
-    bool CustomerController::ExportCustomersToCSV(const std::string& filename);
+    bool ExportCustomersToCSV(const std::string& filename);
 };
