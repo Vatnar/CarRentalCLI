@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <optional>
 
 #include "models/CarModel.h"
 
@@ -13,12 +14,13 @@ public:
     bool addCar(const std::string& regNo, const std::string& brand, const std::string& model);
     bool editCar(int id, const std::string& regNo, const std::string& brand, const std::string& model);
     bool removeCar(int id);
-    // TODO Getter to get a car by ID
+
+    std::optional<CarModel> getCarByID(int id);
+
     int countCars();
 
     std::vector<CarModel> searchCar(const std::string &searchPhrase, int field, const std::string &startDate = "", const
                                     std::string &endDate = "");
+
+
 };
-
-
-
