@@ -33,7 +33,7 @@ void ImportExportView::Import()
     std::string importFile = Input::getString();
 
 
-    // CSVController.import(importFile);
+     csvController.ImportFromCSV(importFile);
 }
 void ImportExportView::Export()
 {
