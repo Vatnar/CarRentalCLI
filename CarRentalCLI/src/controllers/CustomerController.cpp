@@ -35,8 +35,6 @@ bool CustomerController::editCustomer(int customerID, std::string& newName, std:
 
 bool CustomerController::removeCustomer(int customerID)
 {
-    auto customer = storage.get<CustomerModel>(customerID);
-
     try {
         storage.remove<CustomerModel>(customerID);
         return true;

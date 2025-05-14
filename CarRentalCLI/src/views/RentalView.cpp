@@ -120,29 +120,29 @@ int RentalView::getRentalID()
         case 0:
         {
             int customerID = getCustomerID();
-            rentals = rentalController.search("", 0, customerID);
+            rentals = rentalController.Search("", 0, customerID);
             break;
         }
         case 1:
         {
             int carID = carView.getCarID();
-            rentals = rentalController.search("", 1, carID);
+            rentals = rentalController.Search("", 1, carID);
             break;
         }
         case 2:
         {
             std::string startDate = getStartdate();
-            rentals = rentalController.search("startDate", 2);
+            rentals = rentalController.Search("startDate", 2);
             break;
         }
         case 3:
         {
             std::string endDate = getEndDate();
-            rentals = rentalController.search("endDate", 3);
+            rentals = rentalController.Search("endDate", 3);
             break;
         }
         case 4:
-            {rentals = rentalController.search("", 4);}
+            {rentals = rentalController.Search("", 4);}
     }
     if (rentals.empty())
     {

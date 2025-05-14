@@ -2,6 +2,8 @@
 #include <iostream>
 #include <conio.h>
 #include <limits>
+#include <chrono>
+
 /**
 * @brief Provides static methods to get user input
 * All function within class provides error handling
@@ -76,4 +78,27 @@ public:
         return input;
     }
 
+};
+
+
+class Time {
+public:
+    /**
+     * @brief Returns the current time formatted as YYYY-MM-DD hh-mm.
+     *
+     * @return Formatted current date and time as a string.
+     */
+    static std::string getCurrentTime() {
+        // Get current time
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+
+        // Convert to local time
+        std::tm localTime = *std::localtime(&now_c);
+
+        // Formatting to YYYY-MM-DD hh-mm
+        std::ostringstream currentDateStream;
+        currentDateStream << std::put_time(&localTime, "%Y-%m-%d %H-%M");
+        return currentDateStream.str();
+    }
 };

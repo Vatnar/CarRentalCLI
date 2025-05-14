@@ -2,6 +2,8 @@
 #include "models/RentalModel.h"
 #include "storage.h"
 #include "iostream"
+#include "chrono"
+#include "Utils.h"
 
 /**
  * @brief Registers a new car rental in the database.
@@ -57,7 +59,7 @@ bool RentalController::returnCar(int rentalID, const std::string& returnDate)
  *
  * @return Total number of rentals.
  */
-int RentalController::countRentals()
+int RentalController::CountRentals()
 {
     try
     {
@@ -75,14 +77,16 @@ int RentalController::countRentals()
  *
  * @return Number of active rentals.
  */
-int RentalController::countActiveRentals()
+int RentalController::CountActiveRentals()
 {
     try
     {
-        auto activeRentalCount = storage.count<RentalModel>(
-            where(is_not_null(&RentalModel::startDate) and is_null(&RentalModel::endDate))
-        );
-        return activeRentalCount;
+        const std::string currentTime = Time::getCurrentTime();
+
+        auto count = storage.count<RentalModel>(where(
+            c(&RentalModel::endDate) > currentTime)
+            );
+        return count;
     }
     catch (const std::exception& e)
     {
@@ -91,18 +95,20 @@ int RentalController::countActiveRentals()
     }
 }
 
+
 /**
- * @brief Counts rentals that have been completed (returned before a given date).
+ * @brief Counts rentals that have been completed (returned before the current time).
  *
- * @param currentDate The current date to compare against (format: YYYY-MM-DD hh-mm).
  * @return Number of completed rentals.
  */
-int RentalController::countCompletedRentals(const std::string& currentDate)
+int RentalController::CountCompletedRentals()
 {
+    const std::string currentTime = Time::getCurrentTime();
+
     try
     {
         auto completedRentalCount = storage.count<RentalModel>(
-            where(c(&RentalModel::endDate) < currentDate)
+            where(c(&RentalModel::endDate) < currentTime)
         );
         return completedRentalCount;
     }
@@ -121,7 +127,7 @@ int RentalController::countCompletedRentals(const std::string& currentDate)
  * @param ID Used when searching customerID or carID.
  * @return A vector of matching RentalModel entries.
  */
-std::vector<RentalModel> RentalController::search(
+std::vector<RentalModel> RentalController::Search(
     const std::string &searchPhrase, int field, int ID)
 {
     try
@@ -167,7 +173,7 @@ std::vector<RentalModel> RentalController::search(
  * @param newCarID New car ID.
  * @return true if the rental was successfully updated, false otherwise.
  */
-bool RentalController::editRental(int rentalID, const std::string& newStartDate, const std::string& newEndDate, int newCustomerID, int newCarID)
+bool RentalController::EditRental(int rentalID, const std::string& newStartDate, const std::string& newEndDate, int newCustomerID, int newCarID)
 {
     try
     {
@@ -195,13 +201,11 @@ bool RentalController::editRental(int rentalID, const std::string& newStartDate,
  * @param rentalID ID of the rental to remove.
  * @return true if the rental was successfully removed, false otherwise.
  */
-bool RentalController::removeRental(int rentalID)
+bool RentalController::RemoveRental(int rentalID)
 {
     try
     {
-        auto rent = storage.get<RentalModel>(rentalID);
-
-        storage.remove(rent);
+        storage.remove<RentalModel>(rentalID);
 
         std::cout << "Rental removed successfully" << std::endl;
         return true;

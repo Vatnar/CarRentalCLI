@@ -18,7 +18,7 @@ void StatisticsView::Run()
 
     std::cout << std::endl << "Customer count: " << customerController.countCustomers() << std::endl;
     std::cout << "Car count: " << carController.countCars() << std::endl;
-    std::cout << "Active rentals: " << rentalController.countActiveRentals() << std::endl;
-    std::cout << "Completed rentals: " << rentalController.countCompletedRentals() << std::endl;
+    std::cout << "Active rentals: " << rentalController.CountActiveRentals() << std::endl;
+    std::cout << "Completed rentals: " << rentalController.CountCompletedRentals() << std::endl;
     std::cout << "==================================" << std::endl;
 }

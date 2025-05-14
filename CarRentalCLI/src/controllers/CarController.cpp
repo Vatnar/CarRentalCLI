@@ -37,8 +37,6 @@ bool CarController::editCar(int carID, const std::string& newRegNo, const std::s
 
 bool CarController::removeCar(int carID)
 {
-    auto car = storage.get<CarModel>(carID);
-
     try
     {
         storage.remove<CarModel>(carID);
