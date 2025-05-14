@@ -8,7 +8,7 @@ class ImportExportView : View {
 public:
     ImportExportView();
     void Run() override;
-protected:
+private:
     std::string importExportMenu = R"MENU(
 ==================================
           IMPORT/EXPORT
@@ -19,4 +19,6 @@ protected:
 ==================================
 Please enter your choice:
 )MENU";
+    void Import();
+    void Export();
 };

@@ -14,14 +14,32 @@ void ImportExportView::Run()
     while (true)
     {
         std::cout << importExportMenu;
-        switch (Input::getInt(1, 4))
+        switch (Input::getInt(1, 3))
         {
             case 1:
-                break;
+                Import(); break;
             case 2:
-                break;
+                Export(); break;
             case 3:
-                return;
+                exit(0);
+            default: break;
         }
     }
+}
+
+void ImportExportView::Import()
+{
+    std::cout << "Please enter name of file to import. File must be placed in working directory (same as .exe file):";
+    std::string importFile = Input::getString();
+
+
+    // CSVController.import(importFile);
+}
+void ImportExportView::Export()
+{
+    std::cout << "Please enter name of file to export. File will be exported next to .exe:";
+    std::string exportFile = Input::getString();
+
+
+    // CSVController.export(exportFile)
 }
