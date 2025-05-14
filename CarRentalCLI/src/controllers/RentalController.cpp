@@ -223,3 +223,22 @@ bool RentalController::RemoveRental(int rentalID)
         return false;
     }
 }
+
+
+/**
+ * @brief Retrieves a rental by its ID.
+ *
+ * @param rentalID The ID of the rental to retrieve.
+ * @return The RentalModel if found, or std::nullopt if not found.
+ */
+std::optional<RentalModel> RentalController::getRentalByID(int rentalID)
+{
+    try
+    {
+        return storage.get<RentalModel>(rentalID);
+    }
+    catch (const std::exception&)
+    {
+        return std::nullopt;
+    }
+}
