@@ -3,99 +3,212 @@
 #include "storage.h"
 #include "iostream"
 
-void RentalController::rentCar(int customerID, int carID, const std::string& startDate, const std::string& endDate)
+/**
+ * @brief Registers a new car rental in the database.
+ *
+ * @param customerID ID of the customer renting the car.
+ * @param carID ID of the car being rented.
+ * @param startDate Start date of the rental (format: YYYY-MM-DD hh-mm).
+ * @param endDate End date of the rental (format: YYYY-MM-DD hh-mm).
+ * @return true if the rental was successfully registered, false otherwise.
+ */
+bool RentalController::rentCar(int customerID, int carID, const std::string& startDate, const std::string& endDate)
 {
-    RentalModel newRental {-1, customerID, carID, startDate, endDate};
-
-    newRental.rentalID = storage.insert(newRental);
-    std::cout << __FILE__ << "Rental registered successfully" << std::endl;
+    try
+    {
+        RentalModel newRental{-1, customerID, carID, startDate, endDate};
+        newRental.rentalID = storage.insert(newRental);
+        std::cout << "Rental registered successfully" << std::endl;
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in rentCar: " << e.what() << std::endl;
+        return false;
+    }
 }
 
-
-void RentalController::returnCar(int rentalID, const std::string& returnDate)
+/**
+ * @brief Returns a car by setting the end date of a rental.
+ *
+ * @param rentalID ID of the rental to update.
+ * @param returnDate The date the car was returned (format: YYYY-MM-DD hh-mm).
+ * @return true if the rental was successfully updated, false otherwise.
+ */
+bool RentalController::returnCar(int rentalID, const std::string& returnDate)
 {
-    auto rent = storage.get<RentalModel>(rentalID);
-
-    rent.endDate = returnDate;
-
-    storage.update(rent);
-    std::cout << "Storage updated successfully" << std::endl;
+    try
+    {
+        auto rent = storage.get<RentalModel>(rentalID);
+        rent.endDate = returnDate;
+        storage.update(rent);
+        std::cout << "Storage updated successfully" << std::endl;
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in returnCar: " << e.what() << std::endl;
+        return false;
+    }
 }
 
-
+/**
+ * @brief Counts all registered rentals.
+ *
+ * @return Total number of rentals.
+ */
 int RentalController::CountRentals()
 {
-    return storage.count<RentalModel>();
+    try
+    {
+        return storage.count<RentalModel>();
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in CountRentals: " << e.what() << std::endl;
+        return 0;
+    }
 }
+
+/**
+ * @brief Counts currently active rentals (with a start date, but no end date).
+ *
+ * @return Number of active rentals.
+ */
 int RentalController::CountActiveRentals()
 {
-    auto activeRentalCount = storage.count<RentalModel>(
-        where(is_not_null(&RentalModel::startDate) and is_null(&RentalModel::endDate))
-    );
-    return activeRentalCount;
+    try
+    {
+        auto activeRentalCount = storage.count<RentalModel>(
+            where(is_not_null(&RentalModel::startDate) and is_null(&RentalModel::endDate))
+        );
+        return activeRentalCount;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in CountActiveRentals: " << e.what() << std::endl;
+        return 0;
+    }
 }
 
-
+/**
+ * @brief Counts rentals that have been completed (returned before a given date).
+ *
+ * @param currentDate The current date to compare against (format: YYYY-MM-DD hh-mm).
+ * @return Number of completed rentals.
+ */
 int RentalController::CountCompletedRentals(const std::string& currentDate)
 {
-    auto completedRentalCount = storage.count<RentalModel>(
-        where(c(&RentalModel::endDate) < currentDate)
-    );
-    return completedRentalCount;
+    try
+    {
+        auto completedRentalCount = storage.count<RentalModel>(
+            where(c(&RentalModel::endDate) < currentDate)
+        );
+        return completedRentalCount;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in CountCompletedRentals: " << e.what() << std::endl;
+        return 0;
+    }
 }
 
-
+/**
+ * @brief Searches for rentals based on a specified field and search value.
+ *
+ * @param searchPhrase Text input used for date fields.
+ * @param field Field to search (0 = customerID, 1 = carID, 2 = startDate, 3 = endDate, 4 = all).
+ * @param ID Used when searching customerID or carID.
+ * @return A vector of matching RentalModel entries.
+ */
 std::vector<RentalModel> RentalController::Search(
     const std::string &searchPhrase, int field, int ID)
 {
-    using namespace sqlite_orm;
-    std::string likePhrase = "%" + searchPhrase + "%";
-
-    switch (field)
+    try
     {
-    case 0:
-        return storage.get_all<RentalModel>(
-            where(c(&RentalModel::customerID) == ID));
-    case 1:
-        return storage.get_all<RentalModel>(
-            where(c(&RentalModel::carID) == ID));
-    case 2:
-        return storage.get_all<RentalModel>(
-            where(like(&RentalModel::startDate, likePhrase)));
-    case 3:
-        return storage.get_all<RentalModel>(
-            where(like(&RentalModel::endDate, likePhrase)));
-    case 4:
-        return storage.get_all<RentalModel>();
-    default:
-        std::cerr << "Invalid field\n";
+        using namespace sqlite_orm;
+        std::string likePhrase = "%" + searchPhrase + "%";
+
+        switch (field)
+        {
+        case 0:
+            return storage.get_all<RentalModel>(
+                where(c(&RentalModel::customerID) == ID));
+        case 1:
+            return storage.get_all<RentalModel>(
+                where(c(&RentalModel::carID) == ID));
+        case 2:
+            return storage.get_all<RentalModel>(
+                where(like(&RentalModel::startDate, likePhrase)));
+        case 3:
+            return storage.get_all<RentalModel>(
+                where(like(&RentalModel::endDate, likePhrase)));
+        case 4:
+            return storage.get_all<RentalModel>();
+        default:
+            std::cerr << "Invalid field\n";
+            return {};
+        }
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in Search: " << e.what() << std::endl;
         return {};
     }
 }
 
-
-void RentalController::EditRental(int rentalID, const std::string& newStartDate, const std::string& newEndDate, int newCustomerID, int newCarID)
+/**
+ * @brief Updates an existing rental with new values.
+ *
+ * @param rentalID ID of the rental to update.
+ * @param newStartDate New start date (format: YYYY-MM-DD hh-mm).
+ * @param newEndDate New end date (format: YYYY-MM-DD hh-mm).
+ * @param newCustomerID New customer ID.
+ * @param newCarID New car ID.
+ * @return true if the rental was successfully updated, false otherwise.
+ */
+bool RentalController::EditRental(int rentalID, const std::string& newStartDate, const std::string& newEndDate, int newCustomerID, int newCarID)
 {
-    auto rent = storage.get<RentalModel>(rentalID);
+    try
+    {
+        auto rent = storage.get<RentalModel>(rentalID);
 
-    // Oppdater feltene med de nye verdiene
-    rent.startDate = newStartDate;
-    rent.endDate = newEndDate;
-    rent.customerID = newCustomerID;
-    rent.carID = newCarID;
+        rent.startDate = newStartDate;
+        rent.endDate = newEndDate;
+        rent.customerID = newCustomerID;
+        rent.carID = newCarID;
+        storage.update(rent);
 
-    // Oppdater lagret leieavtale
-    storage.update(rent);
-    std::cout << "Rental updated successfully" << std::endl;
+        std::cout << "Rental updated successfully" << std::endl;
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in EditRental: " << e.what() << std::endl;
+        return false;
+    }
 }
 
-
-void RentalController::RemoveRental(int rentalID)
+/**
+ * @brief Deletes a rental from the database.
+ *
+ * @param rentalID ID of the rental to remove.
+ * @return true if the rental was successfully removed, false otherwise.
+ */
+bool RentalController::RemoveRental(int rentalID)
 {
-    // Hent leieavtalen med det gitte rentalID
-    auto rent = storage.get<RentalModel>(rentalID);
+    try
+    {
+        auto rent = storage.get<RentalModel>(rentalID);
 
-    // Slett leieavtalen fra lagringen
-    storage.remove(rent);
-    std::cout << "Rental removed successfully" << std::endl;
+        storage.remove(rent);
+
+        std::cout << "Rental removed successfully" << std::endl;
+        return true;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error in RemoveRental: " << e.what() << std::endl;
+        return false;
+    }
 }
