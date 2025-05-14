@@ -18,13 +18,13 @@ bool CarController::addCar(const std::string& regNo, const std::string& brand, c
     }
 }
 
-bool CarController::editCar(int carID, const std::string& regNo, const std::string& brand, const std::string& model)
+bool CarController::editCar(int carID, const std::string& newRegNo, const std::string& newBrand, const std::string& newModel)
 {
     auto car = storage.get<CarModel>(carID);
 
-    car.regNo = regNo;
-    car.brand = brand;
-    car.model = model;
+    car.regNo = newRegNo;
+    car.brand = newBrand;
+    car.model = newModel;
 
     try {
         storage.update(car);

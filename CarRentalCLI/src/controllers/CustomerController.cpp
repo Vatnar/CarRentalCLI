@@ -16,13 +16,13 @@ bool CustomerController::addCustomer(const std::string& name, const std::string&
     }
 }
 
-bool CustomerController::editCustomer(int customerID, std::string& name, std::string& tel, std::string& email)
+bool CustomerController::editCustomer(int customerID, std::string& newName, std::string& newTel, std::string& newEmail)
 {
     auto customer = storage.get<CustomerModel>(customerID);
 
-    customer.name = name;
-    customer.tel = tel;
-    customer.email = email;
+    customer.name = newName;
+    customer.tel = newTel;
+    customer.email = newEmail;
 
     try {
         storage.update(customer);
