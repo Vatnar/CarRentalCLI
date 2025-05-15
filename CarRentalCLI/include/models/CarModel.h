@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 
+/**
+ * Representation of the model in database
+ */
 class CarModel
 {
 public:

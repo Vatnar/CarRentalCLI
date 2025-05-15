@@ -25,6 +25,7 @@ public:
    int GetCustomerId();
 
 protected:
+
    /**
 * @brief Prompts the user until a valid name is entered
 * @param name Reference to input name string

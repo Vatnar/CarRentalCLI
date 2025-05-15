@@ -21,6 +21,10 @@ public:
     void Run() override;
 
 private:
+    /**
+     *
+     * @return id of prompted customer
+     */
     int getCustomerID();
 
     /**
@@ -31,14 +35,32 @@ private:
      */
     int getCarID(const std::string &startDate, const std::string &endDate);
 
+    /**
+     * @brief Checks if string matched datetime format
+     * @param s string to check
+     * @return true if it matches
+     */
     bool matchesPattern(const std::string &s);
 
 
+    /**
+     * Prompts user for datetime
+     * @return string entered
+     */
     std::string getEndDate();
 
+    /**
+     *
+     * @return id of prompted car
+     */
     int getRentalID();
 
+    /**
+     * prompt user for endate
+     * @return string entered
+     */
     std::string getStartdate();
+
 
     void addRental();
 

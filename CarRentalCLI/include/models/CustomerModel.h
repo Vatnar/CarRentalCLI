@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 
+/**
+ * Representation of customer in database
+ */
 class CustomerModel
 {
 public:
