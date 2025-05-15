@@ -7,9 +7,7 @@
 #include "controllers/CSVController.h"
 
 ImportExportView::ImportExportView()
-{
-
-}
+{}
 
 void ImportExportView::Run()
 {
@@ -18,10 +16,10 @@ void ImportExportView::Run()
         std::cout << importExportMenu;
         switch (Input::GetInt(1, 3))
         {
-            case 1:
-                importcsv(); break;
-            case 2:
-                exportcsv(); break;
+            case 1: importcsv();
+                break;
+            case 2: exportcsv();
+                break;
             default: return;
         }
     }
@@ -29,15 +27,18 @@ void ImportExportView::Run()
 
 void ImportExportView::importcsv()
 {
-    std::cout << "Please enter name of file to import. File must be placed in working directory (same as .exe file):";
+    std::cout <<
+            "Please enter name of file to import. File must be placed in working directory (same as .exe file):";
     std::string importFile = Input::GetString();
 
 
-     csvController.ImportFromCSV(importFile);
+    csvController.ImportFromCSV(importFile);
 }
+
 void ImportExportView::exportcsv()
 {
-    std::cout << "Please enter name of file to export. File will be exported next to .exe:";
+    std::cout <<
+            "Please enter name of file to export. File will be exported next to .exe:";
     std::string exportFile = Input::GetString();
 
     csvController.ExportToCSV(exportFile);

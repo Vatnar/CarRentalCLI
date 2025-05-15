@@ -15,21 +15,20 @@ void CarView::Run()
         std::cout << carMenu;
         switch (Input::GetInt(1, 5))
         {
-            case 1:
-                addCar(); break;
-            case 2:
-                editCar(); break;
-            case 3:
-                removeCar(); break;
-            case 4:
-                listCars();
-            default:
-                return;
+            case 1: addCar();
+                break;
+            case 2: editCar();
+                break;
+            case 3: removeCar();
+                break;
+            case 4: listCars();
+            default: return;
         }
     }
 }
 
-bool CarView::isValidReg(const std::string& s) {
+bool CarView::isValidReg(const std::string &s)
+{
     return s.length() == 7 &&
            std::isalpha(s[0]) &&
            std::isalpha(s[1]) &&
@@ -51,6 +50,7 @@ void CarView::getReg(std::string &reg)
         getBrand(reg);
     }
 }
+
 void CarView::getBrand(std::string &brand)
 {
     std::cout << "Enter the brand name: ";
@@ -61,6 +61,7 @@ void CarView::getBrand(std::string &brand)
         getBrand(brand);
     }
 }
+
 void CarView::getModel(std::string &model)
 {
     std::cout << "Enter the model name: ";
@@ -87,6 +88,7 @@ void CarView::addCar()
 
     carController.AddCar(reg, brand, model);
 }
+
 void CarView::editCar()
 {
     std::cout << R"MENU(
@@ -95,21 +97,23 @@ void CarView::editCar()
 ==================================
     )MENU" << std::endl;
 
-    int carID = getCarID();
+    int         carID = getCarID();
     std::string reg, brand, model;
 
     const auto car = carController.GetCarById(carID);
-    if ( car == std::nullopt)
+    if (car == std::nullopt)
     {
         std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
     }
-    std::cout << car->regNo << "\t\t" << car->brand << "\t\t" << car->model << std::endl;
+    std::cout << car->regNo << "\t\t" << car->brand << "\t\t" << car->model <<
+            std::endl;
     getReg(reg);
     getBrand(brand);
     getModel(model);
 
     carController.EditCar(carID, reg, brand, model);
 }
+
 void CarView::removeCar()
 {
     std::cout << R"MENU(
@@ -133,20 +137,23 @@ void CarView::listCars()
     }
     std::cout << cars.size() << " Cars" << std::endl;
     int index = 0;
-    for (const auto& car : cars)
+    for (const auto &car: cars)
     {
-        std::cout << index++ << ".\t " << car.regNo << "\t\t" << car.brand << "\t\t" << car.model << std::endl;
+        std::cout << index++ << ".\t " << car.regNo << "\t\t" << car.brand <<
+                "\t\t" << car.model << std::endl;
     }
 }
 
 int CarView::getCarID()
 {
     std::string searchString;
-    int field = 0;
-    std::cout << "Press 0, 1, or 2 to select search field\n0: RegNo\n1: Brand\n2: Model\n:";
+    int         field = 0;
+    std::cout <<
+            "Press 0, 1, or 2 to select search field\n0: RegNo\n1: Brand\n2: Model\n:";
     field = Input::GetInt(0, 2);
 
-    std::cout << "\nInput search string. Press Enter to search. Press enter without search string to list all\n ";
+    std::cout <<
+            "\nInput search string. Press Enter to search. Press enter without search string to list all\n ";
     searchString = Input::GetString();
     std::cout << searchString << std::endl;
 
@@ -156,14 +163,16 @@ int CarView::getCarID()
         std::cout << "\n Car not found. Try again";
         return getCarID();
     }
-    std::cout << "Found " << cars.size() << " out of " << carController.CountCars() << std::endl;
+    std::cout << "Found " << cars.size() << " out of " << carController.
+            CountCars() << std::endl;
     int index = 0;
-    for (const auto& car : cars)
+    for (const auto &car: cars)
     {
-        std::cout << index++ << ".\t " << car.regNo << "\t\t" << car.brand << "\t\t" << car.model << std::endl;
+        std::cout << index++ << ".\t " << car.regNo << "\t\t" << car.brand <<
+                "\t\t" << car.model << std::endl;
     }
     std::cout << "Enter number to choose: ";
-    auto indexCustomer = Input::GetInt(0, cars.size()-1); // -1 cuz of 0 index
+    auto indexCustomer = Input::GetInt(0, cars.size() - 1); // -1 cuz of 0 index
     return cars[indexCustomer].carID;
 }
 

@@ -11,7 +11,6 @@
 class Input
 {
 public:
-
     /**
     * @brief Handles integer input from user.
     *
@@ -31,20 +30,20 @@ public:
             {
                 if (input >= min && input <= max)
                 {
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.ignore(
+                        std::numeric_limits<std::streamsize>::max(), '\n');
                     return input;
-                }
-                else
+                } else
                 {
                     std::cerr << "Invalid input. Please enter a number between "
-                              << min << " and " << max << ".\n";
+                            << min << " and " << max << ".\n";
                 }
-            }
-            else
+            } else
             {
                 std::cerr << "Invalid input (not a number).\n";
                 std::cin.clear(); // Clear error flags
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.ignore(
+                    std::numeric_limits<std::streamsize>::max(), '\n');
             }
         }
     }
@@ -57,7 +56,8 @@ public:
      * @param includeChar A character that must be included in the string (default is '\0', meaning no specific character required).
      * @return A valid string input from the user.
      */
-    static std::string GetString(bool allowSpaces = true, char includeChar = '\0')
+    static std::string GetString(
+        bool allowSpaces = true, char includeChar = '\0')
     {
         std::string input;
 
@@ -71,26 +71,28 @@ public:
 
         if (includeChar != '\0' && input.find(includeChar) == std::string::npos)
         {
-            std::cerr << "The character '" << includeChar << "' must be included in the input." << std::endl;
+            std::cerr << "The character '" << includeChar <<
+                    "' must be included in the input." << std::endl;
             return "";
         }
 
         return input;
     }
-
 };
 
 
-class Time {
+class Time
+{
 public:
     /**
      * @brief Returns the current time formatted as YYYY-MM-DD hh-mm.
      *
      * @return Formatted current date and time as a string.
      */
-    static std::string GetCurrentTime() {
+    static std::string GetCurrentTime()
+    {
         // Get current time
-        auto now = std::chrono::system_clock::now();
+        auto        now   = std::chrono::system_clock::now();
         std::time_t now_c = std::chrono::system_clock::to_time_t(now);
 
         // Convert to local time

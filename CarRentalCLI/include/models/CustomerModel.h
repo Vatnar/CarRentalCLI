@@ -4,7 +4,7 @@
 class CustomerModel
 {
 public:
-    int customerID;
+    int         customerID;
     std::string name;
     std::string tel;
     std::string email;

@@ -10,9 +10,11 @@
 #include "controllers/RentalController.h"
 
 
-class RentalView : public View {
+class RentalView : public View
+{
 public:
     RentalView(const CustomerView &customerView, const CarView &carView);
+
     /**
      * @brief Run's the GUI of the view and logic
      */
@@ -46,7 +48,7 @@ private:
 
     void listRentals();
 
-    std::string rentalMenu = R"MENU(
+    std::string        rentalMenu = R"MENU(
 ==================================
             RENTALS
 ==================================
@@ -58,11 +60,11 @@ private:
 ==================================
 Please enter your choice:
 )MENU";
-    RentalController rentalController;
+    RentalController   rentalController;
     CustomerController customerController;
-    CustomerView customerView;
-    CarController carController;
-    CarView carView;
+    CustomerView       customerView;
+    CarController      carController;
+    CarView            carView;
 };
 
 

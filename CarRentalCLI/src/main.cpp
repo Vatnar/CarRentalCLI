@@ -13,8 +13,8 @@ void addSampleData()
 
     storage.sync_schema();
     CustomerController customerController;
-    CarController carController;
-    RentalController rentalController;
+    CarController      carController;
+    RentalController   rentalController;
 
 
     customerController.AddCustomer("Name1", "Tel1", "email1@example.com");
@@ -49,13 +49,11 @@ void addSampleData()
     rentalController.RentCar(1, 1, "2025-15-01", "2025-10-05");
 
 
-
     std::cout << "Adding sample data" << std::endl;
-
 }
+
 int main()
 {
-
     addSampleData();
     MainView menu;
     menu.Run();

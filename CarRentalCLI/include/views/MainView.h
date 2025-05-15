@@ -9,12 +9,15 @@
 #include "StatisticsView.h"
 
 
-class MainView : public View {
+class MainView : public View
+{
 public:
     MainView();
+
     void Run() override;
+
 protected:
-    std::string mainMenu = R"MENU(
+    std::string      mainMenu = R"MENU(
 ==================================
         CAR RENTAL SERVICE
 ==================================
@@ -27,11 +30,10 @@ protected:
 ==================================
 Please enter your choice:
 )MENU";
-    CustomerView customerView;
-    CarView carView;
-    RentalView rentalView;
-    StatisticsView statisticsView;
+    CustomerView     customerView;
+    CarView          carView;
+    RentalView       rentalView;
+    StatisticsView   statisticsView;
     ImportExportView importExportView;
-
 };
 

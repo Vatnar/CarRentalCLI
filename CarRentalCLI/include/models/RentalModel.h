@@ -4,9 +4,9 @@
 class RentalModel
 {
 public:
-	int rentalID;
-	int customerID;
-	int carID;
+	int         rentalID;
+	int         customerID;
+	int         carID;
 	std::string startDate;
 	std::string endDate;
 };

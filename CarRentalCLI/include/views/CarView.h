@@ -5,7 +5,8 @@
 #include "controllers/CarController.h"
 
 
-class CarView : public View{
+class CarView : public View
+{
 public:
     CarView();
 
@@ -33,20 +34,19 @@ private:
      * @brief Prompts the user until a valid registration number is entered
      * @param reg Reference to input registration number string
      */
-    void getReg(std::string& reg);
+    void getReg(std::string &reg);
 
     /**
      * @brief Prompts the user until a valid brand name is entered
      * @param brand Reference to input brand string
      */
-    void getBrand(std::string& brand);
+    void getBrand(std::string &brand);
 
     /**
      * @brief Prompts the user until a valid model name is entered
      * @param model Reference to input model string
      */
-    void getModel(std::string& model);
-
+    void getModel(std::string &model);
 
 
     /**
@@ -68,8 +68,7 @@ private:
     void listCars();
 
 
-
-    std::string carMenu = R"MENU(
+    std::string   carMenu = R"MENU(
 ==================================
               CARS
 ==================================

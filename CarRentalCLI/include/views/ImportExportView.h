@@ -5,13 +5,18 @@
 #include "controllers/CSVController.h"
 
 
-class ImportExportView : View {
+class ImportExportView : View
+{
 public:
     ImportExportView();
+
     void Run() override;
+
 private:
     void importcsv();
+
     void exportcsv();
+
     CSVController csvController;
 
     std::string importExportMenu = R"MENU(
@@ -24,5 +29,4 @@ private:
 ==================================
 Please enter your choice:
 )MENU";
-
 };

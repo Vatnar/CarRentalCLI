@@ -16,7 +16,9 @@
  * @param endDate End date of the rental (format: YYYY-MM-DD hh-mm).
  * @return true if the rental was successfully registered, false otherwise.
  */
-bool RentalController::RentCar(int customerID, int carID, const std::string& startDate, const std::string& endDate)
+bool RentalController::RentCar(
+    int                customerID, int carID, const std::string &startDate,
+    const std::string &endDate)
 {
     try
     {
@@ -25,7 +27,7 @@ bool RentalController::RentCar(int customerID, int carID, const std::string& sta
         std::cout << "Rental registered successfully" << std::endl;
         return true;
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << "Error in RentCar: " << e.what() << std::endl;
         return false;
@@ -40,17 +42,17 @@ bool RentalController::RentCar(int customerID, int carID, const std::string& sta
  * @param returnDate The date the car was returned (format: YYYY-MM-DD hh-mm).
  * @return true if the rental was successfully updated, false otherwise.
  */
-bool RentalController::ReturnCar(int rentalID, const std::string& returnDate)
+bool RentalController::ReturnCar(int rentalID, const std::string &returnDate)
 {
     try
     {
-        auto rent = storage.get<RentalModel>(rentalID);
+        auto rent    = storage.get<RentalModel>(rentalID);
         rent.endDate = returnDate;
         storage.update(rent);
         std::cout << "Storage updated successfully" << std::endl;
         return true;
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << "Error in ReturnCar: " << e.what() << std::endl;
         return false;
@@ -69,7 +71,7 @@ int RentalController::CountRentals()
     {
         return storage.count<RentalModel>();
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << "Error in CountRentals: " << e.what() << std::endl;
         return 0;
@@ -88,12 +90,13 @@ int RentalController::CountActiveRentals()
     {
         const std::string currentTime = Time::GetCurrentTime();
 
-        auto count = storage.count<RentalModel>(where(
-            c(&RentalModel::endDate) > currentTime)
-            );
+        auto count = storage.count<RentalModel>(
+            where(
+                c(&RentalModel::endDate) > currentTime)
+        );
         return count;
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << "Error in CountActiveRentals: " << e.what() << std::endl;
         return 0;
@@ -117,9 +120,10 @@ int RentalController::CountCompletedRentals()
         );
         return completedRentalCount;
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
-        std::cerr << "Error in CountCompletedRentals: " << e.what() << std::endl;
+        std::cerr << "Error in CountCompletedRentals: " << e.what() <<
+                std::endl;
         return 0;
     }
 }
@@ -143,26 +147,20 @@ std::vector<RentalModel> RentalController::Search(
 
         switch (field)
         {
-        case 0:
-            return storage.get_all<RentalModel>(
-                where(c(&RentalModel::customerID) == ID));
-        case 1:
-            return storage.get_all<RentalModel>(
-                where(c(&RentalModel::carID) == ID));
-        case 2:
-            return storage.get_all<RentalModel>(
-                where(like(&RentalModel::startDate, likePhrase)));
-        case 3:
-            return storage.get_all<RentalModel>(
-                where(like(&RentalModel::endDate, likePhrase)));
-        case 4:
-            return storage.get_all<RentalModel>();
-        default:
-            std::cerr << "Invalid field\n";
-            return {};
+            case 0: return storage.get_all<RentalModel>(
+                    where(c(&RentalModel::customerID) == ID));
+            case 1: return storage.get_all<RentalModel>(
+                    where(c(&RentalModel::carID) == ID));
+            case 2: return storage.get_all<RentalModel>(
+                    where(like(&RentalModel::startDate, likePhrase)));
+            case 3: return storage.get_all<RentalModel>(
+                    where(like(&RentalModel::endDate, likePhrase)));
+            case 4: return storage.get_all<RentalModel>();
+            default: std::cerr << "Invalid field\n";
+                return {};
         }
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << "Error in Search: " << e.what() << std::endl;
         return {};
@@ -180,22 +178,24 @@ std::vector<RentalModel> RentalController::Search(
  * @param newCarID New car ID.
  * @return true if the rental was successfully updated, false otherwise.
  */
-bool RentalController::EditRental(int rentalID, const std::string& newStartDate, const std::string& newEndDate, int newCustomerID, int newCarID)
+bool RentalController::EditRental(
+    int                rentalID, const std::string &newStartDate,
+    const std::string &newEndDate, int              newCustomerID, int newCarID)
 {
     try
     {
         auto rent = storage.get<RentalModel>(rentalID);
 
-        rent.startDate = newStartDate;
-        rent.endDate = newEndDate;
+        rent.startDate  = newStartDate;
+        rent.endDate    = newEndDate;
         rent.customerID = newCustomerID;
-        rent.carID = newCarID;
+        rent.carID      = newCarID;
         storage.update(rent);
 
         std::cout << "Rental updated successfully" << std::endl;
         return true;
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << "Error in EditRental: " << e.what() << std::endl;
         return false;
@@ -218,7 +218,7 @@ bool RentalController::RemoveRental(int rentalID)
         std::cout << "Rental removed successfully" << std::endl;
         return true;
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << "Error in RemoveRental: " << e.what() << std::endl;
         return false;
@@ -238,7 +238,7 @@ std::optional<RentalModel> RentalController::GetRentalById(int rentalID)
     {
         return storage.get<RentalModel>(rentalID);
     }
-    catch (const std::exception&)
+    catch (const std::exception &)
     {
         return std::nullopt;
     }

@@ -4,7 +4,7 @@
 class CarModel
 {
 public:
-    int carID;
+    int         carID;
     std::string regNo;
     std::string brand;
     std::string model;
