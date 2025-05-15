@@ -19,7 +19,7 @@ void RentalView::Run()
     while (true)
     {
         std::cout << rentalMenu;
-        switch (Input::getInt(1, 5))
+        switch (Input::GetInt(1, 5))
         {
             case 1:
                 addRental(); break;
@@ -36,7 +36,7 @@ void RentalView::Run()
 
 int RentalView::getCustomerID()
 {
-     return customerView.getCustomerID();
+     return customerView.GetCustomerId();
 }
 int RentalView::getCarID(const std::string& startDate, const std::string& endDate)
 {
@@ -44,13 +44,13 @@ int RentalView::getCarID(const std::string& startDate, const std::string& endDat
     std::string searchString;
     int field = 0;
     std::cout << "Press 0, 1, or 2 to select search field\n0: RegNo\n1: Brand\n2: Model\n:";
-    field = Input::getInt(0, 2);
+    field = Input::GetInt(0, 2);
 
     std::cout << "\nInput search string. Press Enter to search. Press enter without search string to list all\n ";
-    searchString = Input::getString();
+    searchString = Input::GetString();
     std::cout << searchString << std::endl;
 
-    std::vector<CarModel> cars = carController.searchCar(searchString, field, startDate, endDate);
+    std::vector<CarModel> cars = carController.SearchCar(searchString, field, startDate, endDate);
     if (cars.empty())
     {
         std::cout << "\n Car not found. Try again";
@@ -58,14 +58,14 @@ int RentalView::getCarID(const std::string& startDate, const std::string& endDat
     }
 
 
-    std::cout << "Found " << cars.size() << " out of " << carController.countCars() << std::endl;
+    std::cout << "Found " << cars.size() << " out of " << carController.CountCars() << std::endl;
     int index = 0;
     for (const auto& car : cars)
     {
         std::cout << index++ << ".\t " << car.regNo << "\t\t" << car.brand << "\t\t" << car.model << std::endl;
     }
     std::cout << "Enter number to choose: ";
-    auto indexCustomer = Input::getInt(0, cars.size()-1); // -1 cuz of 0 index
+    auto indexCustomer = Input::GetInt(0, cars.size()-1); // -1 cuz of 0 index
     return cars[indexCustomer].carID;
 }
 
@@ -80,11 +80,11 @@ bool RentalView::matchesPattern(const std::string& s) {
 std::string RentalView::getStartdate()
 {
     std::cout << "Enter start date [YYYY-MM-DD hh-mm]\n Click enter without entering anything to choose current time:\n ";
-    std::string startDate = Input::getString();
+    std::string startDate = Input::GetString();
     if (startDate.empty())
     {
         std::cout << "Using current date/time: " << startDate << "\n";
-        return Time::getCurrentTime();
+        return Time::GetCurrentTime();
     }
     if (!matchesPattern(startDate))
     {
@@ -96,7 +96,7 @@ std::string RentalView::getStartdate()
 std::string RentalView::getEndDate()
 {
     std::cout << "Enter end date [YYYY-MM-DD hh-mm] : ";
-    std::string endDate = Input::getString();
+    std::string endDate = Input::GetString();
     if (endDate.empty() || !matchesPattern(endDate))
     {
         std::cout << "Invalid date, Try again\n ";
@@ -108,7 +108,7 @@ int RentalView::getRentalID()
 {
     int field = 0;
     std::cout << "Press 0, 1, 2, or 3 to select search field\n 0: Customer \n 1: Car\n 2: Start Date\n 3: End Date\n 4: All rentals\n:";
-    field = Input::getInt(0, 4);
+    field = Input::GetInt(0, 4);
     std::vector<RentalModel> rentals;
     switch (field)
     {
@@ -150,10 +150,10 @@ int RentalView::getRentalID()
     int index = 0;
     for (const auto& rental : rentals)
     {
-        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.dateRented << "\t\t" << rental.dateReturned << std::endl;
+        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.startDate << "\t\t" << rental.endDate << std::endl;
     }
     std::cout << "Enter number to choose: ";
-    auto indexCustomer = Input::getInt(0, rentals.size()-1); // -1 cuz of 0 index
+    auto indexCustomer = Input::GetInt(0, rentals.size()-1); // -1 cuz of 0 index
     return rentals[indexCustomer].rentalID;
 }
 
@@ -176,7 +176,7 @@ void RentalView::addRental()
     std::cout << "Choose car" << std::endl;
     int carID = getCarID(startdate, endDate);
 
-    rentalController.rentCar(customerID, carID,startdate, endDate);
+    rentalController.RentCar(customerID, carID,startdate, endDate);
 }
 void RentalView::editRental()
 {
@@ -188,12 +188,12 @@ void RentalView::editRental()
 
 
     int rentalID = getRentalID();
-     const auto rental = rentalController.getRentalByID(rentalID);
+     const auto rental = rentalController.GetRentalById(rentalID);
     if ( rental == std::nullopt)
     {
         std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
     }
-    std::cout << rental->rentalID << "\t" << rental->customerID << "\t\t" << rental->carID << "\t\t" << rental->dateRented << "\t\t" << rental->dateReturned << std::endl;
+    std::cout << rental->rentalID << "\t" << rental->customerID << "\t\t" << rental->carID << "\t\t" << rental->startDate << "\t\t" << rental->endDate << std::endl;
 
 
     std::cout << "Choose customer" << std::endl;
@@ -231,6 +231,6 @@ void RentalView::listRentals() {
     int index = 0;
     for (const auto& rental : rentals)
     {
-        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.dateRented << "\t\t" << rental.dateReturned << std::endl;
+        std::cout << index++ << ".\t "  << rental.rentalID << "\t" << rental.customerID << "\t\t" << rental.carID << "\t\t" << rental.startDate << "\t\t" << rental.endDate << std::endl;
     }
 }

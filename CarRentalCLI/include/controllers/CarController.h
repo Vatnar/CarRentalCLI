@@ -11,13 +11,13 @@
 class CarController
 {
 public:
-    bool addCar(const std::string& regNo, const std::string& brand, const std::string& model);
-    bool editCar(int id, const std::string& regNo, const std::string& brand, const std::string& model);
-    bool removeCar(int id);
+    bool AddCar(const std::string& regNo, const std::string& brand, const std::string& model);
+    bool EditCar(int id, const std::string& regNo, const std::string& brand, const std::string& model);
+    bool RemoveCar(int id);
 
-    int countCars();
+    int CountCars();
 
-    std::optional<CarModel> getCarByID(int carID);
-    std::vector<CarModel> searchCar(const std::string &searchPhrase, int field, const std::string &startDate = "",
+    std::optional<CarModel> GetCarById(int carID);
+    std::vector<CarModel> SearchCar(const std::string &searchPhrase, int field, const std::string &startDate = "",
         const std::string &endDate = "");
 };

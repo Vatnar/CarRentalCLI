@@ -17,7 +17,7 @@
  * @param email The email address of the customer.
  * @return true if the customer was added successfully, false if an error occurred.
  */
-bool CustomerController::addCustomer(const std::string& name, const std::string& tel, const std::string& email)
+bool CustomerController::AddCustomer(const std::string& name, const std::string& tel, const std::string& email)
 {
     CustomerModel newCustomer {-1, name, tel, email};
 
@@ -43,7 +43,7 @@ bool CustomerController::addCustomer(const std::string& name, const std::string&
  * @param newEmail The new email address for the customer.
  * @return true if the customer was successfully updated, false if an error occurred.
  */
-bool CustomerController::editCustomer(int customerID, std::string& newName, std::string& newTel, std::string& newEmail)
+bool CustomerController::EditCustomer(int customerID, std::string& newName, std::string& newTel, std::string& newEmail)
 {
     auto customer = storage.get<CustomerModel>(customerID);
 
@@ -69,7 +69,7 @@ bool CustomerController::editCustomer(int customerID, std::string& newName, std:
  * @param customerID The ID of the customer to be removed.
  * @return true if the customer was successfully removed, false if an error occurred.
  */
-bool CustomerController::removeCustomer(int customerID)
+bool CustomerController::RemoveCustomer(int customerID)
 {
     try {
         storage.remove<CustomerModel>(customerID);
@@ -88,7 +88,7 @@ bool CustomerController::removeCustomer(int customerID)
  *
  * @return The total number of customers in the storage.
  */
-int CustomerController::countCustomers()
+int CustomerController::CountCustomers()
 {
     auto customerCount = storage.count<CustomerModel>();
     return customerCount;
@@ -104,7 +104,7 @@ int CustomerController::countCustomers()
  * @param searchPhrase The phrase to search for in the customer's name.
  * @return A vector of customers matching the search criteria.
  */
-std::vector<CustomerModel> CustomerController:: searchCustomer(const std::string& searchPhrase)
+std::vector<CustomerModel> CustomerController:: SearchCustomer(const std::string& searchPhrase)
 {
     std::string likePhrase = "%" + searchPhrase + "%";
     std::vector<CustomerModel> customers = storage.get_all<CustomerModel>(
@@ -120,7 +120,7 @@ std::vector<CustomerModel> CustomerController:: searchCustomer(const std::string
  * @param customerID The ID of the customer to retrieve.
  * @return The CustomerModel if found, or std::nullopt if not found.
  */
-std::optional<CustomerModel> CustomerController::getCustomerByID(int id)
+std::optional<CustomerModel> CustomerController::GetCustomerById(int id)
 {
     try
     {
@@ -129,7 +129,7 @@ std::optional<CustomerModel> CustomerController::getCustomerByID(int id)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Error in getCustomerByID: " << e.what() << std::endl;
+        std::cerr << "Error in GetCustomerById: " << e.what() << std::endl;
         return std::nullopt;
     }
 }

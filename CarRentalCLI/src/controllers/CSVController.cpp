@@ -79,8 +79,8 @@ bool CSVController::ExportToCSV(const std::string& filename)
                 "",
                 "",
                 "",
-                rental.dateRented,
-                rental.dateReturned
+                rental.startDate,
+                rental.endDate
             };
 
             doc.SetRow(rowNumber++, row);
@@ -146,8 +146,8 @@ bool CSVController::ImportFromCSV(const std::string& filename)
                 rental.rentalID = std::stoi(rentalID);
                 rental.customerID = std::stoi(customerID);
                 rental.carID = std::stoi(carID);
-                rental.dateRented = startDate;
-                rental.dateReturned = endDate;
+                rental.startDate = startDate;
+                rental.endDate = endDate;
                 storage.insert(rental);
             }
         }

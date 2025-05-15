@@ -19,7 +19,7 @@ public:
     * @param max The maximum allowed value.
     * @return A valid integer input from the user.
     */
-    static int getInt(int min, int max)
+    static int GetInt(int min, int max)
     {
         int input;
 
@@ -57,7 +57,7 @@ public:
      * @param includeChar A character that must be included in the string (default is '\0', meaning no specific character required).
      * @return A valid string input from the user.
      */
-    static std::string getString(bool allowSpaces = true, char includeChar = '\0')
+    static std::string GetString(bool allowSpaces = true, char includeChar = '\0')
     {
         std::string input;
 
@@ -88,7 +88,7 @@ public:
      *
      * @return Formatted current date and time as a string.
      */
-    static std::string getCurrentTime() {
+    static std::string GetCurrentTime() {
         // Get current time
         auto now = std::chrono::system_clock::now();
         std::time_t now_c = std::chrono::system_clock::to_time_t(now);

@@ -24,8 +24,8 @@ inline auto init_storage()
                                     make_column("rentalID", &RentalModel::rentalID, primary_key().autoincrement()),
                                     make_column("customerID", &RentalModel::customerID, not_null()),
                                     make_column("carID", &RentalModel::carID, not_null()),
-                                    make_column("startDate", &RentalModel::dateRented),
-                                    make_column("endDate", &RentalModel::dateReturned)
+                                    make_column("startDate", &RentalModel::startDate),
+                                    make_column("endDate", &RentalModel::endDate)
                                 ));
     return storage;
 }

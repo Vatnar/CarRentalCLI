@@ -16,7 +16,7 @@
  * @param endDate End date of the rental (format: YYYY-MM-DD hh-mm).
  * @return true if the rental was successfully registered, false otherwise.
  */
-bool RentalController::rentCar(int customerID, int carID, const std::string& startDate, const std::string& endDate)
+bool RentalController::RentCar(int customerID, int carID, const std::string& startDate, const std::string& endDate)
 {
     try
     {
@@ -27,7 +27,7 @@ bool RentalController::rentCar(int customerID, int carID, const std::string& sta
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Error in rentCar: " << e.what() << std::endl;
+        std::cerr << "Error in RentCar: " << e.what() << std::endl;
         return false;
     }
 }
@@ -40,19 +40,19 @@ bool RentalController::rentCar(int customerID, int carID, const std::string& sta
  * @param returnDate The date the car was returned (format: YYYY-MM-DD hh-mm).
  * @return true if the rental was successfully updated, false otherwise.
  */
-bool RentalController::returnCar(int rentalID, const std::string& returnDate)
+bool RentalController::ReturnCar(int rentalID, const std::string& returnDate)
 {
     try
     {
         auto rent = storage.get<RentalModel>(rentalID);
-        rent.dateReturned = returnDate;
+        rent.endDate = returnDate;
         storage.update(rent);
         std::cout << "Storage updated successfully" << std::endl;
         return true;
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Error in returnCar: " << e.what() << std::endl;
+        std::cerr << "Error in ReturnCar: " << e.what() << std::endl;
         return false;
     }
 }
@@ -86,10 +86,10 @@ int RentalController::CountActiveRentals()
 {
     try
     {
-        const std::string currentTime = Time::getCurrentTime();
+        const std::string currentTime = Time::GetCurrentTime();
 
         auto count = storage.count<RentalModel>(where(
-            c(&RentalModel::dateReturned) > currentTime)
+            c(&RentalModel::endDate) > currentTime)
             );
         return count;
     }
@@ -108,12 +108,12 @@ int RentalController::CountActiveRentals()
  */
 int RentalController::CountCompletedRentals()
 {
-    const std::string currentTime = Time::getCurrentTime();
+    const std::string currentTime = Time::GetCurrentTime();
 
     try
     {
         auto completedRentalCount = storage.count<RentalModel>(
-            where(c(&RentalModel::dateReturned) < currentTime)
+            where(c(&RentalModel::endDate) < currentTime)
         );
         return completedRentalCount;
     }
@@ -151,10 +151,10 @@ std::vector<RentalModel> RentalController::Search(
                 where(c(&RentalModel::carID) == ID));
         case 2:
             return storage.get_all<RentalModel>(
-                where(like(&RentalModel::dateRented, likePhrase)));
+                where(like(&RentalModel::startDate, likePhrase)));
         case 3:
             return storage.get_all<RentalModel>(
-                where(like(&RentalModel::dateReturned, likePhrase)));
+                where(like(&RentalModel::endDate, likePhrase)));
         case 4:
             return storage.get_all<RentalModel>();
         default:
@@ -186,8 +186,8 @@ bool RentalController::EditRental(int rentalID, const std::string& newStartDate,
     {
         auto rent = storage.get<RentalModel>(rentalID);
 
-        rent.dateRented = newStartDate;
-        rent.dateReturned = newEndDate;
+        rent.startDate = newStartDate;
+        rent.endDate = newEndDate;
         rent.customerID = newCustomerID;
         rent.carID = newCarID;
         storage.update(rent);
@@ -232,7 +232,7 @@ bool RentalController::RemoveRental(int rentalID)
  * @param rentalID The ID of the rental to retrieve.
  * @return The RentalModel if found, or std::nullopt if not found.
  */
-std::optional<RentalModel> RentalController::getRentalByID(int rentalID)
+std::optional<RentalModel> RentalController::GetRentalById(int rentalID)
 {
     try
     {

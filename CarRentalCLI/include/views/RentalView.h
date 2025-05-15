@@ -18,7 +18,7 @@ public:
      */
     void Run() override;
 
-protected:
+private:
     int getCustomerID();
 
     /**

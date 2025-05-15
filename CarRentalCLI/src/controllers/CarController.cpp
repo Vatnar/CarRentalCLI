@@ -17,7 +17,7 @@
  * @param model The model of the car.
  * @return true if the car was added successfully, false if an error occurred.
  */
-bool CarController::addCar(const std::string& regNo, const std::string& brand, const std::string& model)
+bool CarController::AddCar(const std::string& regNo, const std::string& brand, const std::string& model)
 {
     CarModel newCar {-1, regNo, brand, model};
 
@@ -43,7 +43,7 @@ bool CarController::addCar(const std::string& regNo, const std::string& brand, c
  * @param newModel The new model for the car.
  * @return true if the car was successfully updated, false if an error occurred.
  */
-bool CarController::editCar(int carID, const std::string& newRegNo, const std::string& newBrand, const std::string& newModel)
+bool CarController::EditCar(int carID, const std::string& newRegNo, const std::string& newBrand, const std::string& newModel)
 {
     auto car = storage.get<CarModel>(carID);
 
@@ -69,7 +69,7 @@ bool CarController::editCar(int carID, const std::string& newRegNo, const std::s
  * @param carID The ID of the car to be removed.
  * @return true if the car was successfully removed, false if an error occurred.
  */
-bool CarController::removeCar(int carID)
+bool CarController::RemoveCar(int carID)
 {
     try
     {
@@ -89,7 +89,7 @@ bool CarController::removeCar(int carID)
  *
  * @return The total number of cars in the storage.
  */
-int CarController::countCars()
+int CarController::CountCars()
 {
     auto carCount = storage.count<CarModel>();
     return carCount;
@@ -108,7 +108,7 @@ int CarController::countCars()
  * @param endDate The end date of the rental period (optional).
  * @return A vector of cars matching the search criteria, including availability based on the rental dates.
  */
-std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, int field,
+std::vector<CarModel> CarController::SearchCar(const std::string& searchPhrase, int field,
                                                const std::string& startDate, const std::string& endDate)
 {
     std::string likePhrase = "%" + searchPhrase + "%";
@@ -138,8 +138,8 @@ std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, 
 
     // Rentals that are within the time frame
     auto conflictingRentals = storage.get_all<RentalModel>(
-        where(c(&RentalModel::dateRented) <= endDate &&
-              c(&RentalModel::dateReturned) >= startDate));
+        where(c(&RentalModel::startDate) <= endDate &&
+              c(&RentalModel::endDate) >= startDate));
 
     // IDs of unavailable cars
     std::unordered_set<int> unavailableCarIDs;
@@ -164,7 +164,7 @@ std::vector<CarModel> CarController::searchCar(const std::string& searchPhrase, 
  * @param carID The ID of the car to retrieve.
  * @return The CarModel if found, or std::nullopt if not found.
  */
-std::optional<CarModel> CarController::getCarByID(int id)
+std::optional<CarModel> CarController::GetCarById(int id)
 {
     try
     {
@@ -173,7 +173,7 @@ std::optional<CarModel> CarController::getCarByID(int id)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Error in getCarByID: " << e.what() << std::endl;
+        std::cerr << "Error in GetCarById: " << e.what() << std::endl;
         return std::nullopt;
     }
 }

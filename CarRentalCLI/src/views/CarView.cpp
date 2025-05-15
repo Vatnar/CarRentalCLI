@@ -13,7 +13,7 @@ void CarView::Run()
     while (true)
     {
         std::cout << carMenu;
-        switch (Input::getInt(1, 5))
+        switch (Input::GetInt(1, 5))
         {
             case 1:
                 addCar(); break;
@@ -43,7 +43,7 @@ bool CarView::isValidReg(const std::string& s) {
 void CarView::getReg(std::string &reg)
 {
     std::cout << "Enter the registration number";
-    reg = Input::getString(false);
+    reg = Input::GetString(false);
 
     if (reg.empty() || !isValidReg(reg))
     {
@@ -54,7 +54,7 @@ void CarView::getReg(std::string &reg)
 void CarView::getBrand(std::string &brand)
 {
     std::cout << "Enter the brand name: ";
-    brand = Input::getString();
+    brand = Input::GetString();
     if (brand.empty())
     {
         std::cout << "Invalid brand, Try again: ";
@@ -64,7 +64,7 @@ void CarView::getBrand(std::string &brand)
 void CarView::getModel(std::string &model)
 {
     std::cout << "Enter the model name: ";
-    model = Input::getString();
+    model = Input::GetString();
     if (model.empty())
     {
         std::cout << "Invalid model, Try again: ";
@@ -85,7 +85,7 @@ void CarView::addCar()
     getBrand(brand);
     getModel(model);
 
-    carController.addCar(reg, brand, model);
+    carController.AddCar(reg, brand, model);
 }
 void CarView::editCar()
 {
@@ -98,7 +98,7 @@ void CarView::editCar()
     int carID = getCarID();
     std::string reg, brand, model;
 
-    const auto car = carController.getCarByID(carID);
+    const auto car = carController.GetCarById(carID);
     if ( car == std::nullopt)
     {
         std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
@@ -108,7 +108,7 @@ void CarView::editCar()
     getBrand(brand);
     getModel(model);
 
-    carController.editCar(carID, reg, brand, model);
+    carController.EditCar(carID, reg, brand, model);
 }
 void CarView::removeCar()
 {
@@ -120,12 +120,12 @@ void CarView::removeCar()
 
     int carID = getCarID();
 
-    carController.removeCar(carID);
+    carController.RemoveCar(carID);
 }
 
 void CarView::listCars()
 {
-    std::vector<CarModel> cars = carController.searchCar("", 1);
+    std::vector<CarModel> cars = carController.SearchCar("", 1);
     if (cars.empty())
     {
         std::cout << " No cars in system\n";
@@ -144,26 +144,26 @@ int CarView::getCarID()
     std::string searchString;
     int field = 0;
     std::cout << "Press 0, 1, or 2 to select search field\n0: RegNo\n1: Brand\n2: Model\n:";
-    field = Input::getInt(0, 2);
+    field = Input::GetInt(0, 2);
 
     std::cout << "\nInput search string. Press Enter to search. Press enter without search string to list all\n ";
-    searchString = Input::getString();
+    searchString = Input::GetString();
     std::cout << searchString << std::endl;
 
-    std::vector<CarModel> cars = carController.searchCar(searchString, field);
+    std::vector<CarModel> cars = carController.SearchCar(searchString, field);
     if (cars.empty())
     {
         std::cout << "\n Car not found. Try again";
         return getCarID();
     }
-    std::cout << "Found " << cars.size() << " out of " << carController.countCars() << std::endl;
+    std::cout << "Found " << cars.size() << " out of " << carController.CountCars() << std::endl;
     int index = 0;
     for (const auto& car : cars)
     {
         std::cout << index++ << ".\t " << car.regNo << "\t\t" << car.brand << "\t\t" << car.model << std::endl;
     }
     std::cout << "Enter number to choose: ";
-    auto indexCustomer = Input::getInt(0, cars.size()-1); // -1 cuz of 0 index
+    auto indexCustomer = Input::GetInt(0, cars.size()-1); // -1 cuz of 0 index
     return cars[indexCustomer].carID;
 }
 

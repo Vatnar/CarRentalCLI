@@ -8,7 +8,7 @@ void MainView::Run()
     while (true)
     {
         std::cout << mainMenu;
-        int choice = Input::getInt(1, 6);
+        int choice = Input::GetInt(1, 6);
 
         switch (choice)
         {

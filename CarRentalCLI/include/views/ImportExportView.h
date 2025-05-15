@@ -10,6 +10,10 @@ public:
     ImportExportView();
     void Run() override;
 private:
+    void importcsv();
+    void exportcsv();
+    CSVController csvController;
+
     std::string importExportMenu = R"MENU(
 ==================================
           IMPORT/EXPORT
@@ -20,7 +24,5 @@ private:
 ==================================
 Please enter your choice:
 )MENU";
-    void Import();
-    void Export();
-    CSVController csvController;
+
 };

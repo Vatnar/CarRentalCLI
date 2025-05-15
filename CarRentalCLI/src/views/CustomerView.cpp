@@ -12,7 +12,7 @@ void CustomerView::Run()
     while (true)
     {
         std::cout << customerMenu;
-        switch (Input::getInt(1, 5))
+        switch (Input::GetInt(1, 5))
         {
             case 1:
                 addCustomer(); break;
@@ -31,7 +31,7 @@ void CustomerView::Run()
 
 void CustomerView::getName(std::string &name) {
     std::cout << "Enter name: ";
-    name = Input::getString();
+    name = Input::GetString();
     if (name.empty())
     {
         std::cout << "\n Invalid name, Try again";
@@ -42,7 +42,7 @@ void CustomerView::getName(std::string &name) {
 
 void CustomerView::getTel(std::string &tel) {
     std::cout << "\n Enter telephone number: ";
-    tel = Input::getString(false);
+    tel = Input::GetString(false);
     if (tel.empty())
     {
         std::cout << "\n Invalid telephone number;";
@@ -53,7 +53,7 @@ void CustomerView::getTel(std::string &tel) {
 
 void CustomerView::getEmail(std::string &email) {
     std::cout << "\n Enter email: ";
-    email = Input::getString(false, '@');
+    email = Input::GetString(false, '@');
     if (email.empty())
     {
         std::cout << "\n Invalid email, Try again. Format: example@example.org";
@@ -74,7 +74,7 @@ void CustomerView::addCustomer()
     getTel(tel);
     getEmail(email);
 
-    customerController.addCustomer(name, tel, email);
+    customerController.AddCustomer(name, tel, email);
 }
 
 
@@ -86,9 +86,9 @@ void CustomerView::editCustomer() {
 ==================================
     )MENU" << std::endl;
 
-    int customerID = getCustomerID();
+    int customerID = GetCustomerId();
     std::string name, tel, email;
-     const auto customer = customerController.getCustomerByID(customerID);
+     const auto customer = customerController.GetCustomerById(customerID);
     if ( customer == std::nullopt)
     {
         std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
@@ -99,7 +99,7 @@ void CustomerView::editCustomer() {
     getTel(tel);
     getEmail(email);
 
-    customerController.editCustomer(customerID, name, tel, email);
+    customerController.EditCustomer(customerID, name, tel, email);
 }
 
 void CustomerView::removeCustomer()
@@ -110,13 +110,13 @@ void CustomerView::removeCustomer()
 ==================================
     )MENU" << std::endl;
 
-    int customerID = getCustomerID();
+    int customerID = GetCustomerId();
 
-    customerController.removeCustomer(customerID);
+    customerController.RemoveCustomer(customerID);
 }
 
 void CustomerView::listCustomers() {
-    std::vector<CustomerModel> customers = customerController.searchCustomer("");
+    std::vector<CustomerModel> customers = customerController.SearchCustomer("");
     if (customers.empty())
     {
         std::cout << " No customers in system\n";
@@ -131,25 +131,25 @@ void CustomerView::listCustomers() {
 }
 
 
-int CustomerView::getCustomerID() {
+int CustomerView::GetCustomerId() {
     std::string searchString;
     std::cout << "Input search string. Press Enter to search. Press enter without search string to list all\n ";
-    searchString = Input::getString();
+    searchString = Input::GetString();
     std::cout << searchString << std::endl;
 
-    std::vector<CustomerModel> customers = customerController.searchCustomer(searchString);
+    std::vector<CustomerModel> customers = customerController.SearchCustomer(searchString);
     if (customers.empty())
     {
         std::cout << "\n Customer not found. Try again" << std::endl;
-        return getCustomerID();
+        return GetCustomerId();
     }
-    std::cout << "Found " << customers.size() << " out of " << customerController.countCustomers() << std::endl;
+    std::cout << "Found " << customers.size() << " out of " << customerController.CountCustomers() << std::endl;
     int index = 0;
     for (const auto& customer : customers)
     {
         std::cout << index++ << ".\t " << customer.name << "\t\t" << customer.tel << "\t\t" << customer.email << std::endl;
     }
     std::cout << "Enter number to choose: ";
-    auto indexCustomer = Input::getInt(0, customers.size()-1); // -1 cuz of 0 index
+    auto indexCustomer = Input::GetInt(0, customers.size()-1); // -1 cuz of 0 index
     return customers[indexCustomer].customerID;
 }

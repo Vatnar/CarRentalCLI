@@ -11,14 +11,14 @@
 class RentalController
 {
     public:
-    bool rentCar(int customerID, int carID, const std::string &startDate, const std::string &endDate);
-    bool returnCar(int rentalID, const std::string& returnDate);
+    bool RentCar(int customerID, int carID, const std::string &startDate, const std::string &endDate);
+    bool ReturnCar(int rentalID, const std::string& returnDate);
 
     int CountRentals();
     int CountActiveRentals();
     int CountCompletedRentals();
 
-    std::optional<RentalModel> getRentalByID(int rentalID);
+    std::optional<RentalModel> GetRentalById(int rentalID);
     std::vector<RentalModel> Search(const std::string &searchPhrase, int field, int ID = -1);
 
     bool EditRental(int rentalID, const std::string& startDate, const std::string& endDate, int customerID, int carID);

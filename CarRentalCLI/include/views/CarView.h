@@ -21,7 +21,7 @@ public:
      */
     int getCarID();
 
-protected:
+private:
     /**
      * Checks wether or not input regNo is valid
      * @param s string to check
