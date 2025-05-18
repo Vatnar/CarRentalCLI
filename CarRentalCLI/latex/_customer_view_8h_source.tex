@@ -1,0 +1,53 @@
+\doxysection{Customer\+View.\+h}
+\hypertarget{_customer_view_8h_source}{}\label{_customer_view_8h_source}\index{include/views/CustomerView.h@{include/views/CustomerView.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}View.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}controllers/CustomerController.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_customer_view_a41fb37a1e8b485087ce44906e8aafc97}{CustomerView}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_view}{View}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \mbox{\hyperlink{class_customer_view_a41fb37a1e8b485087ce44906e8aafc97}{CustomerView}}();}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_customer_view_aa0a10d57bb54e9b8a852e2f6b48dea2d}{Run}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00025\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_customer_view_afa8ada2dd9b3b9c4a07525a1811089bc}{GetCustomerId}}();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00033\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_customer_view_ada4a2b0085caf5c810456ee6e011451c}{getName}}(std::string\ \&name);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00039\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_customer_view_a0312d9f06e9731f6a8d910828ec28723}{getTel}}(std::string\ \&tel);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00045\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_customer_view_a6bc1cac2fb81bc8199d6673b37066f9e}{getEmail}}(std::string\ \&email);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00051\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_customer_view_a924191572ae69a68e519dd58bfb17d4f}{addCustomer}}();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00056\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_customer_view_adf60f70fa8a654f35bbaf64e1e23293c}{editCustomer}}();}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00061\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_customer_view_a9e412ec021112d158e0ba5953b6d2450}{removeCustomer}}();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \textcolor{keywordtype}{void}\ listCustomers();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ std::string\ \ \ \ \ \ \ \ customerMenu\ =\ R\textcolor{stringliteral}{"{}MENU(}}
+\DoxyCodeLine{00066\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00067\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ CUSTOMERS}}
+\DoxyCodeLine{00068\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00069\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 1.\ ADD\ CUSTOMER}}
+\DoxyCodeLine{00070\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 2.\ EDIT\ CUSTOMER}}
+\DoxyCodeLine{00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 3.\ REMOVE\ CUSTOMER}}
+\DoxyCodeLine{00072\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 4.\ LIST\ CUSTOMERS}}
+\DoxyCodeLine{00073\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 5.\ RETURN\ TO\ MENU}}
+\DoxyCodeLine{00074\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00075\ \textcolor{stringliteral}{Please\ enter\ your\ choice:}}
+\DoxyCodeLine{00076\ \textcolor{stringliteral}{)MENU"{};}}
+\DoxyCodeLine{00077\ \textcolor{stringliteral}{\ \ \ \mbox{\hyperlink{class_customer_controller}{CustomerController}}\ customerController;}}
+\DoxyCodeLine{00078\ \textcolor{stringliteral}{\};}}
+
+\end{DoxyCode}

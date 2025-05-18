@@ -1,0 +1,1599 @@
+\doxysection{rapidcsv.\+h}
+\hypertarget{rapidcsv_8h_source}{}\label{rapidcsv_8h_source}\index{vendor/rapidcsv/rapidcsv.h@{vendor/rapidcsv/rapidcsv.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ rapidcsv.h}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ URL:\ \ \ \ \ \ https://github.com/d99kris/rapidcsv}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ Version:\ \ 8.87}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2017-\/2025\ Kristofer\ Berggren}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ All\ rights\ reserved.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ rapidcsv\ is\ distributed\ under\ the\ BSD\ 3-\/Clause\ license,\ see\ LICENSE\ for\ details.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifdef\ HAS\_CODECVT}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <codecvt>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <locale>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{namespace\ }rapidcsv}
+\DoxyCodeLine{00035\ \{}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{00037\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ sPlatformHasCR\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ sPlatformHasCR\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::vector<char>\ s\_Utf8BOM\ =\ \{\textcolor{stringliteral}{'\(\backslash\)xef'},\ \textcolor{stringliteral}{'\(\backslash\)xbb'},\ \textcolor{stringliteral}{'\(\backslash\)xbf'}\};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrapidcsv_1_1_converter_params_a9ce85a6fd120b3ecb08c29e2727cd52e}{ConverterParams}}}
+\DoxyCodeLine{00048\ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_a9ce85a6fd120b3ecb08c29e2727cd52e}{ConverterParams}}(}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ pHasDefaultConverter\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ pDefaultFloat\ \ \ \ \ \ \ \ =\ std::numeric\_limits<\textcolor{keywordtype}{long}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}>::signaling\_NaN(),}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ pDefaultInteger\ =\ 0,}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \ \ \ \ \ pNumericLocale\ \ =\ \textcolor{keyword}{true})}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_acc9b157c2646d342e42467813e5972d3}{mHasDefaultConverter}}(pHasDefaultConverter)}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_a1d1362d122cc65b288fb9d85c5a209b6}{mDefaultFloat}}(pDefaultFloat)}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_aaba94d37670fb1d637d40113400b34d9}{mDefaultInteger}}(pDefaultInteger)}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_af8860c14e6e5e9eab8595ec2dd8a7bfa}{mNumericLocale}}(pNumericLocale)}
+\DoxyCodeLine{00069\ \ \ \ \ \{\}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_acc9b157c2646d342e42467813e5972d3}{mHasDefaultConverter}};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_a1d1362d122cc65b288fb9d85c5a209b6}{mDefaultFloat}};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_aaba94d37670fb1d637d40113400b34d9}{mDefaultInteger}};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params_af8860c14e6e5e9eab8595ec2dd8a7bfa}{mNumericLocale}};}
+\DoxyCodeLine{00091\ \ \ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classrapidcsv_1_1no__converter}{no\_converter}}\ :\ \textcolor{keyword}{public}\ std::exception}
+\DoxyCodeLine{00098\ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{classrapidcsv_1_1no__converter_a8d61f928ca273a85ef8194dbe8f889e2}{what}}()\ \textcolor{keyword}{const}\ throw()\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00105\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}unsupported\ conversion\ datatype"{}};}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00115\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00116\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classrapidcsv_1_1_converter_a8f7de9557f32e24abb022bc9d52ae2e2}{Converter}}}
+\DoxyCodeLine{00117\ \ \ \{}
+\DoxyCodeLine{00118\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter_a8f7de9557f32e24abb022bc9d52ae2e2}{Converter}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}\ \&pConverterParams)}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ :\ mConverterParams(pConverterParams)}
+\DoxyCodeLine{00126\ \ \ \ \ \{\}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_converter_a114b87c39563c7777ad79fa8eb50c8e5}{ToStr}}(\textcolor{keyword}{const}\ T\ \&pVal,\ std::string\ \&pStr)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00134\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{int})\ ||}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{long})\ ||}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})\ ||}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{unsigned})\ ||}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})\ ||}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})\ ||}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double})\ ||}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{char}))}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ std::ostringstream\ out;}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ out\ <<\ pVal;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ pStr\ =\ out.str();}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{float}))}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ std::ostringstream\ out;}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ out\ <<\ std::setprecision(9)\ <<\ pVal;}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ pStr\ =\ out.str();}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{double}))}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ std::ostringstream\ out;}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ out\ <<\ std::setprecision(17)\ <<\ pVal;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ pStr\ =\ out.str();}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classrapidcsv_1_1no__converter}{no\_converter}}();}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_converter_a827c54e8cbe86cdb8e315d3382dfcbba}{ToVal}}(\textcolor{keyword}{const}\ std::string\ \&pStr,\ T\ \&pVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00169\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{int}))}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stoi(pStr));}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{long}))}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stol(pStr));}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}))}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stoll(pStr));}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{unsigned}))}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stoul(pStr));}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}))}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stoul(pStr));}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}))}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stoull(pStr));}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \textcolor{keywordflow}{catch}\ (...)}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!mConverterParams.mHasDefaultConverter)}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(mConverterParams.mDefaultInteger);}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mConverterParams.mNumericLocale)}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{float}))}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stof(pStr));}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{double}))}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stod(pStr));}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}))}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(std::stold(pStr));}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{float}))\ ||}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{double}))\ ||}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double})))}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ std::istringstream\ iss(pStr);}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ iss.imbue(std::locale::classic());}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ iss\ >>\ pVal;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iss.fail()\ ||\ iss.bad()\ ||\ !iss.eof())}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}istringstream:\ no\ conversion"{}});}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \textcolor{keywordflow}{catch}\ (...)}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!mConverterParams.mHasDefaultConverter)}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(mConverterParams.mDefaultFloat);}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{typeid}(T)\ ==\ \textcolor{keyword}{typeid}(\textcolor{keywordtype}{char}))}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ pVal\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(pStr[0]);}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classrapidcsv_1_1no__converter}{no\_converter}}();}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00264\ \ \ \ \ \}}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}\ \&mConverterParams;}
+\DoxyCodeLine{00268\ \ \ \};}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00275\ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00276\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_converter_a114b87c39563c7777ad79fa8eb50c8e5}{Converter<std::string>::ToStr}}(}
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pVal,\ std::string\ \&pStr)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00278\ \textcolor{keyword}{\ \ }\{}
+\DoxyCodeLine{00279\ \ \ \ \ pStr\ =\ pVal;}
+\DoxyCodeLine{00280\ \ \ \}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00287\ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00288\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_converter_a827c54e8cbe86cdb8e315d3382dfcbba}{Converter<std::string>::ToVal}}(}
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pStr,\ std::string\ \&pVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00290\ \textcolor{keyword}{\ \ }\{}
+\DoxyCodeLine{00291\ \ \ \ \ pVal\ =\ pStr;}
+\DoxyCodeLine{00292\ \ \ \}}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00295\ \ \ \textcolor{keyword}{using\ }ConvFunc\ =\ std::function<void\ (\textcolor{keyword}{const}\ std::string\ \&pStr,\ T\ \&pVal)>;}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00301\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrapidcsv_1_1_label_params_a410048d60e7012e586e40d15692b748a}{LabelParams}}}
+\DoxyCodeLine{00302\ \ \ \{}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structrapidcsv_1_1_label_params_a410048d60e7012e586e40d15692b748a}{LabelParams}}(}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ pColumnNameIdx\ =\ 0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ pRowNameIdx\ =\ -\/1)}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structrapidcsv_1_1_label_params_a564b7a874bbcb23fdd4ca68dd6f8e3c8}{mColumnNameIdx}}(pColumnNameIdx)}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_label_params_a273e7fb70b4bb41bd9db2654adbffd5e}{mRowNameIdx}}(pRowNameIdx)}
+\DoxyCodeLine{00316\ \ \ \ \ \{}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structrapidcsv_1_1_label_params_a564b7a874bbcb23fdd4ca68dd6f8e3c8}{mColumnNameIdx}}\ <\ -\/1)}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ errStr\ =\ \textcolor{stringliteral}{"{}invalid\ column\ name\ index\ "{}}\ +}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(\mbox{\hyperlink{structrapidcsv_1_1_label_params_a564b7a874bbcb23fdd4ca68dd6f8e3c8}{mColumnNameIdx}})\ +\ \textcolor{stringliteral}{"{}\ <\ -\/1"{}};}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(errStr);}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structrapidcsv_1_1_label_params_a273e7fb70b4bb41bd9db2654adbffd5e}{mRowNameIdx}}\ <\ -\/1)}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ errStr\ =\ \textcolor{stringliteral}{"{}invalid\ row\ name\ index\ "{}}\ +}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(\mbox{\hyperlink{structrapidcsv_1_1_label_params_a273e7fb70b4bb41bd9db2654adbffd5e}{mRowNameIdx}})\ +\ \textcolor{stringliteral}{"{}\ <\ -\/1"{}};}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(errStr);}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00330\ \ \ \ \ \}}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structrapidcsv_1_1_label_params_a564b7a874bbcb23fdd4ca68dd6f8e3c8}{mColumnNameIdx}};}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structrapidcsv_1_1_label_params_a273e7fb70b4bb41bd9db2654adbffd5e}{mRowNameIdx}};}
+\DoxyCodeLine{00341\ \ \ \};}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00346\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrapidcsv_1_1_separator_params_af6642a61308b0051142207eb5161115e}{SeparatorParams}}}
+\DoxyCodeLine{00347\ \ \ \{}
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_af6642a61308b0051142207eb5161115e}{SeparatorParams}}(}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ pSeparator\ =\ \textcolor{charliteral}{','},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ pTrim\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ pHasCR\ =\ sPlatformHasCR,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ pQuotedLinebreaks\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ pAutoQuote\ =\ \textcolor{keyword}{true},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ pQuoteChar\ =\ \textcolor{charliteral}{'"{}'})}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a8231e02d3e6b917675f30071d39eaebb}{mSeparator}}(pSeparator)}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a188b1488d2ef5f53e28b156dc9926695}{mTrim}}(pTrim)}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a7f441773d773c69e1ed138164d3d1120}{mHasCR}}(pHasCR)}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a0d4cdda7636deba424ed2312fe3c87e0}{mQuotedLinebreaks}}(pQuotedLinebreaks)}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_ae63043bd2471b4ab0c4af34ce042ac47}{mAutoQuote}}(pAutoQuote)}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a24335b1fc23b0eb350f142b52da53d1d}{mQuoteChar}}(pQuoteChar)}
+\DoxyCodeLine{00371\ \ \ \ \ \{\}}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a8231e02d3e6b917675f30071d39eaebb}{mSeparator}};}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00381\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a188b1488d2ef5f53e28b156dc9926695}{mTrim}};}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a7f441773d773c69e1ed138164d3d1120}{mHasCR}};}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00391\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a0d4cdda7636deba424ed2312fe3c87e0}{mQuotedLinebreaks}};}
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00396\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_ae63043bd2471b4ab0c4af34ce042ac47}{mAutoQuote}};}
+\DoxyCodeLine{00397\ }
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params_a24335b1fc23b0eb350f142b52da53d1d}{mQuoteChar}};}
+\DoxyCodeLine{00402\ \ \ \};}
+\DoxyCodeLine{00403\ }
+\DoxyCodeLine{00408\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_ac503972c8771dca468a07b670c4e5be5}{LineReaderParams}}}
+\DoxyCodeLine{00409\ \ \ \{}
+\DoxyCodeLine{00418\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_ac503972c8771dca468a07b670c4e5be5}{LineReaderParams}}(}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ pSkipCommentLines\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ pCommentPrefix\ \ \ \ =\ \textcolor{charliteral}{'\#'},}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ pSkipEmptyLines\ \ \ =\ \textcolor{keyword}{false})}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_a1edac9abdc5a33fc06cc01ef46c90ef6}{mSkipCommentLines}}(pSkipCommentLines)}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_a63969673b0bf1517d537c7efb172b1c0}{mCommentPrefix}}(pCommentPrefix)}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ ,\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_a85a5a9c3de206585bd0461a0b6126428}{mSkipEmptyLines}}(pSkipEmptyLines)}
+\DoxyCodeLine{00425\ \ \ \ \ \{\}}
+\DoxyCodeLine{00426\ }
+\DoxyCodeLine{00430\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_a1edac9abdc5a33fc06cc01ef46c90ef6}{mSkipCommentLines}};}
+\DoxyCodeLine{00431\ }
+\DoxyCodeLine{00435\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_a63969673b0bf1517d537c7efb172b1c0}{mCommentPrefix}};}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00440\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params_a85a5a9c3de206585bd0461a0b6126428}{mSkipEmptyLines}};}
+\DoxyCodeLine{00441\ \ \ \};}
+\DoxyCodeLine{00442\ }
+\DoxyCodeLine{00446\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classrapidcsv_1_1_document_a3c8a1c6cc0deeb5e57f0db75ccb52878}{Document}}}
+\DoxyCodeLine{00447\ \ \ \{}
+\DoxyCodeLine{00448\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00459\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a3c8a1c6cc0deeb5e57f0db75ccb52878}{Document}}(}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&\ \ \ \ \ pPath\ \ \ \ \ \ \ \ \ \ \ \ \ =\ std::string(),}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}\ \&\ \ \ \ \ pLabelParams\ \ \ \ \ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}(),}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}\ \&\ pSeparatorParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}(),}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}\ \&\ pConverterParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}(),}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}\ \&pLineReaderParams\ =\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}())}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ :\ mPath(pPath)}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ ,\ mLabelParams(pLabelParams)}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ ,\ mSeparatorParams(pSeparatorParams)}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ ,\ mConverterParams(pConverterParams)}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ ,\ mLineReaderParams(pLineReaderParams)}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ ,\ mData()}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ ,\ mColumnNames()}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ ,\ mRowNames()}
+\DoxyCodeLine{00473\ \ \ \ \ \{}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!mPath.empty())}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ ReadCsv();}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00478\ \ \ \ \ \}}
+\DoxyCodeLine{00479\ }
+\DoxyCodeLine{00489\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae340e319fcc66598df359b780f768346}{Document}}(}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ std::istream\ \&\ \ \ \ \ \ \ \ \ \ pStream,}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}\ \&\ \ \ \ \ pLabelParams\ \ \ \ \ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}(),}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}\ \&\ pSeparatorParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}(),}
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}\ \&\ pConverterParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}(),}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}\ \&pLineReaderParams\ =\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}())}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ :\ mPath()}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ ,\ mLabelParams(pLabelParams)}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ ,\ mSeparatorParams(pSeparatorParams)}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ ,\ mConverterParams(pConverterParams)}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ ,\ mLineReaderParams(pLineReaderParams)}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ ,\ mData()}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ ,\ mColumnNames()}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ ,\ mRowNames()}
+\DoxyCodeLine{00503\ \ \ \ \ \{}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ ReadCsv(pStream);}
+\DoxyCodeLine{00505\ \ \ \ \ \}}
+\DoxyCodeLine{00506\ }
+\DoxyCodeLine{00517\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a7036c131dbfe536760bc715052b8e6f6}{Load}}(}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&\ \ \ \ \ pPath,}
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}\ \&\ \ \ \ \ pLabelParams\ \ \ \ \ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}(),}
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}\ \&\ pSeparatorParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}(),}
+\DoxyCodeLine{00521\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}\ \&\ pConverterParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}(),}
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}\ \&pLineReaderParams\ =\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}())}
+\DoxyCodeLine{00523\ \ \ \ \ \{}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ mPath\ \ \ \ \ \ \ \ \ \ \ \ \ =\ pPath;}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ mLabelParams\ \ \ \ \ \ =\ pLabelParams;}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ mSeparatorParams\ \ =\ pSeparatorParams;}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ mConverterParams\ \ =\ pConverterParams;}
+\DoxyCodeLine{00528\ \ \ \ \ \ \ mLineReaderParams\ =\ pLineReaderParams;}
+\DoxyCodeLine{00529\ \ \ \ \ \ \ ReadCsv();}
+\DoxyCodeLine{00530\ \ \ \ \ \}}
+\DoxyCodeLine{00531\ }
+\DoxyCodeLine{00541\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ac8f256b27db75652d6539bb6f23cdc23}{Load}}(}
+\DoxyCodeLine{00542\ \ \ \ \ \ \ std::istream\ \&\ \ \ \ \ \ \ \ \ \ pStream,}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}\ \&\ \ \ \ \ pLabelParams\ \ \ \ \ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_label_params}{LabelParams}}(),}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}\ \&\ pSeparatorParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_separator_params}{SeparatorParams}}(),}
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}\ \&\ pConverterParams\ \ =\ \mbox{\hyperlink{structrapidcsv_1_1_converter_params}{ConverterParams}}(),}
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}\ \&pLineReaderParams\ =\ \mbox{\hyperlink{structrapidcsv_1_1_line_reader_params}{LineReaderParams}}())}
+\DoxyCodeLine{00547\ \ \ \ \ \{}
+\DoxyCodeLine{00548\ \ \ \ \ \ \ mPath\ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ mLabelParams\ \ \ \ \ \ =\ pLabelParams;}
+\DoxyCodeLine{00550\ \ \ \ \ \ \ mSeparatorParams\ \ =\ pSeparatorParams;}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ mConverterParams\ \ =\ pConverterParams;}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ mLineReaderParams\ =\ pLineReaderParams;}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ ReadCsv(pStream);}
+\DoxyCodeLine{00554\ \ \ \ \ \}}
+\DoxyCodeLine{00555\ }
+\DoxyCodeLine{00562\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a9a20f5cb294ac8e28d312dc3665957fe}{Save}}(\textcolor{keyword}{const}\ std::string\ \&pPath\ =\ std::string())}
+\DoxyCodeLine{00563\ \ \ \ \ \{}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!pPath.empty())}
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ mPath\ =\ pPath;}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ WriteCsv();}
+\DoxyCodeLine{00569\ \ \ \ \ \}}
+\DoxyCodeLine{00570\ }
+\DoxyCodeLine{00575\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ad01b5af31303549a6202583937fe4f77}{Save}}(std::ostream\ \&pStream)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00576\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00577\ \ \ \ \ \ \ WriteCsv(pStream);}
+\DoxyCodeLine{00578\ \ \ \ \ \}}
+\DoxyCodeLine{00579\ }
+\DoxyCodeLine{00584\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a3ba6776a6490dc1a276a2767c5164f24}{Clear}}()}
+\DoxyCodeLine{00585\ \ \ \ \ \{}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ mData.clear();}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ mColumnNames.clear();}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ mRowNames.clear();}
+\DoxyCodeLine{00589\ \textcolor{preprocessor}{\#ifdef\ HAS\_CODECVT}}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ mIsUtf16\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ mIsLE\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00592\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ mHasUtf8BOM\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00594\ \ \ \ \ \}}
+\DoxyCodeLine{00595\ }
+\DoxyCodeLine{00601\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(\textcolor{keyword}{const}\ std::string\ \&pColumnName)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00602\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00603\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mColumnNameIdx\ >=\ 0)}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mColumnNames.find(pColumnName)\ !=\ mColumnNames.end())}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(mColumnNames.at(pColumnName))\ -\/\ (}
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mRowNameIdx\ +\ 1);}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00612\ \ \ \ \ \}}
+\DoxyCodeLine{00613\ }
+\DoxyCodeLine{00619\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00620\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a6aae631d0697a9562241675947216a4e}{GetColumn}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00621\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \ \ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ std::vector<T>\ column;}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ \ \ converter(mConverterParams);}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >\ mLabelParams.mColumnNameIdx)}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dataColumnIdx\ <\ itRow-\/>size())}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ \ \ T\ val;}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a827c54e8cbe86cdb8e315d3382dfcbba}{ToVal}}(itRow-\/>at(dataColumnIdx),\ val);}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \ \ column.push\_back(val);}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ errStr\ =\ \textcolor{stringliteral}{"{}requested\ column\ index\ "{}}\ +}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(pColumnIdx)\ +\ \textcolor{stringliteral}{"{}\ >=\ "{}}\ +}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>size()\ -\/\ GetDataColumnIndex(0))}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +}
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ (number\ of\ columns\ on\ row\ index\ "{}}\ +}
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(}
+\DoxyCodeLine{00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::distance(mData.begin(),\ itRow)\ -\/}
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (mLabelParams.mColumnNameIdx\ +\ 1))\ +}
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(errStr);}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ column;}
+\DoxyCodeLine{00651\ \ \ \ \ \}}
+\DoxyCodeLine{00652\ }
+\DoxyCodeLine{00659\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00660\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a1e4adadae95d21ba0d12e658597e6a9a}{GetColumn}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ ConvFunc<T>\ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00661\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \ \ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{00663\ \ \ \ \ \ \ std::vector<T>\ column;}
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >\ mLabelParams.mColumnNameIdx)}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \ \ T\ val;}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \ \ pToVal(itRow-\/>at(dataColumnIdx),\ val);}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \ \ column.push\_back(val);}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ column;}
+\DoxyCodeLine{00674\ \ \ \ \ \}}
+\DoxyCodeLine{00675\ }
+\DoxyCodeLine{00681\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00682\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a3e36e5d6fc1171a9c026f442ee9a33cb}{GetColumn}}(\textcolor{keyword}{const}\ std::string\ \&pColumnName)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00683\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{00685\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a6aae631d0697a9562241675947216a4e}{GetColumn<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx));}
+\DoxyCodeLine{00690\ \ \ \ \ \}}
+\DoxyCodeLine{00691\ }
+\DoxyCodeLine{00698\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00699\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a6a688c6c1fd12a0fc5b2a0b62409d408}{GetColumn}}(}
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pColumnName,\ ConvFunc<T>\ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00701\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00702\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{00704\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00705\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{00706\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00707\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a6aae631d0697a9562241675947216a4e}{GetColumn<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ pToVal);}
+\DoxyCodeLine{00708\ \ \ \ \ \}}
+\DoxyCodeLine{00709\ }
+\DoxyCodeLine{00715\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00716\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae48da50147082a34218c193f93c57259}{SetColumn}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ std::vector<T>\ \&pColumn)}
+\DoxyCodeLine{00717\ \ \ \ \ \{}
+\DoxyCodeLine{00718\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{00719\ }
+\DoxyCodeLine{00720\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (GetDataRowIndex(pColumn.size())\ >\ GetDataRowCount())}
+\DoxyCodeLine{00721\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ std::vector<std::string>\ row;}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ row.resize(GetDataColumnCount());}
+\DoxyCodeLine{00724\ \ \ \ \ \ \ \ \ mData.push\_back(row);}
+\DoxyCodeLine{00725\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00726\ }
+\DoxyCodeLine{00727\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dataColumnIdx\ +\ 1)\ >\ GetDataColumnCount())}
+\DoxyCodeLine{00728\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00731\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >=\ mLabelParams.}
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mColumnNameIdx)}
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>resize(GetDataColumnIndex(dataColumnIdx\ +\ 1));}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00737\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00738\ }
+\DoxyCodeLine{00739\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ converter(mConverterParams);}
+\DoxyCodeLine{00740\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ pColumn.begin();\ itRow\ !=\ pColumn.end();\ ++itRow)}
+\DoxyCodeLine{00741\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00742\ \ \ \ \ \ \ \ \ std::string\ str;}
+\DoxyCodeLine{00743\ \ \ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a114b87c39563c7777ad79fa8eb50c8e5}{ToStr}}(*itRow,\ str);}
+\DoxyCodeLine{00744\ \ \ \ \ \ \ \ \ mData.at(}
+\DoxyCodeLine{00745\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(std::distance(pColumn.begin(),\ itRow)\ +}
+\DoxyCodeLine{00746\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mColumnNameIdx\ +\ 1)).at(}
+\DoxyCodeLine{00747\ \ \ \ \ \ \ \ \ \ \ dataColumnIdx)\ =\ str;}
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00749\ \ \ \ \ \}}
+\DoxyCodeLine{00750\ }
+\DoxyCodeLine{00756\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00757\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ab5dcf985afb50279580c751e0f7eec79}{SetColumn}}(}
+\DoxyCodeLine{00758\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pColumnName,\ \textcolor{keyword}{const}\ std::vector<T>\ \&pColumn)}
+\DoxyCodeLine{00759\ \ \ \ \ \{}
+\DoxyCodeLine{00760\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{00761\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{00762\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00763\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{00764\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00765\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_ae48da50147082a34218c193f93c57259}{SetColumn<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ pColumn);}
+\DoxyCodeLine{00766\ \ \ \ \ \}}
+\DoxyCodeLine{00767\ }
+\DoxyCodeLine{00772\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a1e736e932b9162f74ce6188937099c7d}{RemoveColumn}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx)}
+\DoxyCodeLine{00773\ \ \ \ \ \{}
+\DoxyCodeLine{00774\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{00775\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{00776\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00777\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >=\ mLabelParams.mColumnNameIdx)}
+\DoxyCodeLine{00778\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00779\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dataColumnIdx\ <\ itRow-\/>size())}
+\DoxyCodeLine{00780\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00781\ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>erase(itRow-\/>begin()\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(dataColumnIdx));}
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00784\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ errStr\ =\ \textcolor{stringliteral}{"{}column\ out\ of\ range:\ "{}}\ +}
+\DoxyCodeLine{00785\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(pColumnIdx)\ +\ \textcolor{stringliteral}{"{}\ (on\ row\ "{}}}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +}
+\DoxyCodeLine{00787\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(}
+\DoxyCodeLine{00788\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::distance(mData.begin(),\ itRow))\ +}
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{00790\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(errStr);}
+\DoxyCodeLine{00791\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00792\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00793\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00794\ }
+\DoxyCodeLine{00795\ \ \ \ \ \ \ UpdateColumnNames();}
+\DoxyCodeLine{00796\ \ \ \ \ \}}
+\DoxyCodeLine{00797\ }
+\DoxyCodeLine{00802\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_acf7432447c7fd1308c3b30ebabea6440}{RemoveColumn}}(\textcolor{keyword}{const}\ std::string\ \&pColumnName)}
+\DoxyCodeLine{00803\ \ \ \ \ \{}
+\DoxyCodeLine{00804\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{00805\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{00806\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00807\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{00808\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00809\ }
+\DoxyCodeLine{00810\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_a1e736e932b9162f74ce6188937099c7d}{RemoveColumn}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx));}
+\DoxyCodeLine{00811\ \ \ \ \ \}}
+\DoxyCodeLine{00812\ }
+\DoxyCodeLine{00819\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00820\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a774353ea9ad58c3a8c63f8ff8aa44f69}{InsertColumn}}(}
+\DoxyCodeLine{00821\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ std::vector<T>\ \&pColumn\ =\ std::vector<T>(),}
+\DoxyCodeLine{00822\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pColumnName\ =\ std::string())}
+\DoxyCodeLine{00823\ \ \ \ \ \{}
+\DoxyCodeLine{00824\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{00825\ }
+\DoxyCodeLine{00826\ \ \ \ \ \ \ std::vector<std::string>\ column;}
+\DoxyCodeLine{00827\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pColumn.empty())}
+\DoxyCodeLine{00828\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00829\ \ \ \ \ \ \ \ \ column.resize(GetDataRowCount());}
+\DoxyCodeLine{00830\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00831\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00832\ \ \ \ \ \ \ \ \ column.resize(GetDataRowIndex(pColumn.size()));}
+\DoxyCodeLine{00833\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ converter(mConverterParams);}
+\DoxyCodeLine{00834\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ pColumn.begin();\ itRow\ !=\ pColumn.end();\ ++itRow)}
+\DoxyCodeLine{00835\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00836\ \ \ \ \ \ \ \ \ \ \ std::string\ str;}
+\DoxyCodeLine{00837\ \ \ \ \ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a114b87c39563c7777ad79fa8eb50c8e5}{ToStr}}(*itRow,\ str);}
+\DoxyCodeLine{00838\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ rowIdx\ =}
+\DoxyCodeLine{00839\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(}
+\DoxyCodeLine{00840\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::distance(pColumn.begin(),\ itRow)\ +\ (}
+\DoxyCodeLine{00841\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mColumnNameIdx\ +\ 1));}
+\DoxyCodeLine{00842\ \ \ \ \ \ \ \ \ \ \ column.at(rowIdx)\ =\ str;}
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00844\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00845\ }
+\DoxyCodeLine{00846\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (column.size()\ >\ GetDataRowCount())}
+\DoxyCodeLine{00847\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00848\ \ \ \ \ \ \ \ \ std::vector<std::string>\ row;}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \ \ \ columnCount\ =\ std::max<size\_t>(}
+\DoxyCodeLine{00850\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mColumnNameIdx\ +\ 1),}
+\DoxyCodeLine{00851\ \ \ \ \ \ \ \ \ \ \ GetDataColumnCount());}
+\DoxyCodeLine{00852\ \ \ \ \ \ \ \ \ row.resize(columnCount);}
+\DoxyCodeLine{00853\ \ \ \ \ \ \ \ \ mData.push\_back(row);}
+\DoxyCodeLine{00854\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00855\ }
+\DoxyCodeLine{00856\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{00857\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00858\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >=\ mLabelParams.mColumnNameIdx)}
+\DoxyCodeLine{00859\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00860\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ rowIdx\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(std::distance(}
+\DoxyCodeLine{00861\ \ \ \ \ \ \ \ \ \ \ \ \ mData.begin(),\ itRow));}
+\DoxyCodeLine{00862\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dataColumnIdx\ <=\ itRow-\/>size())}
+\DoxyCodeLine{00863\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00864\ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>insert(}
+\DoxyCodeLine{00865\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>begin()\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(dataColumnIdx),}
+\DoxyCodeLine{00866\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ column.at(rowIdx));}
+\DoxyCodeLine{00867\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00868\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00869\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ errStr\ =\ \textcolor{stringliteral}{"{}column\ out\ of\ range:\ "{}}\ +}
+\DoxyCodeLine{00870\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(pColumnIdx)\ +\ \textcolor{stringliteral}{"{}\ (on\ row\ "{}}}
+\DoxyCodeLine{00871\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +}
+\DoxyCodeLine{00872\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::to\_string(}
+\DoxyCodeLine{00873\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::distance(mData.begin(),\ itRow))\ +}
+\DoxyCodeLine{00874\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{00875\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(errStr);}
+\DoxyCodeLine{00876\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00877\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00878\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00879\ }
+\DoxyCodeLine{00880\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!pColumnName.empty())}
+\DoxyCodeLine{00881\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00882\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_a4c9c8e85a9ccefea28068c460ebb725e}{SetColumnName}}(pColumnIdx,\ pColumnName);}
+\DoxyCodeLine{00883\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00884\ }
+\DoxyCodeLine{00885\ \ \ \ \ \ \ UpdateColumnNames();}
+\DoxyCodeLine{00886\ \ \ \ \ \}}
+\DoxyCodeLine{00887\ }
+\DoxyCodeLine{00892\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae56d9b1d6b3b0037371032ba0dc0ee5c}{GetColumnCount}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00893\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00894\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ firstRow\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(}
+\DoxyCodeLine{00895\ \ \ \ \ \ \ \ \ (mLabelParams.mColumnNameIdx\ >=\ 0)\ ?\ mLabelParams.mColumnNameIdx\ :\ 0);}
+\DoxyCodeLine{00896\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ count\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}((mData.size()\ >\ firstRow)}
+\DoxyCodeLine{00897\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ mData.at(firstRow).size()}
+\DoxyCodeLine{00898\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0)\ -\/}
+\DoxyCodeLine{00899\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (mLabelParams.mRowNameIdx\ +\ 1);}
+\DoxyCodeLine{00900\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (count\ >=\ 0)\ ?\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(count)\ :\ 0;}
+\DoxyCodeLine{00901\ \ \ \ \ \}}
+\DoxyCodeLine{00902\ }
+\DoxyCodeLine{00908\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(\textcolor{keyword}{const}\ std::string\ \&pRowName)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00909\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00910\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mRowNameIdx\ >=\ 0)}
+\DoxyCodeLine{00911\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00912\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mRowNames.find(pRowName)\ !=\ mRowNames.end())}
+\DoxyCodeLine{00913\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00914\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(mRowNames.at(pRowName))\ -\/\ (}
+\DoxyCodeLine{00915\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mColumnNameIdx\ +\ 1);}
+\DoxyCodeLine{00916\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00917\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00918\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00919\ \ \ \ \ \}}
+\DoxyCodeLine{00920\ }
+\DoxyCodeLine{00926\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00927\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_af9b3e05c138a433e799d80520ff12f89}{GetRow}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00928\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00929\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \ \ dataRowIdx\ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{00930\ \ \ \ \ \ \ std::vector<T>\ row;}
+\DoxyCodeLine{00931\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ \ \ converter(mConverterParams);}
+\DoxyCodeLine{00932\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itCol\ =\ mData.at(dataRowIdx).begin();\ itCol\ !=\ mData.at(}
+\DoxyCodeLine{00933\ \ \ \ \ \ \ \ \ \ \ \ \ \ dataRowIdx).end();\ ++itCol)}
+\DoxyCodeLine{00934\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00935\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.at(dataRowIdx).begin(),\ itCol)\ >\ mLabelParams.}
+\DoxyCodeLine{00936\ \ \ \ \ \ \ \ \ \ \ \ \ mRowNameIdx)}
+\DoxyCodeLine{00937\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00938\ \ \ \ \ \ \ \ \ \ \ T\ val;}
+\DoxyCodeLine{00939\ \ \ \ \ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a827c54e8cbe86cdb8e315d3382dfcbba}{ToVal}}(*itCol,\ val);}
+\DoxyCodeLine{00940\ \ \ \ \ \ \ \ \ \ \ row.push\_back(val);}
+\DoxyCodeLine{00941\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00942\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00943\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ row;}
+\DoxyCodeLine{00944\ \ \ \ \ \}}
+\DoxyCodeLine{00945\ }
+\DoxyCodeLine{00952\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00953\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a12cb4ec910cbdfe80cfbe53d810a3a8c}{GetRow}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx,\ ConvFunc<T>\ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00954\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00955\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \ \ dataRowIdx\ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{00956\ \ \ \ \ \ \ std::vector<T>\ row;}
+\DoxyCodeLine{00957\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ \ \ converter(mConverterParams);}
+\DoxyCodeLine{00958\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itCol\ =\ mData.at(dataRowIdx).begin();\ itCol\ !=\ mData.at(}
+\DoxyCodeLine{00959\ \ \ \ \ \ \ \ \ \ \ \ \ \ dataRowIdx).end();\ ++itCol)}
+\DoxyCodeLine{00960\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00961\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.at(dataRowIdx).begin(),\ itCol)\ >\ mLabelParams.}
+\DoxyCodeLine{00962\ \ \ \ \ \ \ \ \ \ \ \ \ mRowNameIdx)}
+\DoxyCodeLine{00963\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00964\ \ \ \ \ \ \ \ \ \ \ T\ val;}
+\DoxyCodeLine{00965\ \ \ \ \ \ \ \ \ \ \ pToVal(*itCol,\ val);}
+\DoxyCodeLine{00966\ \ \ \ \ \ \ \ \ \ \ row.push\_back(val);}
+\DoxyCodeLine{00967\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00968\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00969\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ row;}
+\DoxyCodeLine{00970\ \ \ \ \ \}}
+\DoxyCodeLine{00971\ }
+\DoxyCodeLine{00977\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00978\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a5b263dc3c23a2eb4ea23a939ac001e23}{GetRow}}(\textcolor{keyword}{const}\ std::string\ \&pRowName)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00979\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00980\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{00981\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{00982\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00983\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{00984\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00985\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_af9b3e05c138a433e799d80520ff12f89}{GetRow<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx));}
+\DoxyCodeLine{00986\ \ \ \ \ \}}
+\DoxyCodeLine{00987\ }
+\DoxyCodeLine{00994\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00995\ \ \ \ \ std::vector<T>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a00a02d145b13533dcae1ba8da262093a}{GetRow}}(\textcolor{keyword}{const}\ std::string\ \&pRowName,\ ConvFunc<T>\ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00996\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00997\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{00998\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{00999\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01000\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01001\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01002\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_af9b3e05c138a433e799d80520ff12f89}{GetRow<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx),\ pToVal);}
+\DoxyCodeLine{01003\ \ \ \ \ \}}
+\DoxyCodeLine{01004\ }
+\DoxyCodeLine{01010\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01011\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a66ad9bc5f756fd0265b6852a325e3e43}{SetRow}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx,\ \textcolor{keyword}{const}\ std::vector<T>\ \&pRow)}
+\DoxyCodeLine{01012\ \ \ \ \ \{}
+\DoxyCodeLine{01013\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataRowIdx\ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01014\ }
+\DoxyCodeLine{01015\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((dataRowIdx\ +\ 1)\ >\ GetDataRowCount())}
+\DoxyCodeLine{01016\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01017\ \ \ \ \ \ \ \ \ std::vector<std::string>\ row;}
+\DoxyCodeLine{01018\ \ \ \ \ \ \ \ \ row.resize(GetDataColumnCount());}
+\DoxyCodeLine{01019\ \ \ \ \ \ \ \ \ mData.push\_back(row);}
+\DoxyCodeLine{01020\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01021\ }
+\DoxyCodeLine{01022\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pRow.size()\ >\ GetDataColumnCount())}
+\DoxyCodeLine{01023\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{01025\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01026\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >=\ mLabelParams.}
+\DoxyCodeLine{01027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mColumnNameIdx)}
+\DoxyCodeLine{01028\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01029\ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>resize(GetDataColumnIndex(pRow.size()));}
+\DoxyCodeLine{01030\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01032\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01033\ }
+\DoxyCodeLine{01034\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ converter(mConverterParams);}
+\DoxyCodeLine{01035\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itCol\ =\ pRow.begin();\ itCol\ !=\ pRow.end();\ ++itCol)}
+\DoxyCodeLine{01036\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01037\ \ \ \ \ \ \ \ \ std::string\ str;}
+\DoxyCodeLine{01038\ \ \ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a114b87c39563c7777ad79fa8eb50c8e5}{ToStr}}(*itCol,\ str);}
+\DoxyCodeLine{01039\ \ \ \ \ \ \ \ \ mData.at(dataRowIdx).at(}
+\DoxyCodeLine{01040\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(std::distance(}
+\DoxyCodeLine{01041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pRow.begin(),}
+\DoxyCodeLine{01042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ itCol)\ +\ mLabelParams.mRowNameIdx\ +\ 1))\ =\ str;}
+\DoxyCodeLine{01043\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01044\ \ \ \ \ \}}
+\DoxyCodeLine{01045\ }
+\DoxyCodeLine{01051\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a11d51fe0ab92ed52822e68edb6848b96}{SetRow}}(\textcolor{keyword}{const}\ std::string\ \&pRowName,\ \textcolor{keyword}{const}\ std::vector<T>\ \&pRow)}
+\DoxyCodeLine{01053\ \ \ \ \ \{}
+\DoxyCodeLine{01054\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01055\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01056\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01058\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01059\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a66ad9bc5f756fd0265b6852a325e3e43}{SetRow<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx),\ pRow);}
+\DoxyCodeLine{01060\ \ \ \ \ \}}
+\DoxyCodeLine{01061\ }
+\DoxyCodeLine{01066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_adbcc87ce353137b900b135c42213b78e}{RemoveRow}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx)}
+\DoxyCodeLine{01067\ \ \ \ \ \{}
+\DoxyCodeLine{01068\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataRowIdx\ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01069\ \ \ \ \ \ \ mData.erase(mData.begin()\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(dataRowIdx));}
+\DoxyCodeLine{01070\ \ \ \ \ \ \ UpdateRowNames();}
+\DoxyCodeLine{01071\ \ \ \ \ \}}
+\DoxyCodeLine{01072\ }
+\DoxyCodeLine{01077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a43504afd4fc6e2912e0d004bc841425b}{RemoveRow}}(\textcolor{keyword}{const}\ std::string\ \&pRowName)}
+\DoxyCodeLine{01078\ \ \ \ \ \{}
+\DoxyCodeLine{01079\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01080\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01081\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01083\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01084\ }
+\DoxyCodeLine{01085\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_adbcc87ce353137b900b135c42213b78e}{RemoveRow}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx));}
+\DoxyCodeLine{01086\ \ \ \ \ \}}
+\DoxyCodeLine{01087\ }
+\DoxyCodeLine{01094\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01095\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a7b4909b75796e7e2fbd14320fd6e9835}{InsertRow}}(}
+\DoxyCodeLine{01096\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ pRowIdx,\ \textcolor{keyword}{const}\ std::vector<T>\ \&pRow\ =\ std::vector<T>(),}
+\DoxyCodeLine{01097\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pRowName\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ std::string())}
+\DoxyCodeLine{01098\ \ \ \ \ \{}
+\DoxyCodeLine{01099\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ rowIdx\ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01100\ }
+\DoxyCodeLine{01101\ \ \ \ \ \ \ std::vector<std::string>\ row;}
+\DoxyCodeLine{01102\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pRow.empty())}
+\DoxyCodeLine{01103\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01104\ \ \ \ \ \ \ \ \ row.resize(GetDataColumnCount());}
+\DoxyCodeLine{01105\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01106\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01107\ \ \ \ \ \ \ \ \ row.resize(GetDataColumnIndex(pRow.size()));}
+\DoxyCodeLine{01108\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ converter(mConverterParams);}
+\DoxyCodeLine{01109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itCol\ =\ pRow.begin();\ itCol\ !=\ pRow.end();\ ++itCol)}
+\DoxyCodeLine{01110\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01111\ \ \ \ \ \ \ \ \ \ \ std::string\ str;}
+\DoxyCodeLine{01112\ \ \ \ \ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a114b87c39563c7777ad79fa8eb50c8e5}{ToStr}}(*itCol,\ str);}
+\DoxyCodeLine{01113\ \ \ \ \ \ \ \ \ \ \ row.at(}
+\DoxyCodeLine{01114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(std::distance(pRow.begin(),\ itCol)\ +}
+\DoxyCodeLine{01115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mRowNameIdx\ +\ 1))\ =\ str;}
+\DoxyCodeLine{01116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01117\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01118\ }
+\DoxyCodeLine{01119\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (rowIdx\ >\ GetDataRowCount())}
+\DoxyCodeLine{01120\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01121\ \ \ \ \ \ \ \ \ std::vector<std::string>\ tempRow;}
+\DoxyCodeLine{01122\ \ \ \ \ \ \ \ \ tempRow.resize(GetDataColumnCount());}
+\DoxyCodeLine{01123\ \ \ \ \ \ \ \ \ mData.push\_back(tempRow);}
+\DoxyCodeLine{01124\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01125\ }
+\DoxyCodeLine{01126\ \ \ \ \ \ \ mData.insert(mData.begin()\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(rowIdx),\ row);}
+\DoxyCodeLine{01127\ }
+\DoxyCodeLine{01128\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!pRowName.empty())}
+\DoxyCodeLine{01129\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01130\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_a5596b4c6751e883584bacf3922316eab}{SetRowName}}(pRowIdx,\ pRowName);}
+\DoxyCodeLine{01131\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01132\ }
+\DoxyCodeLine{01133\ \ \ \ \ \ \ UpdateRowNames();}
+\DoxyCodeLine{01134\ \ \ \ \ \}}
+\DoxyCodeLine{01135\ }
+\DoxyCodeLine{01140\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classrapidcsv_1_1_document_af8d77c33b83ceb7d7be284555db1f09f}{GetRowCount}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01141\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01142\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ count\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(mData.size())\ -\/\ (}
+\DoxyCodeLine{01143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mColumnNameIdx\ +\ 1);}
+\DoxyCodeLine{01144\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (count\ >=\ 0)\ ?\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(count)\ :\ 0;}
+\DoxyCodeLine{01145\ \ \ \ \ \}}
+\DoxyCodeLine{01146\ }
+\DoxyCodeLine{01153\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01154\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_a57574b0b63080f7cc270a0ca1e092676}{GetCell}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01155\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01156\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{01157\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataRowIdx\ \ \ \ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01158\ }
+\DoxyCodeLine{01159\ \ \ \ \ \ \ T\ \ \ \ \ \ \ \ \ \ \ \ val;}
+\DoxyCodeLine{01160\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ converter(mConverterParams);}
+\DoxyCodeLine{01161\ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a827c54e8cbe86cdb8e315d3382dfcbba}{ToVal}}(mData.at(dataRowIdx).at(dataColumnIdx),\ val);}
+\DoxyCodeLine{01162\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ val;}
+\DoxyCodeLine{01163\ \ \ \ \ \}}
+\DoxyCodeLine{01164\ }
+\DoxyCodeLine{01172\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01173\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_a475e75a7292c3a0367b4bce92c9404f5}{GetCell}}(}
+\DoxyCodeLine{01174\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx,\ ConvFunc<T>\ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01175\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01176\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{01177\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataRowIdx\ \ \ \ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01178\ }
+\DoxyCodeLine{01179\ \ \ \ \ \ \ T\ val;}
+\DoxyCodeLine{01180\ \ \ \ \ \ \ pToVal(mData.at(dataRowIdx).at(dataColumnIdx),\ val);}
+\DoxyCodeLine{01181\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ val;}
+\DoxyCodeLine{01182\ \ \ \ \ \}}
+\DoxyCodeLine{01183\ }
+\DoxyCodeLine{01190\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01191\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_a166f1e2052d1da87e37f84d104070d05}{GetCell}}(\textcolor{keyword}{const}\ std::string\ \&pColumnName,\ \textcolor{keyword}{const}\ std::string\ \&pRowName)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01192\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01193\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{01194\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{01195\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{01197\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01198\ }
+\DoxyCodeLine{01199\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01200\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01201\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01203\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01204\ }
+\DoxyCodeLine{01205\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a57574b0b63080f7cc270a0ca1e092676}{GetCell<T>}}(}
+\DoxyCodeLine{01206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx));}
+\DoxyCodeLine{01207\ \ \ \ \ \}}
+\DoxyCodeLine{01208\ }
+\DoxyCodeLine{01216\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01217\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_a9ffdef4e04691991470df4c49b7133f1}{GetCell}}(}
+\DoxyCodeLine{01218\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pColumnName,\ \textcolor{keyword}{const}\ std::string\ \&pRowName,}
+\DoxyCodeLine{01219\ \ \ \ \ \ \ ConvFunc<T>\ \ \ \ \ \ \ \ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01220\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01221\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{01222\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{01223\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{01225\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01226\ }
+\DoxyCodeLine{01227\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01228\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01229\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01231\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01232\ }
+\DoxyCodeLine{01233\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a57574b0b63080f7cc270a0ca1e092676}{GetCell<T>}}(}
+\DoxyCodeLine{01234\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx),\ pToVal);}
+\DoxyCodeLine{01235\ \ \ \ \ \}}
+\DoxyCodeLine{01236\ }
+\DoxyCodeLine{01243\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01244\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_a93d4a249d7d193bfdc0874ef4e2e716c}{GetCell}}(\textcolor{keyword}{const}\ std::string\ \&pColumnName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01245\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01246\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{01247\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{01248\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{01250\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01251\ }
+\DoxyCodeLine{01252\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a57574b0b63080f7cc270a0ca1e092676}{GetCell<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ pRowIdx);}
+\DoxyCodeLine{01253\ \ \ \ \ \}}
+\DoxyCodeLine{01254\ }
+\DoxyCodeLine{01262\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01263\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_af5af1480a4456347fade6354f7d47d8e}{GetCell}}(}
+\DoxyCodeLine{01264\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pColumnName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx,}
+\DoxyCodeLine{01265\ \ \ \ \ \ \ ConvFunc<T>\ \ \ \ \ \ \ \ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01266\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01267\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{01268\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{01269\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01270\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{01271\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01272\ }
+\DoxyCodeLine{01273\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a57574b0b63080f7cc270a0ca1e092676}{GetCell<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ pRowIdx,\ pToVal);}
+\DoxyCodeLine{01274\ \ \ \ \ \}}
+\DoxyCodeLine{01275\ }
+\DoxyCodeLine{01282\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01283\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_a35499f9c2ad3f708449be46e191d8748}{GetCell}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ std::string\ \&pRowName)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01284\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01285\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01286\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01287\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01289\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01290\ }
+\DoxyCodeLine{01291\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a57574b0b63080f7cc270a0ca1e092676}{GetCell<T>}}(pColumnIdx,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx));}
+\DoxyCodeLine{01292\ \ \ \ \ \}}
+\DoxyCodeLine{01293\ }
+\DoxyCodeLine{01301\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01302\ \ \ \ \ T\ \mbox{\hyperlink{classrapidcsv_1_1_document_aa0a96f88a453454a5724dd06844e86f2}{GetCell}}(}
+\DoxyCodeLine{01303\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ std::string\ \&pRowName,}
+\DoxyCodeLine{01304\ \ \ \ \ \ \ ConvFunc<T>\ \ pToVal)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01305\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01306\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01307\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01308\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01309\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01310\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01311\ }
+\DoxyCodeLine{01312\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a57574b0b63080f7cc270a0ca1e092676}{GetCell<T>}}(pColumnIdx,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx),\ pToVal);}
+\DoxyCodeLine{01313\ \ \ \ \ \}}
+\DoxyCodeLine{01314\ }
+\DoxyCodeLine{01321\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01322\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a898aaeab0412ad7de186f669194569f8}{SetCell}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx,\ \textcolor{keyword}{const}\ T\ \&pCell)}
+\DoxyCodeLine{01323\ \ \ \ \ \{}
+\DoxyCodeLine{01324\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{01325\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataRowIdx\ \ \ \ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01326\ }
+\DoxyCodeLine{01327\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((dataRowIdx\ +\ 1)\ >\ GetDataRowCount())}
+\DoxyCodeLine{01328\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01329\ \ \ \ \ \ \ \ \ std::vector<std::string>\ row;}
+\DoxyCodeLine{01330\ \ \ \ \ \ \ \ \ row.resize(GetDataColumnCount());}
+\DoxyCodeLine{01331\ \ \ \ \ \ \ \ \ mData.push\_back(row);}
+\DoxyCodeLine{01332\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01333\ }
+\DoxyCodeLine{01334\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dataColumnIdx\ +\ 1)\ >\ GetDataColumnCount())}
+\DoxyCodeLine{01335\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01336\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{01337\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01338\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >=\ mLabelParams.}
+\DoxyCodeLine{01339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mColumnNameIdx)}
+\DoxyCodeLine{01340\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01341\ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>resize(dataColumnIdx\ +\ 1);}
+\DoxyCodeLine{01342\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01343\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01344\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01345\ }
+\DoxyCodeLine{01346\ \ \ \ \ \ \ std::string\ \ str;}
+\DoxyCodeLine{01347\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_converter}{Converter<T>}}\ converter(mConverterParams);}
+\DoxyCodeLine{01348\ \ \ \ \ \ \ converter.\mbox{\hyperlink{classrapidcsv_1_1_converter_a114b87c39563c7777ad79fa8eb50c8e5}{ToStr}}(pCell,\ str);}
+\DoxyCodeLine{01349\ \ \ \ \ \ \ mData.at(dataRowIdx).at(dataColumnIdx)\ =\ str;}
+\DoxyCodeLine{01350\ \ \ \ \ \}}
+\DoxyCodeLine{01351\ }
+\DoxyCodeLine{01358\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01359\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ab90e2c413dbdaf29d013d975bf3d1d53}{SetCell}}(}
+\DoxyCodeLine{01360\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pColumnName,\ \textcolor{keyword}{const}\ std::string\ \&pRowName,}
+\DoxyCodeLine{01361\ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ \&\ \ \ \ \ \ \ \ \ \ pCell)}
+\DoxyCodeLine{01362\ \ \ \ \ \{}
+\DoxyCodeLine{01363\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{01364\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{01365\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01366\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{01367\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01368\ }
+\DoxyCodeLine{01369\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01370\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01371\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01372\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01373\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01374\ }
+\DoxyCodeLine{01375\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_a898aaeab0412ad7de186f669194569f8}{SetCell<T>}}(}
+\DoxyCodeLine{01376\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx),\ pCell);}
+\DoxyCodeLine{01377\ \ \ \ \ \}}
+\DoxyCodeLine{01378\ }
+\DoxyCodeLine{01385\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01386\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a6a885f6f8e486180cad487006ad09e7c}{SetCell}}(}
+\DoxyCodeLine{01387\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ std::string\ \&pRowName,\ \textcolor{keyword}{const}\ T\ \&pCell)}
+\DoxyCodeLine{01388\ \ \ \ \ \{}
+\DoxyCodeLine{01389\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ rowIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae891478a9f8a9507b12215c40b571bf5}{GetRowIdx}}(pRowName);}
+\DoxyCodeLine{01390\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ <\ 0)}
+\DoxyCodeLine{01391\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01392\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}row\ not\ found:\ "{}}\ +\ pRowName);}
+\DoxyCodeLine{01393\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01394\ }
+\DoxyCodeLine{01395\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_a898aaeab0412ad7de186f669194569f8}{SetCell<T>}}(pColumnIdx,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(rowIdx),\ pCell);}
+\DoxyCodeLine{01396\ \ \ \ \ \}}
+\DoxyCodeLine{01397\ }
+\DoxyCodeLine{01404\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{01405\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_ae333759676f37096009ac44137066023}{SetCell}}(}
+\DoxyCodeLine{01406\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pColumnName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx,\ \textcolor{keyword}{const}\ T\ \&pCell)}
+\DoxyCodeLine{01407\ \ \ \ \ \{}
+\DoxyCodeLine{01408\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ columnIdx\ =\ \mbox{\hyperlink{classrapidcsv_1_1_document_afc1b810c70291eea340f820c5a91f282}{GetColumnIdx}}(pColumnName);}
+\DoxyCodeLine{01409\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (columnIdx\ <\ 0)}
+\DoxyCodeLine{01410\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01411\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}column\ not\ found:\ "{}}\ +\ pColumnName);}
+\DoxyCodeLine{01412\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01413\ }
+\DoxyCodeLine{01414\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_a898aaeab0412ad7de186f669194569f8}{SetCell<T>}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(columnIdx),\ pRowIdx,\ pCell);}
+\DoxyCodeLine{01415\ \ \ \ \ \}}
+\DoxyCodeLine{01416\ }
+\DoxyCodeLine{01422\ \ \ \ \ std::string\ \mbox{\hyperlink{classrapidcsv_1_1_document_a97bd39b55a5ce8c6e1c90e7e055a04ee}{GetColumnName}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01423\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01424\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{01425\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mColumnNameIdx\ <\ 0)}
+\DoxyCodeLine{01426\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01427\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(}
+\DoxyCodeLine{01428\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}column\ name\ row\ index\ <\ 0:\ "{}}\ +\ std::to\_string(}
+\DoxyCodeLine{01429\ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mColumnNameIdx));}
+\DoxyCodeLine{01430\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01431\ }
+\DoxyCodeLine{01432\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mData.at(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mColumnNameIdx)).at(}
+\DoxyCodeLine{01433\ \ \ \ \ \ \ \ \ dataColumnIdx);}
+\DoxyCodeLine{01434\ \ \ \ \ \}}
+\DoxyCodeLine{01435\ }
+\DoxyCodeLine{01441\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a4c9c8e85a9ccefea28068c460ebb725e}{SetColumnName}}(\textcolor{keywordtype}{size\_t}\ pColumnIdx,\ \textcolor{keyword}{const}\ std::string\ \&pColumnName)}
+\DoxyCodeLine{01442\ \ \ \ \ \{}
+\DoxyCodeLine{01443\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mColumnNameIdx\ <\ 0)}
+\DoxyCodeLine{01444\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01445\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(}
+\DoxyCodeLine{01446\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}column\ name\ row\ index\ <\ 0:\ "{}}\ +\ std::to\_string(}
+\DoxyCodeLine{01447\ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mColumnNameIdx));}
+\DoxyCodeLine{01448\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01449\ }
+\DoxyCodeLine{01450\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataColumnIdx\ =\ GetDataColumnIndex(pColumnIdx);}
+\DoxyCodeLine{01451\ \ \ \ \ \ \ mColumnNames[pColumnName]\ \ =\ dataColumnIdx;}
+\DoxyCodeLine{01452\ }
+\DoxyCodeLine{01453\ \ \ \ \ \ \ \textcolor{comment}{//\ increase\ table\ size\ if\ necessary:}}
+\DoxyCodeLine{01454\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ rowIdx\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mColumnNameIdx);}
+\DoxyCodeLine{01455\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rowIdx\ >=\ mData.size())}
+\DoxyCodeLine{01456\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01457\ \ \ \ \ \ \ \ \ mData.resize(rowIdx\ +\ 1);}
+\DoxyCodeLine{01458\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01459\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&row\ =\ mData[rowIdx];}
+\DoxyCodeLine{01460\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dataColumnIdx\ >=\ row.size())}
+\DoxyCodeLine{01461\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01462\ \ \ \ \ \ \ \ \ row.resize(dataColumnIdx\ +\ 1);}
+\DoxyCodeLine{01463\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01464\ }
+\DoxyCodeLine{01465\ \ \ \ \ \ \ mData.at(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mColumnNameIdx)).at(}
+\DoxyCodeLine{01466\ \ \ \ \ \ \ \ \ dataColumnIdx)\ =\ pColumnName;}
+\DoxyCodeLine{01467\ \ \ \ \ \}}
+\DoxyCodeLine{01468\ }
+\DoxyCodeLine{01473\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a204b6dd4fe1bb0c6bdf7f6819e5a8f59}{GetColumnNames}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01474\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01475\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mColumnNameIdx\ >=\ 0)}
+\DoxyCodeLine{01476\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01477\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::vector<std::string>(}
+\DoxyCodeLine{01478\ \ \ \ \ \ \ \ \ \ \ mData.at(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mColumnNameIdx)).begin()\ +}
+\DoxyCodeLine{01479\ \ \ \ \ \ \ \ \ \ \ (mLabelParams.mRowNameIdx\ +\ 1),}
+\DoxyCodeLine{01480\ \ \ \ \ \ \ \ \ \ \ mData.at(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mColumnNameIdx)).end());}
+\DoxyCodeLine{01481\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01482\ }
+\DoxyCodeLine{01483\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::vector<std::string>();}
+\DoxyCodeLine{01484\ \ \ \ \ \}}
+\DoxyCodeLine{01485\ }
+\DoxyCodeLine{01491\ \ \ \ \ std::string\ \mbox{\hyperlink{classrapidcsv_1_1_document_abe437fec77d301ffff6a4c1c996034ff}{GetRowName}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01492\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01493\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataRowIdx\ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01494\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mRowNameIdx\ <\ 0)}
+\DoxyCodeLine{01495\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01496\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(}
+\DoxyCodeLine{01497\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}row\ name\ column\ index\ <\ 0:\ "{}}\ +\ std::to\_string(}
+\DoxyCodeLine{01498\ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mRowNameIdx));}
+\DoxyCodeLine{01499\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01500\ }
+\DoxyCodeLine{01501\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mData.at(dataRowIdx).at(}
+\DoxyCodeLine{01502\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mRowNameIdx));}
+\DoxyCodeLine{01503\ \ \ \ \ \}}
+\DoxyCodeLine{01504\ }
+\DoxyCodeLine{01510\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrapidcsv_1_1_document_a5596b4c6751e883584bacf3922316eab}{SetRowName}}(\textcolor{keywordtype}{size\_t}\ pRowIdx,\ \textcolor{keyword}{const}\ std::string\ \&pRowName)}
+\DoxyCodeLine{01511\ \ \ \ \ \{}
+\DoxyCodeLine{01512\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ dataRowIdx\ =\ GetDataRowIndex(pRowIdx);}
+\DoxyCodeLine{01513\ \ \ \ \ \ \ mRowNames[pRowName]\ \ \ \ \ =\ dataRowIdx;}
+\DoxyCodeLine{01514\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mRowNameIdx\ <\ 0)}
+\DoxyCodeLine{01515\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01516\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(}
+\DoxyCodeLine{01517\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}row\ name\ column\ index\ <\ 0:\ "{}}\ +\ std::to\_string(}
+\DoxyCodeLine{01518\ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams.mRowNameIdx));}
+\DoxyCodeLine{01519\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01520\ }
+\DoxyCodeLine{01521\ \ \ \ \ \ \ \textcolor{comment}{//\ increase\ table\ size\ if\ necessary:}}
+\DoxyCodeLine{01522\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dataRowIdx\ >=\ mData.size())}
+\DoxyCodeLine{01523\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01524\ \ \ \ \ \ \ \ \ mData.resize(dataRowIdx\ +\ 1);}
+\DoxyCodeLine{01525\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01526\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&row\ =\ mData[dataRowIdx];}
+\DoxyCodeLine{01527\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mRowNameIdx\ >=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(row.size()))}
+\DoxyCodeLine{01528\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01529\ \ \ \ \ \ \ \ \ row.resize(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mRowNameIdx)\ +\ 1);}
+\DoxyCodeLine{01530\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01531\ }
+\DoxyCodeLine{01532\ \ \ \ \ \ \ mData.at(dataRowIdx).at(}
+\DoxyCodeLine{01533\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mRowNameIdx))\ =\ pRowName;}
+\DoxyCodeLine{01534\ \ \ \ \ \}}
+\DoxyCodeLine{01535\ }
+\DoxyCodeLine{01540\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{classrapidcsv_1_1_document_a4faf31f4bd70917bd1a21d2363d5bf63}{GetRowNames}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01541\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01542\ \ \ \ \ \ \ std::vector<std::string>\ rownames;}
+\DoxyCodeLine{01543\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLabelParams.mRowNameIdx\ >=\ 0)}
+\DoxyCodeLine{01544\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01545\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itRow\ =\ mData.begin();\ itRow\ !=\ mData.end();\ ++itRow)}
+\DoxyCodeLine{01546\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01547\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(mData.begin(),\ itRow)\ >\ mLabelParams.mColumnNameIdx)}
+\DoxyCodeLine{01548\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01549\ \ \ \ \ \ \ \ \ \ \ \ \ rownames.push\_back(}
+\DoxyCodeLine{01550\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ itRow-\/>at(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mRowNameIdx)));}
+\DoxyCodeLine{01551\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01552\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01553\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01554\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rownames;}
+\DoxyCodeLine{01555\ \ \ \ \ \}}
+\DoxyCodeLine{01556\ }
+\DoxyCodeLine{01557\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01558\ \ \ \ \ \textcolor{keywordtype}{void}\ ReadCsv()}
+\DoxyCodeLine{01559\ \ \ \ \ \{}
+\DoxyCodeLine{01560\ \ \ \ \ \ \ std::ifstream\ stream;}
+\DoxyCodeLine{01561\ \ \ \ \ \ \ stream.exceptions(std::ifstream::failbit\ |\ std::ifstream::badbit);}
+\DoxyCodeLine{01562\ \ \ \ \ \ \ stream.open(mPath,\ std::ios::binary);}
+\DoxyCodeLine{01563\ \ \ \ \ \ \ ReadCsv(stream);}
+\DoxyCodeLine{01564\ \ \ \ \ \}}
+\DoxyCodeLine{01565\ }
+\DoxyCodeLine{01566\ \ \ \ \ \textcolor{keywordtype}{void}\ ReadCsv(std::istream\ \&pStream)}
+\DoxyCodeLine{01567\ \ \ \ \ \{}
+\DoxyCodeLine{01568\ \ \ \ \ \ \ \mbox{\hyperlink{classrapidcsv_1_1_document_a3ba6776a6490dc1a276a2767c5164f24}{Clear}}();}
+\DoxyCodeLine{01569\ \ \ \ \ \ \ pStream.seekg(0,\ std::ios::end);}
+\DoxyCodeLine{01570\ \ \ \ \ \ \ std::streamsize\ length\ =\ pStream.tellg();}
+\DoxyCodeLine{01571\ \ \ \ \ \ \ pStream.seekg(0,\ std::ios::beg);}
+\DoxyCodeLine{01572\ }
+\DoxyCodeLine{01573\ \textcolor{preprocessor}{\#ifdef\ HAS\_CODECVT}}
+\DoxyCodeLine{01574\ \ \ \ \ \ \ std::vector<char>\ bom2b(2,\ \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{01575\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (length\ >=\ 2)}
+\DoxyCodeLine{01576\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01577\ \ \ \ \ \ \ \ \ pStream.read(bom2b.data(),\ 2);}
+\DoxyCodeLine{01578\ \ \ \ \ \ \ \ \ pStream.seekg(0,\ std::ios::beg);}
+\DoxyCodeLine{01579\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01580\ }
+\DoxyCodeLine{01581\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::vector<char>\ bomU16le\ =\ \{\ \textcolor{stringliteral}{'\(\backslash\)xff'},\ \textcolor{stringliteral}{'\(\backslash\)xfe'}\ \};}
+\DoxyCodeLine{01582\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::vector<char>\ bomU16be\ =\ \{\ \textcolor{stringliteral}{'\(\backslash\)xfe'},\ \textcolor{stringliteral}{'\(\backslash\)xff'}\ \};}
+\DoxyCodeLine{01583\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((bom2b\ ==\ bomU16le)\ ||\ (bom2b\ ==\ bomU16be))}
+\DoxyCodeLine{01584\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01585\ \ \ \ \ \ \ \ \ mIsUtf16\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{01586\ \ \ \ \ \ \ \ \ mIsLE\ =\ (bom2b\ ==\ bomU16le);}
+\DoxyCodeLine{01587\ }
+\DoxyCodeLine{01588\ \ \ \ \ \ \ \ \ std::wifstream\ wstream;}
+\DoxyCodeLine{01589\ \ \ \ \ \ \ \ \ wstream.exceptions(std::wifstream::failbit\ |\ std::wifstream::badbit);}
+\DoxyCodeLine{01590\ \ \ \ \ \ \ \ \ wstream.open(mPath,\ std::ios::binary);}
+\DoxyCodeLine{01591\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mIsLE)}
+\DoxyCodeLine{01592\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01593\ \ \ \ \ \ \ \ \ \ \ wstream.imbue(std::locale(wstream.getloc(),}
+\DoxyCodeLine{01594\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ std::codecvt\_utf16<\textcolor{keywordtype}{wchar\_t},\ 0x10ffff,}
+\DoxyCodeLine{01595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}std::codecvt\_mode\textcolor{keyword}{>}(std::consume\_header\ |}
+\DoxyCodeLine{01596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::little\_endian)>));}
+\DoxyCodeLine{01597\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01598\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01599\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01600\ \ \ \ \ \ \ \ \ \ \ wstream.imbue(std::locale(wstream.getloc(),}
+\DoxyCodeLine{01601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ std::codecvt\_utf16<\textcolor{keywordtype}{wchar\_t},\ 0x10ffff,}
+\DoxyCodeLine{01602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::consume\_header>));}
+\DoxyCodeLine{01603\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01604\ \ \ \ \ \ \ \ \ std::wstringstream\ wss;}
+\DoxyCodeLine{01605\ \ \ \ \ \ \ \ \ wss\ <<\ wstream.rdbuf();}
+\DoxyCodeLine{01606\ \ \ \ \ \ \ \ \ std::string\ utf8\ =\ ToString(wss.str());}
+\DoxyCodeLine{01607\ \ \ \ \ \ \ \ \ std::stringstream\ ss(utf8);}
+\DoxyCodeLine{01608\ \ \ \ \ \ \ \ \ ParseCsv(ss,\ \textcolor{keyword}{static\_cast<}std::streamsize\textcolor{keyword}{>}(utf8.size()));}
+\DoxyCodeLine{01609\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01610\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01611\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01612\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01613\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ for\ UTF-\/8\ Byte\ order\ mark\ and\ skip\ it\ when\ found}}
+\DoxyCodeLine{01614\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (length\ >=\ 3)}
+\DoxyCodeLine{01615\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01616\ \ \ \ \ \ \ \ \ \ \ std::vector<char>\ bom3b(3,\ \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{01617\ \ \ \ \ \ \ \ \ \ \ pStream.read(bom3b.data(),\ 3);}
+\DoxyCodeLine{01618\ }
+\DoxyCodeLine{01619\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bom3b\ !=\ s\_Utf8BOM)}
+\DoxyCodeLine{01620\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01621\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ file\ does\ not\ start\ with\ a\ UTF-\/8\ Byte\ order\ mark}}
+\DoxyCodeLine{01622\ \ \ \ \ \ \ \ \ \ \ \ \ pStream.seekg(0,\ std::ios::beg);}
+\DoxyCodeLine{01623\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01624\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01625\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ file\ did\ start\ with\ a\ UTF-\/8\ Byte\ order\ mark,\ simply\ skip\ it}}
+\DoxyCodeLine{01626\ \ \ \ \ \ \ \ \ \ \ \ \ length\ -\/=\ 3;}
+\DoxyCodeLine{01627\ \ \ \ \ \ \ \ \ \ \ \ \ mHasUtf8BOM\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{01628\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01629\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01630\ }
+\DoxyCodeLine{01631\ \ \ \ \ \ \ \ \ ParseCsv(pStream,\ length);}
+\DoxyCodeLine{01632\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01633\ \ \ \ \ \}}
+\DoxyCodeLine{01634\ }
+\DoxyCodeLine{01635\ \ \ \ \ \textcolor{keywordtype}{void}\ ParseCsv(std::istream\ \&pStream,\ std::streamsize\ p\_FileLength)}
+\DoxyCodeLine{01636\ \ \ \ \ \{}
+\DoxyCodeLine{01637\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::streamsize\ \ \ \ bufLength\ =\ 64\ *\ 1024;}
+\DoxyCodeLine{01638\ \ \ \ \ \ \ std::vector<char>\ \ \ \ \ \ \ \ buffer(bufLength);}
+\DoxyCodeLine{01639\ \ \ \ \ \ \ std::vector<std::string>\ row;}
+\DoxyCodeLine{01640\ \ \ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ \ cell;}
+\DoxyCodeLine{01641\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ quoted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01642\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cr\ \ \ \ \ =\ 0;}
+\DoxyCodeLine{01643\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lf\ \ \ \ \ =\ 0;}
+\DoxyCodeLine{01644\ }
+\DoxyCodeLine{01645\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (p\_FileLength\ >\ 0)}
+\DoxyCodeLine{01646\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01647\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::streamsize\ toReadLength\ =\ std::min<std::streamsize>(}
+\DoxyCodeLine{01648\ \ \ \ \ \ \ \ \ \ \ p\_FileLength,\ bufLength);}
+\DoxyCodeLine{01649\ \ \ \ \ \ \ \ \ pStream.read(buffer.data(),\ toReadLength);}
+\DoxyCodeLine{01650\ }
+\DoxyCodeLine{01651\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ With\ user-\/specified\ istream\ opened\ in\ non-\/binary\ mode\ on\ windows,\ we\ may\ have\ a}}
+\DoxyCodeLine{01652\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data\ length\ mismatch,\ so\ ensure\ we\ don't\ parse\ outside\ actual\ data\ length\ read.}}
+\DoxyCodeLine{01653\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::streamsize\ readLength\ =\ pStream.gcount();}
+\DoxyCodeLine{01654\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (readLength\ <=\ 0)}
+\DoxyCodeLine{01655\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01656\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01657\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01658\ }
+\DoxyCodeLine{01659\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ static\_cast<size\_t>(readLength);\ ++i)}
+\DoxyCodeLine{01660\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01661\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (buffer[i]\ ==\ mSeparatorParams.mQuoteChar)}
+\DoxyCodeLine{01662\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01663\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cell.empty()\ ||\ (cell[0]\ ==\ mSeparatorParams.mQuoteChar))}
+\DoxyCodeLine{01664\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01665\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ quoted\ =\ !quoted;}
+\DoxyCodeLine{01666\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (mSeparatorParams.mTrim)}
+\DoxyCodeLine{01667\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01668\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ allow\ whitespace\ before\ first\ mQuoteChar}}
+\DoxyCodeLine{01669\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ firstQuote\ =\ std::find(}
+\DoxyCodeLine{01670\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell.begin(),\ cell.end(),\ mSeparatorParams.mQuoteChar);}
+\DoxyCodeLine{01671\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::all\_of(}
+\DoxyCodeLine{01672\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell.begin(),\ firstQuote,\ [](\textcolor{keywordtype}{int}\ ch)\ \{\ return\ isspace(ch);\ \}))}
+\DoxyCodeLine{01673\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01674\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ quoted\ =\ !quoted;}
+\DoxyCodeLine{01675\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01676\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01677\ \ \ \ \ \ \ \ \ \ \ \ \ cell\ +=\ buffer[i];}
+\DoxyCodeLine{01678\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (buffer[i]\ ==\ mSeparatorParams.mSeparator)}
+\DoxyCodeLine{01679\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01680\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!quoted)}
+\DoxyCodeLine{01681\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01682\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ row.push\_back(Unquote(Trim(cell)));}
+\DoxyCodeLine{01683\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell.clear();}
+\DoxyCodeLine{01684\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01685\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01686\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell\ +=\ buffer[i];}
+\DoxyCodeLine{01687\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01688\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (buffer[i]\ ==\ \textcolor{charliteral}{'\(\backslash\)r'})}
+\DoxyCodeLine{01689\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01690\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mSeparatorParams.mQuotedLinebreaks\ \&\&\ quoted)}
+\DoxyCodeLine{01691\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01692\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell\ +=\ buffer[i];}
+\DoxyCodeLine{01693\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01694\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01695\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++cr;}
+\DoxyCodeLine{01696\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01697\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (buffer[i]\ ==\ \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{01698\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01699\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mSeparatorParams.mQuotedLinebreaks\ \&\&\ quoted)}
+\DoxyCodeLine{01700\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01701\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell\ +=\ buffer[i];}
+\DoxyCodeLine{01702\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01703\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01704\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++lf;}
+\DoxyCodeLine{01705\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLineReaderParams.mSkipEmptyLines\ \&\&\ row.empty()\ \&\&\ cell.}
+\DoxyCodeLine{01706\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ empty())}
+\DoxyCodeLine{01707\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ skip\ empty\ line}}
+\DoxyCodeLine{01709\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01711\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ row.push\_back(Unquote(Trim(cell)));}
+\DoxyCodeLine{01712\ }
+\DoxyCodeLine{01713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLineReaderParams.mSkipCommentLines\ \&\&\ !row.at(0).empty()\ \&\&}
+\DoxyCodeLine{01714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (row.at(0)[0]\ ==\ mLineReaderParams.mCommentPrefix))}
+\DoxyCodeLine{01715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01716\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ skip\ comment\ line}}
+\DoxyCodeLine{01717\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01718\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mData.push\_back(row);}
+\DoxyCodeLine{01720\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01721\ }
+\DoxyCodeLine{01722\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell.clear();}
+\DoxyCodeLine{01723\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ row.clear();}
+\DoxyCodeLine{01724\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ quoted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01725\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01726\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01727\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01728\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01729\ \ \ \ \ \ \ \ \ \ \ \ \ cell\ +=\ buffer[i];}
+\DoxyCodeLine{01730\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01731\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01732\ \ \ \ \ \ \ \ \ p\_FileLength\ -\/=\ readLength;}
+\DoxyCodeLine{01733\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01734\ }
+\DoxyCodeLine{01735\ \ \ \ \ \ \ \textcolor{comment}{//\ Handle\ last\ row\ /\ cell\ without\ linebreak}}
+\DoxyCodeLine{01736\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (row.empty()\ \&\&\ cell.empty())}
+\DoxyCodeLine{01737\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01738\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ skip\ empty\ trailing\ line}}
+\DoxyCodeLine{01739\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01740\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01741\ \ \ \ \ \ \ \ \ row.push\_back(Unquote(Trim(cell)));}
+\DoxyCodeLine{01742\ }
+\DoxyCodeLine{01743\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mLineReaderParams.mSkipCommentLines\ \&\&\ !row.at(0).empty()\ \&\&}
+\DoxyCodeLine{01744\ \ \ \ \ \ \ \ \ \ \ \ \ (row.at(0)[0]\ ==\ mLineReaderParams.mCommentPrefix))}
+\DoxyCodeLine{01745\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01746\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ skip\ comment\ line}}
+\DoxyCodeLine{01747\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01748\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01749\ \ \ \ \ \ \ \ \ \ \ mData.push\_back(row);}
+\DoxyCodeLine{01750\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01751\ }
+\DoxyCodeLine{01752\ \ \ \ \ \ \ \ \ cell.clear();}
+\DoxyCodeLine{01753\ \ \ \ \ \ \ \ \ row.clear();}
+\DoxyCodeLine{01754\ \ \ \ \ \ \ \ \ quoted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01755\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01756\ }
+\DoxyCodeLine{01757\ \ \ \ \ \ \ \textcolor{comment}{//\ Assume\ CR/LF\ if\ at\ least\ half\ the\ linebreaks\ have\ CR}}
+\DoxyCodeLine{01758\ \ \ \ \ \ \ mSeparatorParams.mHasCR\ =\ (cr\ >\ (lf\ /\ 2));}
+\DoxyCodeLine{01759\ }
+\DoxyCodeLine{01760\ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ up\ column\ labels}}
+\DoxyCodeLine{01761\ \ \ \ \ \ \ UpdateColumnNames();}
+\DoxyCodeLine{01762\ }
+\DoxyCodeLine{01763\ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ up\ row\ labels}}
+\DoxyCodeLine{01764\ \ \ \ \ \ \ UpdateRowNames();}
+\DoxyCodeLine{01765\ \ \ \ \ \}}
+\DoxyCodeLine{01766\ }
+\DoxyCodeLine{01767\ \ \ \ \ \textcolor{keywordtype}{void}\ WriteCsv()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01768\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01769\ \textcolor{preprocessor}{\#ifdef\ HAS\_CODECVT}}
+\DoxyCodeLine{01770\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mIsUtf16)}
+\DoxyCodeLine{01771\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01772\ \ \ \ \ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{01773\ \ \ \ \ \ \ \ \ WriteCsv(ss);}
+\DoxyCodeLine{01774\ \ \ \ \ \ \ \ \ std::string\ utf8\ =\ ss.str();}
+\DoxyCodeLine{01775\ \ \ \ \ \ \ \ \ std::wstring\ wstr\ =\ ToWString(utf8);}
+\DoxyCodeLine{01776\ }
+\DoxyCodeLine{01777\ \ \ \ \ \ \ \ \ std::wofstream\ wstream;}
+\DoxyCodeLine{01778\ \ \ \ \ \ \ \ \ wstream.exceptions(std::wofstream::failbit\ |\ std::wofstream::badbit);}
+\DoxyCodeLine{01779\ \ \ \ \ \ \ \ \ wstream.open(mPath,\ std::ios::binary\ |\ std::ios::trunc);}
+\DoxyCodeLine{01780\ }
+\DoxyCodeLine{01781\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mIsLE)}
+\DoxyCodeLine{01782\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01783\ \ \ \ \ \ \ \ \ \ \ wstream.imbue(std::locale(wstream.getloc(),}
+\DoxyCodeLine{01784\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ std::codecvt\_utf16<\textcolor{keywordtype}{wchar\_t},\ 0x10ffff,}
+\DoxyCodeLine{01785\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}std::codecvt\_mode\textcolor{keyword}{>}(std::little\_endian)>));}
+\DoxyCodeLine{01786\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01787\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01788\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01789\ \ \ \ \ \ \ \ \ \ \ wstream.imbue(std::locale(wstream.getloc(),}
+\DoxyCodeLine{01790\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ std::codecvt\_utf16<wchar\_t,\ 0x10ffff>));}
+\DoxyCodeLine{01791\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01792\ }
+\DoxyCodeLine{01793\ \ \ \ \ \ \ \ \ wstream\ <<\ static\_cast<wchar\_t>(0xfeff);}
+\DoxyCodeLine{01794\ \ \ \ \ \ \ \ \ wstream\ <<\ wstr;}
+\DoxyCodeLine{01795\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01796\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01797\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01798\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01799\ \ \ \ \ \ \ \ \ std::ofstream\ stream;}
+\DoxyCodeLine{01800\ \ \ \ \ \ \ \ \ stream.exceptions(std::ofstream::failbit\ |\ std::ofstream::badbit);}
+\DoxyCodeLine{01801\ \ \ \ \ \ \ \ \ stream.open(mPath,\ std::ios::binary\ |\ std::ios::trunc);}
+\DoxyCodeLine{01802\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mHasUtf8BOM)}
+\DoxyCodeLine{01803\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01804\ \ \ \ \ \ \ \ \ \ \ stream.write(s\_Utf8BOM.data(),\ 3);}
+\DoxyCodeLine{01805\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01806\ }
+\DoxyCodeLine{01807\ \ \ \ \ \ \ \ \ WriteCsv(stream);}
+\DoxyCodeLine{01808\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01809\ \ \ \ \ \}}
+\DoxyCodeLine{01810\ }
+\DoxyCodeLine{01811\ \ \ \ \ \textcolor{keywordtype}{void}\ WriteCsv(std::ostream\ \&pStream)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01812\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01813\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itr\ =\ mData.begin();\ itr\ !=\ mData.end();\ ++itr)}
+\DoxyCodeLine{01814\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01815\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ itc\ =\ itr-\/>begin();\ itc\ !=\ itr-\/>end();\ ++itc)}
+\DoxyCodeLine{01816\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01817\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mSeparatorParams.mAutoQuote\ \&\&}
+\DoxyCodeLine{01818\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((itc-\/>find(mSeparatorParams.mSeparator)\ !=\ std::string::npos)\ ||}
+\DoxyCodeLine{01819\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (itc-\/>find(\textcolor{charliteral}{'\ '})\ !=\ std::string::npos)\ ||}
+\DoxyCodeLine{01820\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (itc-\/>find(\textcolor{charliteral}{'\(\backslash\)n'})\ !=\ std::string::npos)))}
+\DoxyCodeLine{01821\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01822\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ escape\ quotes\ in\ string}}
+\DoxyCodeLine{01823\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \ \ \ \ \ \ str\ \ \ \ \ \ \ \ \ \ =\ *itc;}
+\DoxyCodeLine{01824\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ quoteCharStr\ =\ std::string(}
+\DoxyCodeLine{01825\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1,\ mSeparatorParams.mQuoteChar);}
+\DoxyCodeLine{01826\ \ \ \ \ \ \ \ \ \ \ \ \ ReplaceString(str,\ quoteCharStr,\ quoteCharStr\ +\ quoteCharStr);}
+\DoxyCodeLine{01827\ }
+\DoxyCodeLine{01828\ \ \ \ \ \ \ \ \ \ \ \ \ pStream\ <<\ quoteCharStr\ <<\ str\ <<\ quoteCharStr;}
+\DoxyCodeLine{01829\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01830\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01831\ \ \ \ \ \ \ \ \ \ \ \ \ pStream\ <<\ *itc;}
+\DoxyCodeLine{01832\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01833\ }
+\DoxyCodeLine{01834\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::distance(itc,\ itr-\/>end())\ >\ 1)}
+\DoxyCodeLine{01835\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01836\ \ \ \ \ \ \ \ \ \ \ \ \ pStream\ <<\ mSeparatorParams.mSeparator;}
+\DoxyCodeLine{01837\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01838\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01839\ \ \ \ \ \ \ \ \ pStream\ <<\ (mSeparatorParams.mHasCR\ ?\ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}}\ :\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{01840\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01841\ \ \ \ \ \}}
+\DoxyCodeLine{01842\ }
+\DoxyCodeLine{01843\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ GetDataRowCount()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01844\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01845\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mData.size();}
+\DoxyCodeLine{01846\ \ \ \ \ \}}
+\DoxyCodeLine{01847\ }
+\DoxyCodeLine{01848\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ GetDataColumnCount()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01849\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01850\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ firstDataRow\ =}
+\DoxyCodeLine{01851\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}((mLabelParams.mColumnNameIdx\ >=\ 0)}
+\DoxyCodeLine{01852\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ mLabelParams.mColumnNameIdx}
+\DoxyCodeLine{01853\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0);}
+\DoxyCodeLine{01854\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (mData.size()\ >\ firstDataRow)\ ?\ mData.at(firstDataRow).size()\ :\ 0;}
+\DoxyCodeLine{01855\ \ \ \ \ \}}
+\DoxyCodeLine{01856\ }
+\DoxyCodeLine{01857\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ GetDataRowIndex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pRowIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01858\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01859\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ firstDataRow\ =}
+\DoxyCodeLine{01860\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}((mLabelParams.mColumnNameIdx\ +\ 1\ >=\ 0)}
+\DoxyCodeLine{01861\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ mLabelParams.mColumnNameIdx\ +\ 1}
+\DoxyCodeLine{01862\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0);}
+\DoxyCodeLine{01863\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pRowIdx\ +\ firstDataRow;}
+\DoxyCodeLine{01864\ \ \ \ \ \}}
+\DoxyCodeLine{01865\ }
+\DoxyCodeLine{01866\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ GetDataColumnIndex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ pColumnIdx)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01867\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01868\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ firstDataColumn\ =}
+\DoxyCodeLine{01869\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}((mLabelParams.mRowNameIdx\ +\ 1\ >=\ 0)}
+\DoxyCodeLine{01870\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ mLabelParams.mRowNameIdx\ +\ 1}
+\DoxyCodeLine{01871\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ 0);}
+\DoxyCodeLine{01872\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pColumnIdx\ +\ firstDataColumn;}
+\DoxyCodeLine{01873\ \ \ \ \ \}}
+\DoxyCodeLine{01874\ }
+\DoxyCodeLine{01875\ \ \ \ \ std::string\ Trim(\textcolor{keyword}{const}\ std::string\ \&pStr)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01876\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01877\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mSeparatorParams.mTrim)}
+\DoxyCodeLine{01878\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01879\ \ \ \ \ \ \ \ \ std::string\ str\ =\ pStr;}
+\DoxyCodeLine{01880\ }
+\DoxyCodeLine{01881\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ltrim}}
+\DoxyCodeLine{01882\ \ \ \ \ \ \ \ \ str.erase(}
+\DoxyCodeLine{01883\ \ \ \ \ \ \ \ \ \ \ str.begin(),\ std::find\_if(}
+\DoxyCodeLine{01884\ \ \ \ \ \ \ \ \ \ \ \ \ str.begin(),\ str.end(),\ [](\textcolor{keywordtype}{int}\ ch)\ \{\ return\ !isspace(ch);\ \}));}
+\DoxyCodeLine{01885\ }
+\DoxyCodeLine{01886\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ rtrim}}
+\DoxyCodeLine{01887\ \ \ \ \ \ \ \ \ str.erase(}
+\DoxyCodeLine{01888\ \ \ \ \ \ \ \ \ \ \ std::find\_if(}
+\DoxyCodeLine{01889\ \ \ \ \ \ \ \ \ \ \ \ \ str.rbegin(),\ str.rend(),}
+\DoxyCodeLine{01890\ \ \ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keywordtype}{int}\ ch)\ \{\ return\ !isspace(ch);\ \}).base(),\ str.end());}
+\DoxyCodeLine{01891\ }
+\DoxyCodeLine{01892\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ str;}
+\DoxyCodeLine{01893\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01894\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01895\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pStr;}
+\DoxyCodeLine{01896\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01897\ \ \ \ \ \}}
+\DoxyCodeLine{01898\ }
+\DoxyCodeLine{01899\ \ \ \ \ std::string\ Unquote(\textcolor{keyword}{const}\ std::string\ \&pStr)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01900\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{01901\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mSeparatorParams.mAutoQuote\ \&\&\ (pStr.size()\ >=\ 2)\ \&\&}
+\DoxyCodeLine{01902\ \ \ \ \ \ \ \ \ \ \ (pStr.front()\ ==\ mSeparatorParams.mQuoteChar)\ \&\&}
+\DoxyCodeLine{01903\ \ \ \ \ \ \ \ \ \ \ (pStr.back()\ ==\ mSeparatorParams.mQuoteChar))}
+\DoxyCodeLine{01904\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01905\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ remove\ start/end\ quotes}}
+\DoxyCodeLine{01906\ \ \ \ \ \ \ \ \ std::string\ str\ =\ pStr.substr(1,\ pStr.size()\ -\/\ 2);}
+\DoxyCodeLine{01907\ }
+\DoxyCodeLine{01908\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ unescape\ quotes\ in\ string}}
+\DoxyCodeLine{01909\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ quoteCharStr\ =\ std::string(}
+\DoxyCodeLine{01910\ \ \ \ \ \ \ \ \ \ \ 1,\ mSeparatorParams.mQuoteChar);}
+\DoxyCodeLine{01911\ \ \ \ \ \ \ \ \ ReplaceString(str,\ quoteCharStr\ +\ quoteCharStr,\ quoteCharStr);}
+\DoxyCodeLine{01912\ }
+\DoxyCodeLine{01913\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ str;}
+\DoxyCodeLine{01914\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01915\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01916\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pStr;}
+\DoxyCodeLine{01917\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01918\ \ \ \ \ \}}
+\DoxyCodeLine{01919\ }
+\DoxyCodeLine{01920\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateColumnNames()}
+\DoxyCodeLine{01921\ \ \ \ \ \{}
+\DoxyCodeLine{01922\ \ \ \ \ \ \ mColumnNames.clear();}
+\DoxyCodeLine{01923\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((mLabelParams.mColumnNameIdx\ >=\ 0)\ \&\&}
+\DoxyCodeLine{01924\ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(mData.size())\ >\ mLabelParams.mColumnNameIdx))}
+\DoxyCodeLine{01925\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01926\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;}
+\DoxyCodeLine{01927\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&columnName:\ mData[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.}
+\DoxyCodeLine{01928\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mColumnNameIdx)])}
+\DoxyCodeLine{01929\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01930\ \ \ \ \ \ \ \ \ \ \ mColumnNames[columnName]\ =\ i++;}
+\DoxyCodeLine{01931\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01932\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01933\ \ \ \ \ \}}
+\DoxyCodeLine{01934\ }
+\DoxyCodeLine{01935\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateRowNames()}
+\DoxyCodeLine{01936\ \ \ \ \ \{}
+\DoxyCodeLine{01937\ \ \ \ \ \ \ mRowNames.clear();}
+\DoxyCodeLine{01938\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((mLabelParams.mRowNameIdx\ >=\ 0)\ \&\&}
+\DoxyCodeLine{01939\ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(mData.size())\ >}
+\DoxyCodeLine{01940\ \ \ \ \ \ \ \ \ \ \ \ (mLabelParams.mColumnNameIdx\ +\ 1)))}
+\DoxyCodeLine{01941\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01942\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;}
+\DoxyCodeLine{01943\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&dataRow:\ mData)}
+\DoxyCodeLine{01944\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01945\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(dataRow.size())\ >\ mLabelParams.mRowNameIdx)}
+\DoxyCodeLine{01946\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01947\ \ \ \ \ \ \ \ \ \ \ \ \ mRowNames[dataRow[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(mLabelParams.mRowNameIdx)]]\ =}
+\DoxyCodeLine{01948\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{01949\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01950\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01951\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01952\ \ \ \ \ \}}
+\DoxyCodeLine{01953\ }
+\DoxyCodeLine{01954\ \textcolor{preprocessor}{\#ifdef\ HAS\_CODECVT}}
+\DoxyCodeLine{01955\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{01956\ \textcolor{preprocessor}{\#pragma\ warning\ (push)}}
+\DoxyCodeLine{01957\ \textcolor{preprocessor}{\#pragma\ warning\ (disable:\ 4996)}}
+\DoxyCodeLine{01958\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01959\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ ToString(\textcolor{keyword}{const}\ std::wstring\&\ pWStr)}
+\DoxyCodeLine{01960\ \ \ \ \ \{}
+\DoxyCodeLine{01961\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::wstring\_convert<std::codecvt\_utf8<wchar\_t>,\ \textcolor{keywordtype}{wchar\_t}>\{\ \}.to\_bytes(pWStr);}
+\DoxyCodeLine{01962\ \ \ \ \ \}}
+\DoxyCodeLine{01963\ }
+\DoxyCodeLine{01964\ \ \ \ \ \textcolor{keyword}{static}\ std::wstring\ ToWString(\textcolor{keyword}{const}\ std::string\&\ pStr)}
+\DoxyCodeLine{01965\ \ \ \ \ \{}
+\DoxyCodeLine{01966\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::wstring\_convert<std::codecvt\_utf8<wchar\_t>,\ \textcolor{keywordtype}{wchar\_t}>\{\ \}.from\_bytes(pStr);}
+\DoxyCodeLine{01967\ \ \ \ \ \}}
+\DoxyCodeLine{01968\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{01969\ \textcolor{preprocessor}{\#pragma\ warning\ (pop)}}
+\DoxyCodeLine{01970\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01971\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01972\ }
+\DoxyCodeLine{01973\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ReplaceString(}
+\DoxyCodeLine{01974\ \ \ \ \ \ \ std::string\ \&\ \ \ \ \ \ pStr,\ \textcolor{keyword}{const}\ std::string\ \&pSearch,}
+\DoxyCodeLine{01975\ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&pReplace)}
+\DoxyCodeLine{01976\ \ \ \ \ \{}
+\DoxyCodeLine{01977\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ pos\ =\ 0;}
+\DoxyCodeLine{01978\ }
+\DoxyCodeLine{01979\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((pos\ =\ pStr.find(pSearch,\ pos))\ !=\ std::string::npos)}
+\DoxyCodeLine{01980\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01981\ \ \ \ \ \ \ \ \ pStr.replace(pos,\ pSearch.size(),\ pReplace);}
+\DoxyCodeLine{01982\ \ \ \ \ \ \ \ \ pos\ +=\ pReplace.size();}
+\DoxyCodeLine{01983\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01984\ \ \ \ \ \}}
+\DoxyCodeLine{01985\ }
+\DoxyCodeLine{01986\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01987\ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mPath;}
+\DoxyCodeLine{01988\ \ \ \ \ LabelParams\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLabelParams;}
+\DoxyCodeLine{01989\ \ \ \ \ SeparatorParams\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mSeparatorParams;}
+\DoxyCodeLine{01990\ \ \ \ \ ConverterParams\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mConverterParams;}
+\DoxyCodeLine{01991\ \ \ \ \ LineReaderParams\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mLineReaderParams;}
+\DoxyCodeLine{01992\ \ \ \ \ std::vector<std::vector<std::string>\ >\ mData;}
+\DoxyCodeLine{01993\ \ \ \ \ std::map<std::string,\ size\_t>\ \ \ \ \ \ \ \ \ \ mColumnNames;}
+\DoxyCodeLine{01994\ \ \ \ \ std::map<std::string,\ size\_t>\ \ \ \ \ \ \ \ \ \ mRowNames;}
+\DoxyCodeLine{01995\ \textcolor{preprocessor}{\#ifdef\ HAS\_CODECVT}}
+\DoxyCodeLine{01996\ \ \ \ \ \textcolor{keywordtype}{bool}\ mIsUtf16\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01997\ \ \ \ \ \textcolor{keywordtype}{bool}\ mIsLE\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01998\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01999\ \ \ \ \ \textcolor{keywordtype}{bool}\ mHasUtf8BOM\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{02000\ \ \ \};}
+\DoxyCodeLine{02001\ \}}
+
+\end{DoxyCode}

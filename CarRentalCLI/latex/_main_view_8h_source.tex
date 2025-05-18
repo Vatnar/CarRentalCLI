@@ -1,0 +1,43 @@
+\doxysection{Main\+View.\+h}
+\hypertarget{_main_view_8h_source}{}\label{_main_view_8h_source}\index{include/views/MainView.h@{include/views/MainView.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}CarView.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}CustomerView.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}ImportExportView.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}RentalView.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}StatisticsView.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }MainView\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_view}{View}}}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ MainView();}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ Run()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00018\ \ \ \ \ std::string\ \ \ \ \ \ mainMenu\ =\ R\textcolor{stringliteral}{"{}MENU(}}
+\DoxyCodeLine{00019\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00020\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ CAR\ RENTAL\ SERVICE}}
+\DoxyCodeLine{00021\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00022\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 1.\ Customer\ Menu}}
+\DoxyCodeLine{00023\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 2.\ Car\ Menu}}
+\DoxyCodeLine{00024\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 3.\ Manage\ rentals}}
+\DoxyCodeLine{00025\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 4.\ Display\ statistics}}
+\DoxyCodeLine{00026\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 5.\ Import/Export}}
+\DoxyCodeLine{00027\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 6.\ EXIT}}
+\DoxyCodeLine{00028\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00029\ \textcolor{stringliteral}{Please\ enter\ your\ choice:}}
+\DoxyCodeLine{00030\ \textcolor{stringliteral}{)MENU"{};}}
+\DoxyCodeLine{00031\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_customer_view}{CustomerView}}\ \ \ \ \ customerView;}}
+\DoxyCodeLine{00032\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_car_view}{CarView}}\ \ \ \ \ \ \ \ \ \ carView;}}
+\DoxyCodeLine{00033\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_rental_view}{RentalView}}\ \ \ \ \ \ \ rentalView;}}
+\DoxyCodeLine{00034\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_statistics_view}{StatisticsView}}\ \ \ statisticsView;}}
+\DoxyCodeLine{00035\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_import_export_view}{ImportExportView}}\ importExportView;}}
+\DoxyCodeLine{00036\ \textcolor{stringliteral}{\};}}
+\DoxyCodeLine{00037\ \textcolor{stringliteral}{}}
+
+\end{DoxyCode}

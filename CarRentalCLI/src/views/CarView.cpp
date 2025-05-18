@@ -29,6 +29,7 @@ void CarView::Run()
 
 bool CarView::isValidReg(const std::string &s)
 {
+    // Checks if input regNo is valid
     return s.length() == 7 &&
            std::isalpha(s[0]) &&
            std::isalpha(s[1]) &&
@@ -46,13 +47,14 @@ void CarView::getReg(std::string &reg)
 
     if (reg.empty() || !isValidReg(reg))
     {
-        std::cout << "Invalid brand, Try again (LJ12345): ";
+        std::cout << "Invalid brand, Try again (Format: LJ12345): ";
         getBrand(reg);
     }
 }
 
 void CarView::getBrand(std::string &brand)
 {
+    // Retries until valid string is entered
     std::cout << "Enter the brand name: ";
     brand = Input::GetString();
     if (brand.empty())
@@ -64,6 +66,7 @@ void CarView::getBrand(std::string &brand)
 
 void CarView::getModel(std::string &model)
 {
+    // Retries until valid string is entered
     std::cout << "Enter the model name: ";
     model = Input::GetString();
     if (model.empty())
@@ -97,7 +100,7 @@ void CarView::editCar()
 ==================================
     )MENU" << std::endl;
 
-    int         carID = getCarID();
+    int carID = getCarID();
     std::string reg, brand, model;
 
     const auto car = carController.GetCarById(carID);
@@ -105,6 +108,8 @@ void CarView::editCar()
     {
         std::cout << "INTERNAL FAILURE " << __FILE__ << __LINE__ << std::endl;
     }
+
+    // Printing the car currently being edited
     std::cout << car->regNo << "\t\t" << car->brand << "\t\t" << car->model <<
             std::endl;
     getReg(reg);
@@ -172,7 +177,7 @@ int CarView::getCarID()
                 "\t\t" << car.model << std::endl;
     }
     std::cout << "Enter number to choose: ";
-    auto indexCustomer = Input::GetInt(0, cars.size() - 1); // -1 cuz of 0 index
+    auto indexCustomer = Input::GetInt(0, cars.size() - 1); // -1 because of 0 index
     return cars[indexCustomer].carID;
 }
 

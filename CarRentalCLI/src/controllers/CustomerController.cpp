@@ -9,7 +9,6 @@
 /**
  * @brief Adds a new customer to the storage.
  *
- * This function creates a new customer with the provided details and inserts it into the storage.
  * The customer will be assigned a unique customerID upon successful insertion.
  *
  * @param name The name of the customer.
@@ -37,7 +36,6 @@ bool CustomerController::AddCustomer(
 /**
  * @brief Edits an existing customer's details.
  *
- * This function updates the details of an existing customer with the provided new information.
  * The customer is identified by their customerID, and their name, phone number, and email are updated.
  *
  * @param customerID The ID of the customer to be edited.
@@ -70,9 +68,7 @@ bool CustomerController::EditCustomer(
 
 /**
  * @brief Removes a customer from the storage.
- *
- * This function deletes a customer from the storage using the customer's unique customerID.
- *
+ * *
  * @param customerID The ID of the customer to be removed.
  * @return true if the customer was successfully removed, false if an error occurred.
  */
@@ -92,9 +88,7 @@ bool CustomerController::RemoveCustomer(int customerID)
 
 /**
  * @brief Counts the total number of customers in the storage.
- *
- * This function returns the total count of customers currently stored.
- *
+ * *
  * @return The total number of customers in the storage.
  */
 int CustomerController::CountCustomers()
@@ -108,7 +102,6 @@ int CustomerController::CountCustomers()
  * @brief Searches for customers by name.
  *
  * This function searches for customers whose name contains the given search phrase.
- * The search is case-insensitive and uses the LIKE operator for partial matches.
  *
  * @param searchPhrase The phrase to search for in the customer's name.
  * @return A vector of customers matching the search criteria.

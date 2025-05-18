@@ -121,6 +121,8 @@ int RentalView::getRentalID()
             "Press 0, 1, 2, or 3 to select search field\n 0: Customer \n 1: Car\n 2: Start Date\n 3: End Date\n 4: All rentals\n:";
     field = Input::GetInt(0, 4);
     std::vector<RentalModel> rentals;
+
+    // Give options to choose what to search for
     switch (field)
     {
         case 0:
@@ -170,7 +172,7 @@ int RentalView::getRentalID()
     }
     std::cout << "Enter number to choose: ";
     auto indexCustomer = Input::GetInt(0, rentals.size() - 1);
-    // -1 cuz of 0 index
+    // -1 cause of 0 indexing
     return rentals[indexCustomer].rentalID;
 }
 

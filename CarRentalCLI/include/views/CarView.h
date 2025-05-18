@@ -10,7 +10,6 @@ class CarView : public View
 public:
     CarView();
 
-
     /**
      * @brief Run's the GUI of the view and logic
      */

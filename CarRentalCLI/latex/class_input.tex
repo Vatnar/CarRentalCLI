@@ -1,0 +1,69 @@
+\doxysection{Input Class Reference}
+\hypertarget{class_input}{}\label{class_input}\index{Input@{Input}}
+
+
+Provides static methods to get user input All function within class provides error handling.  
+
+
+
+
+{\ttfamily \#include $<$Utils.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_input_a148232db86b8da9f726901da85612651}{Get\+Int}} (int min, int max)
+\begin{DoxyCompactList}\small\item\em Handles integer input from user. \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{class_input_a588a4bdb5b96311a884583c647da983c}{Get\+String}} (bool allow\+Spaces=true, char include\+Char=\textquotesingle{}\textbackslash{}0\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em Prompts the user to enter a string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides static methods to get user input All function within class provides error handling. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_input_a148232db86b8da9f726901da85612651}\index{Input@{Input}!GetInt@{GetInt}}
+\index{GetInt@{GetInt}!Input@{Input}}
+\doxysubsubsection{\texorpdfstring{GetInt()}{GetInt()}}
+{\footnotesize\ttfamily \label{class_input_a148232db86b8da9f726901da85612651} 
+static int Input\+::\+Get\+Int (\begin{DoxyParamCaption}\item[{int}]{min}{, }\item[{int}]{max}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Handles integer input from user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min} & The minimum allowed value. \\
+\hline
+{\em max} & The maximum allowed value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A valid integer input from the user. 
+\end{DoxyReturn}
+\Hypertarget{class_input_a588a4bdb5b96311a884583c647da983c}\index{Input@{Input}!GetString@{GetString}}
+\index{GetString@{GetString}!Input@{Input}}
+\doxysubsubsection{\texorpdfstring{GetString()}{GetString()}}
+{\footnotesize\ttfamily \label{class_input_a588a4bdb5b96311a884583c647da983c} 
+static std\+::string Input\+::\+Get\+String (\begin{DoxyParamCaption}\item[{bool}]{allow\+Spaces}{ = {\ttfamily true}, }\item[{char}]{include\+Char}{ = {\ttfamily \textquotesingle{}\textbackslash{}0\textquotesingle{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Prompts the user to enter a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em allow\+Spaces} & Whether spaces are allowed in the string (default is true). \\
+\hline
+{\em include\+Char} & A character that must be included in the string (default is \textquotesingle{}\textbackslash{}0\textquotesingle{}, meaning no specific character required). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A valid string input from the user. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/Utils.\+h\end{DoxyCompactItemize}

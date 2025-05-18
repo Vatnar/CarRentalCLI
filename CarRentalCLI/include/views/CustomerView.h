@@ -9,8 +9,8 @@ class CustomerView : public View
 {
 public:
    /**
-* @brief Draws a customer menu from which a user can decide to add edit or remove customers
-*/
+   * @brief Draws a customer menu from which a user can decide to add edit or remove customers
+   */
    CustomerView();
 
    /**

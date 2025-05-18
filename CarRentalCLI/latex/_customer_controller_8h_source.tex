@@ -1,0 +1,30 @@
+\doxysection{Customer\+Controller.\+h}
+\hypertarget{_customer_controller_8h_source}{}\label{_customer_controller_8h_source}\index{include/controllers/CustomerController.h@{include/controllers/CustomerController.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}models/CustomerModel.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_customer_controller}{CustomerController}}}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_customer_controller_a22512ab471e674e7f862473a66716755}{AddCustomer}}(}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keyword}{const}\ std::string\ \&tel,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&email);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_customer_controller_ae828ed9ff42834c12ffb9cdca4243d6f}{EditCustomer}}(}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ std::string\ \&name,\ std::string\ \&tel,\ std::string\ \&email);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_customer_controller_a55fbebb0da562a54483af1883590afea}{RemoveCustomer}}(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_customer_controller_ab06715d72c63f2f36713c5b3a02496c5}{CountCustomers}}();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00053\ \ \ \ \ std::optional<CustomerModel>\ \mbox{\hyperlink{class_customer_controller_a9404c173611d7c1cc8fc2f3ab4ed30e8}{GetCustomerById}}(\textcolor{keywordtype}{int}\ customerID);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \ \ \ \ std::vector<CustomerModel>\ \mbox{\hyperlink{class_customer_controller_acb2a99b133f68255a7eca53b7aeaef69}{SearchCustomer}}(\textcolor{keyword}{const}\ std::string\ \&searchPhrase);}
+\DoxyCodeLine{00061\ \};}
+
+\end{DoxyCode}

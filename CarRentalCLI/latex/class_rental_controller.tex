@@ -1,0 +1,275 @@
+\doxysection{Rental\+Controller Class Reference}
+\hypertarget{class_rental_controller}{}\label{class_rental_controller}\index{RentalController@{RentalController}}
+
+
+Modifies and reads the Rental table.  
+
+
+
+
+{\ttfamily \#include $<$Rental\+Controller.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_rental_controller_a62b9f572ab9bc8f1c304f690c504eb2c}{Rent\+Car}} (int customer\+ID, int car\+ID, const std\+::string \&start\+Date, const std\+::string \&end\+Date)
+\begin{DoxyCompactList}\small\item\em Registers a new car rental in the database. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_rental_controller_a1942007cceaf3d58a914da56129c4a27}{Return\+Car}} (int rental\+ID, const std\+::string \&return\+Date)
+\begin{DoxyCompactList}\small\item\em Returns a car by setting the end date of a rental. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_rental_controller_a6e55b520ddc48de77f00bce8b214c1c5}{Count\+Rentals}} ()
+\begin{DoxyCompactList}\small\item\em Counts all registered rentals. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_rental_controller_a414bd9cec25d9fbc18112e8393a403ec}{Count\+Active\+Rentals}} ()
+\begin{DoxyCompactList}\small\item\em Counts currently active rentals (with a start date, but no end date). \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_rental_controller_ad49fe5caceb2146a43257ee802a916ec}{Count\+Completed\+Rentals}} ()
+\begin{DoxyCompactList}\small\item\em Counts rentals that have been completed (returned before the current time). \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{class_rental_model}{Rental\+Model}} $>$ \mbox{\hyperlink{class_rental_controller_a31c9deebaf64b8539d605bf28bb47b59}{Get\+Rental\+By\+Id}} (int rental\+ID)
+\begin{DoxyCompactList}\small\item\em Retrieves a rental by its ID. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_rental_model}{Rental\+Model}} $>$ \mbox{\hyperlink{class_rental_controller_a51d7b754325e10a5994636c47c8ba005}{Search}} (const std\+::string \&search\+Phrase, int field, int ID=-\/1)
+\begin{DoxyCompactList}\small\item\em Searches for rentals based on a specified field and search value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_rental_controller_a328cd1617023598f7764028aed3e051a}{Edit\+Rental}} (int rental\+ID, const std\+::string \&start\+Date, const std\+::string \&end\+Date, int customer\+ID, int car\+ID)
+\begin{DoxyCompactList}\small\item\em Updates an existing rental with new values. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_rental_controller_a8a2c9bdc5fd2bd4fc6163af3eb1ea5e1}{Remove\+Rental}} (int rental\+ID)
+\begin{DoxyCompactList}\small\item\em Removes a rental from the database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Modifies and reads the Rental table. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_rental_controller_a414bd9cec25d9fbc18112e8393a403ec}\index{RentalController@{RentalController}!CountActiveRentals@{CountActiveRentals}}
+\index{CountActiveRentals@{CountActiveRentals}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{CountActiveRentals()}{CountActiveRentals()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a414bd9cec25d9fbc18112e8393a403ec} 
+int Rental\+Controller\+::\+Count\+Active\+Rentals (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Counts currently active rentals (with a start date, but no end date). 
+
+\begin{DoxyReturn}{Returns}
+count of currently active rentals
+
+Number of active rentals. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_ad49fe5caceb2146a43257ee802a916ec}\index{RentalController@{RentalController}!CountCompletedRentals@{CountCompletedRentals}}
+\index{CountCompletedRentals@{CountCompletedRentals}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{CountCompletedRentals()}{CountCompletedRentals()}}
+{\footnotesize\ttfamily \label{class_rental_controller_ad49fe5caceb2146a43257ee802a916ec} 
+int Rental\+Controller\+::\+Count\+Completed\+Rentals (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Counts rentals that have been completed (returned before the current time). 
+
+\begin{DoxyReturn}{Returns}
+count of completed rentals
+
+Number of completed rentals. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_a6e55b520ddc48de77f00bce8b214c1c5}\index{RentalController@{RentalController}!CountRentals@{CountRentals}}
+\index{CountRentals@{CountRentals}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{CountRentals()}{CountRentals()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a6e55b520ddc48de77f00bce8b214c1c5} 
+int Rental\+Controller\+::\+Count\+Rentals (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Counts all registered rentals. 
+
+\begin{DoxyReturn}{Returns}
+count of rentals
+
+Total number of rentals. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_a328cd1617023598f7764028aed3e051a}\index{RentalController@{RentalController}!EditRental@{EditRental}}
+\index{EditRental@{EditRental}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{EditRental()}{EditRental()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a328cd1617023598f7764028aed3e051a} 
+bool Rental\+Controller\+::\+Edit\+Rental (\begin{DoxyParamCaption}\item[{int}]{rental\+ID}{, }\item[{const std\+::string \&}]{new\+Start\+Date}{, }\item[{const std\+::string \&}]{new\+End\+Date}{, }\item[{int}]{new\+Customer\+ID}{, }\item[{int}]{new\+Car\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Updates an existing rental with new values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rental\+ID} & id of rental to be edited \\
+\hline
+{\em start\+Date} & new start\+Date \\
+\hline
+{\em end\+Date} & new end\+Date \\
+\hline
+{\em customer\+ID} & new customer\+ID \\
+\hline
+{\em car\+ID} & new car\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeeded
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em rental\+ID} & ID of the rental to update. \\
+\hline
+{\em new\+Start\+Date} & New start date (format\+: YYYY-\/\+MM-\/\+DD hh-\/mm). \\
+\hline
+{\em new\+End\+Date} & New end date (format\+: YYYY-\/\+MM-\/\+DD hh-\/mm). \\
+\hline
+{\em new\+Customer\+ID} & New customer ID. \\
+\hline
+{\em new\+Car\+ID} & New car ID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the rental was successfully updated, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_a31c9deebaf64b8539d605bf28bb47b59}\index{RentalController@{RentalController}!GetRentalById@{GetRentalById}}
+\index{GetRentalById@{GetRentalById}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{GetRentalById()}{GetRentalById()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a31c9deebaf64b8539d605bf28bb47b59} 
+std\+::optional$<$ \mbox{\hyperlink{class_rental_model}{Rental\+Model}} $>$ Rental\+Controller\+::\+Get\+Rental\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{rental\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves a rental by its ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rental\+ID} & id of rental to fetch \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{class_rental_model}{Rental\+Model} instance with that Id
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em rental\+ID} & The ID of the rental to retrieve. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \doxylink{class_rental_model}{Rental\+Model} if found, or std\+::nullopt if not found. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_a8a2c9bdc5fd2bd4fc6163af3eb1ea5e1}\index{RentalController@{RentalController}!RemoveRental@{RemoveRental}}
+\index{RemoveRental@{RemoveRental}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{RemoveRental()}{RemoveRental()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a8a2c9bdc5fd2bd4fc6163af3eb1ea5e1} 
+bool Rental\+Controller\+::\+Remove\+Rental (\begin{DoxyParamCaption}\item[{int}]{rental\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Removes a rental from the database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rental\+ID} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em rental\+ID} & ID of the rental to remove. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the rental was successfully removed, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_a62b9f572ab9bc8f1c304f690c504eb2c}\index{RentalController@{RentalController}!RentCar@{RentCar}}
+\index{RentCar@{RentCar}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{RentCar()}{RentCar()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a62b9f572ab9bc8f1c304f690c504eb2c} 
+bool Rental\+Controller\+::\+Rent\+Car (\begin{DoxyParamCaption}\item[{int}]{customer\+ID}{, }\item[{int}]{car\+ID}{, }\item[{const std\+::string \&}]{start\+Date}{, }\item[{const std\+::string \&}]{end\+Date}{}\end{DoxyParamCaption})}
+
+
+
+Registers a new car rental in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+ID} & id of customer that rents \\
+\hline
+{\em car\+ID} & id of car to rent \\
+\hline
+{\em start\+Date} & start date of rent period \\
+\hline
+{\em end\+Date} & end date of rental period \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeeded
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+ID} & ID of the customer renting the car. \\
+\hline
+{\em car\+ID} & ID of the car being rented. \\
+\hline
+{\em start\+Date} & Start date of the rental (format\+: YYYY-\/\+MM-\/\+DD hh-\/mm). \\
+\hline
+{\em end\+Date} & End date of the rental (format\+: YYYY-\/\+MM-\/\+DD hh-\/mm). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the rental was successfully registered, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_a1942007cceaf3d58a914da56129c4a27}\index{RentalController@{RentalController}!ReturnCar@{ReturnCar}}
+\index{ReturnCar@{ReturnCar}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{ReturnCar()}{ReturnCar()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a1942007cceaf3d58a914da56129c4a27} 
+bool Rental\+Controller\+::\+Return\+Car (\begin{DoxyParamCaption}\item[{int}]{rental\+ID}{, }\item[{const std\+::string \&}]{return\+Date}{}\end{DoxyParamCaption})}
+
+
+
+Returns a car by setting the end date of a rental. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rental\+ID} & ID of the rental to update. \\
+\hline
+{\em return\+Date} & The date the car was returned (format\+: YYYY-\/\+MM-\/\+DD hh-\/mm). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the rental was successfully updated, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_rental_controller_a51d7b754325e10a5994636c47c8ba005}\index{RentalController@{RentalController}!Search@{Search}}
+\index{Search@{Search}!RentalController@{RentalController}}
+\doxysubsubsection{\texorpdfstring{Search()}{Search()}}
+{\footnotesize\ttfamily \label{class_rental_controller_a51d7b754325e10a5994636c47c8ba005} 
+std\+::vector$<$ \mbox{\hyperlink{class_rental_model}{Rental\+Model}} $>$ Rental\+Controller\+::\+Search (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{search\+Phrase}{, }\item[{int}]{field}{, }\item[{int}]{ID}{ = {\ttfamily -\/1}}\end{DoxyParamCaption})}
+
+
+
+Searches for rentals based on a specified field and search value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em search\+Phrase} & phrase to search \\
+\hline
+{\em field} & what field to search for \\
+\hline
+{\em ID} & Optional ID for searching \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of rentals matching the query
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em search\+Phrase} & Text input used for date fields. \\
+\hline
+{\em field} & Field to search (0 = customer\+ID, 1 = car\+ID, 2 = start\+Date, 3 = end\+Date, 4 = all). \\
+\hline
+{\em ID} & Used when searching customer\+ID or car\+ID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector of matching \doxylink{class_rental_model}{Rental\+Model} entries. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/controllers/Rental\+Controller.\+h\item 
+src/controllers/Rental\+Controller.\+cpp\end{DoxyCompactItemize}

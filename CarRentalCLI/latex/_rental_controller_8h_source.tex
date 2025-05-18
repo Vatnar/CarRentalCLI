@@ -1,0 +1,38 @@
+\doxysection{Rental\+Controller.\+h}
+\hypertarget{_rental_controller_8h_source}{}\label{_rental_controller_8h_source}\index{include/controllers/RentalController.h@{include/controllers/RentalController.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}models/rentalModel.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_rental_controller}{RentalController}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_rental_controller_a62b9f572ab9bc8f1c304f690c504eb2c}{RentCar}}(}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ customerID,\ \textcolor{keywordtype}{int}\ carID,\ \textcolor{keyword}{const}\ std::string\ \&startDate,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&endDate);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_rental_controller_a1942007cceaf3d58a914da56129c4a27}{ReturnCar}}(\textcolor{keywordtype}{int}\ rentalID,\ \textcolor{keyword}{const}\ std::string\&\ returnDate);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_rental_controller_a6e55b520ddc48de77f00bce8b214c1c5}{CountRentals}}();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_rental_controller_a414bd9cec25d9fbc18112e8393a403ec}{CountActiveRentals}}();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_rental_controller_ad49fe5caceb2146a43257ee802a916ec}{CountCompletedRentals}}();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00045\ \ \ \ \ std::optional<RentalModel>\ \mbox{\hyperlink{class_rental_controller_a31c9deebaf64b8539d605bf28bb47b59}{GetRentalById}}(\textcolor{keywordtype}{int}\ rentalID);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00053\ \ \ \ \ std::vector<RentalModel>\ \mbox{\hyperlink{class_rental_controller_a51d7b754325e10a5994636c47c8ba005}{Search}}(}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&searchPhrase,\ \textcolor{keywordtype}{int}\ field,\ \textcolor{keywordtype}{int}\ ID\ =\ -\/1);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_rental_controller_a328cd1617023598f7764028aed3e051a}{EditRental}}(}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rentalID,\ \textcolor{keyword}{const}\ std::string\ \&startDate,\ \textcolor{keyword}{const}\ std::string\ \&endDate,}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ customerID,\ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ carID);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_rental_controller_a8a2c9bdc5fd2bd4fc6163af3eb1ea5e1}{RemoveRental}}(\textcolor{keywordtype}{int}\ rentalID);}
+\DoxyCodeLine{00073\ \};}
+
+\end{DoxyCode}

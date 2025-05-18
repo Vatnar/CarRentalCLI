@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-#include <ostream>
 
 #include "CarView.h"
 #include "CustomerView.h"

@@ -1,0 +1,221 @@
+\doxysection{Car\+Controller Class Reference}
+\hypertarget{class_car_controller}{}\label{class_car_controller}\index{CarController@{CarController}}
+
+
+Modifies and reads the Car table.  
+
+
+
+
+{\ttfamily \#include $<$Car\+Controller.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_car_controller_a4251e8788ff2577f9db49a801816ba77}{Add\+Car}} (const std\+::string \&reg\+No, const std\+::string \&brand, const std\+::string \&model)
+\begin{DoxyCompactList}\small\item\em Adds a new car to the storage. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_car_controller_a0bb158895f00e9ff5bf3f33d0e83c901}{Edit\+Car}} (int id, const std\+::string \&reg\+No, const std\+::string \&brand, const std\+::string \&model)
+\begin{DoxyCompactList}\small\item\em Edits an existing car\textquotesingle{}s details. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_car_controller_acd8996ef763a949ae9cddf93410c169b}{Remove\+Car}} (int id)
+\begin{DoxyCompactList}\small\item\em Removes a car from the storage. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_car_controller_a77e4681a57a97d627c26c7fe070e23b9}{Count\+Cars}} ()
+\begin{DoxyCompactList}\small\item\em Counts the total number of cars in the storage. \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{class_car_model}{Car\+Model}} $>$ \mbox{\hyperlink{class_car_controller_ac89e30acc11d95a58503ec2e8b42b6c1}{Get\+Car\+By\+Id}} (int car\+ID)
+\begin{DoxyCompactList}\small\item\em Retrieves a car by its ID. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_car_model}{Car\+Model}} $>$ \mbox{\hyperlink{class_car_controller_adba9341d0c00cf30fa294d29168a76e3}{Search\+Car}} (const std\+::string \&search\+Phrase, int field, const std\+::string \&start\+Date="{}"{}, const std\+::string \&end\+Date="{}"{})
+\begin{DoxyCompactList}\small\item\em Searches for cars based on various fields. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Modifies and reads the Car table. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_car_controller_a4251e8788ff2577f9db49a801816ba77}\index{CarController@{CarController}!AddCar@{AddCar}}
+\index{AddCar@{AddCar}!CarController@{CarController}}
+\doxysubsubsection{\texorpdfstring{AddCar()}{AddCar()}}
+{\footnotesize\ttfamily \label{class_car_controller_a4251e8788ff2577f9db49a801816ba77} 
+bool Car\+Controller\+::\+Add\+Car (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{reg\+No}{, }\item[{const std\+::string \&}]{brand}{, }\item[{const std\+::string \&}]{model}{}\end{DoxyParamCaption})}
+
+
+
+Adds a new car to the storage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+No} & registration number of car \\
+\hline
+{\em brand} & brand name of car \\
+\hline
+{\em model} & model name of car \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeeded
+\end{DoxyReturn}
+This function creates a new car with the provided details and inserts it into the storage. The car will be assigned a unique car\+ID upon successful insertion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg\+No} & The registration number of the car. \\
+\hline
+{\em brand} & The brand of the car. \\
+\hline
+{\em model} & The model of the car. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the car was added successfully, false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_car_controller_a77e4681a57a97d627c26c7fe070e23b9}\index{CarController@{CarController}!CountCars@{CountCars}}
+\index{CountCars@{CountCars}!CarController@{CarController}}
+\doxysubsubsection{\texorpdfstring{CountCars()}{CountCars()}}
+{\footnotesize\ttfamily \label{class_car_controller_a77e4681a57a97d627c26c7fe070e23b9} 
+int Car\+Controller\+::\+Count\+Cars (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Counts the total number of cars in the storage. 
+
+\begin{DoxyReturn}{Returns}
+count of cars in system
+
+The total number of cars in the storage. 
+\end{DoxyReturn}
+\Hypertarget{class_car_controller_a0bb158895f00e9ff5bf3f33d0e83c901}\index{CarController@{CarController}!EditCar@{EditCar}}
+\index{EditCar@{EditCar}!CarController@{CarController}}
+\doxysubsubsection{\texorpdfstring{EditCar()}{EditCar()}}
+{\footnotesize\ttfamily \label{class_car_controller_a0bb158895f00e9ff5bf3f33d0e83c901} 
+bool Car\+Controller\+::\+Edit\+Car (\begin{DoxyParamCaption}\item[{int}]{car\+ID}{, }\item[{const std\+::string \&}]{new\+Reg\+No}{, }\item[{const std\+::string \&}]{new\+Brand}{, }\item[{const std\+::string \&}]{new\+Model}{}\end{DoxyParamCaption})}
+
+
+
+Edits an existing car\textquotesingle{}s details. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id of car to edit \\
+\hline
+{\em reg\+No} & new registration number \\
+\hline
+{\em brand} & new brand name \\
+\hline
+{\em model} & new model name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeeded
+\end{DoxyReturn}
+This function updates the details of an existing car with the provided new information. The car is identified by its car\+ID, and its registration number, brand, and model are updated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em car\+ID} & The ID of the car to be edited. \\
+\hline
+{\em new\+Reg\+No} & The new registration number for the car. \\
+\hline
+{\em new\+Brand} & The new brand for the car. \\
+\hline
+{\em new\+Model} & The new model for the car. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the car was successfully updated, false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_car_controller_ac89e30acc11d95a58503ec2e8b42b6c1}\index{CarController@{CarController}!GetCarById@{GetCarById}}
+\index{GetCarById@{GetCarById}!CarController@{CarController}}
+\doxysubsubsection{\texorpdfstring{GetCarById()}{GetCarById()}}
+{\footnotesize\ttfamily \label{class_car_controller_ac89e30acc11d95a58503ec2e8b42b6c1} 
+std\+::optional$<$ \mbox{\hyperlink{class_car_model}{Car\+Model}} $>$ Car\+Controller\+::\+Get\+Car\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{id}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves a car by its ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em car\+ID} & id of car to fetch \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{class_car_model}{Car\+Model} instance of car
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em car\+ID} & The ID of the car to retrieve. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \doxylink{class_car_model}{Car\+Model} if found, or std\+::nullopt if not found. 
+\end{DoxyReturn}
+\Hypertarget{class_car_controller_acd8996ef763a949ae9cddf93410c169b}\index{CarController@{CarController}!RemoveCar@{RemoveCar}}
+\index{RemoveCar@{RemoveCar}!CarController@{CarController}}
+\doxysubsubsection{\texorpdfstring{RemoveCar()}{RemoveCar()}}
+{\footnotesize\ttfamily \label{class_car_controller_acd8996ef763a949ae9cddf93410c169b} 
+bool Car\+Controller\+::\+Remove\+Car (\begin{DoxyParamCaption}\item[{int}]{car\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Removes a car from the storage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id of car to remove \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeeded
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em car\+ID} & The ID of the car to be removed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the car was successfully removed, false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_car_controller_adba9341d0c00cf30fa294d29168a76e3}\index{CarController@{CarController}!SearchCar@{SearchCar}}
+\index{SearchCar@{SearchCar}!CarController@{CarController}}
+\doxysubsubsection{\texorpdfstring{SearchCar()}{SearchCar()}}
+{\footnotesize\ttfamily \label{class_car_controller_adba9341d0c00cf30fa294d29168a76e3} 
+std\+::vector$<$ \mbox{\hyperlink{class_car_model}{Car\+Model}} $>$ Car\+Controller\+::\+Search\+Car (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{search\+Phrase}{, }\item[{int}]{field}{, }\item[{const std\+::string \&}]{start\+Date}{ = {\ttfamily "{}"{}}, }\item[{const std\+::string \&}]{end\+Date}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})}
+
+
+
+Searches for cars based on various fields. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em search\+Phrase} & phrase to search \\
+\hline
+{\em field} & what field of \doxylink{class_car_model}{Car\+Model} to search Optional\+: \\
+\hline
+{\em start\+Date} & start of rent period \\
+\hline
+{\em end\+Date} & end of rent period \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+This function allows searching for cars by registration number, brand, or model. Optionally, it can also filter the cars based on a date range for rental availability.
+
+
+\begin{DoxyParams}{Parameters}
+{\em search\+Phrase} & The phrase to search for in the chosen field. \\
+\hline
+{\em field} & The field to search in (0 for reg\+No, 1 for brand, 2 for model). \\
+\hline
+{\em start\+Date} & The start date of the rental period (optional). \\
+\hline
+{\em end\+Date} & The end date of the rental period (optional). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector of cars matching the search criteria, including availability based on the rental dates. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/controllers/Car\+Controller.\+h\item 
+src/controllers/Car\+Controller.\+cpp\end{DoxyCompactItemize}

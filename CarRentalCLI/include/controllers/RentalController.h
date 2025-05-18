@@ -21,6 +21,7 @@ public:
     bool RentCar(
         int                customerID, int carID, const std::string &startDate,
         const std::string &endDate);
+    bool ReturnCar(int rentalID, const std::string& returnDate);
 
     /**
      * @return count of rentals

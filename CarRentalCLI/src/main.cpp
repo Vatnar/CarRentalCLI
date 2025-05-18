@@ -7,7 +7,7 @@
 #include "controllers/CustomerController.h"
 #include "views/MainView.h"
 
-void addSampleData()
+void sampleImport()
 {
     std::filesystem::remove("CarRental.sqlite");
 
@@ -16,45 +16,55 @@ void addSampleData()
     CarController      carController;
     RentalController   rentalController;
 
+    for (int i = 1; i <= 30; ++i) {
+        customerController.AddCustomer(
+            "Customer" + std::to_string(i),
+            "Tel" + std::to_string(1000 + i),
+            "customer" + std::to_string(i) + "@example.com"
+        );
+    }
 
-    customerController.AddCustomer("Name1", "Tel1", "email1@example.com");
-    customerController.AddCustomer("Name2", "Tel2", "email2@example.com");
-    customerController.AddCustomer("Name3", "Tel3", "email3@example.com");
-    customerController.AddCustomer("Name4", "Tel4", "email4@example.com");
-    customerController.AddCustomer("Name5", "Tel5", "email5@example.com");
-    customerController.AddCustomer("Name6", "Tel6", "email6@example.com");
-    customerController.AddCustomer("Name7", "Tel7", "email7@example.com");
-    customerController.AddCustomer("Name8", "Tel8", "email8@example.com");
+    for (int i = 0; i < 25; ++i) {
+        std::string plate = "AB";
+        plate += (i < 10) ? "0000" : "000";
+        plate += std::to_string(i);
 
+        std::string brand = "Brand" + std::to_string((i % 5) + 1);
+        std::string model = "Model" + std::to_string((i % 7) + 1);
+        carController.AddCar(plate, brand, model);
+    }
 
-    carController.AddCar("AA00000", "Brand1", "Model1");
-    carController.AddCar("AA00001", "Brand1", "Model2");
-    carController.AddCar("AA00002", "Brand3", "Model3");
-    carController.AddCar("AA00003", "Brand1", "Model4");
-    carController.AddCar("AA00004", "Brand2", "Model2");
-    carController.AddCar("AA00005", "Brand3", "Model2");
-    carController.AddCar("AA00006", "Brand1", "Model3");
-    carController.AddCar("AA00007", "Brand1", "Model2");
-    carController.AddCar("AA00008", "Brand2", "Model3");
+    int rentalId = 1;
 
-    rentalController.RentCar(1, 3, "2024-01-10", "2024-01-15");
-    rentalController.RentCar(2, 1, "2024-02-01", "2024-02-05");
-    rentalController.RentCar(3, 5, "2024-03-12", "2024-03-20");
-    rentalController.RentCar(4, 4, "2024-04-01", "2024-04-10");
-    rentalController.RentCar(5, 2, "2024-05-05", "2024-05-12");
-    rentalController.RentCar(6, 6, "2024-06-20", "2024-06-30");
-    rentalController.RentCar(7, 7, "2025-04-01", "2025-07-15");
-    rentalController.RentCar(8, 8, "2025-04-10", "2025-08-18");
-    rentalController.RentCar(2, 9, "2025-05-01", "2025-09-07");
-    rentalController.RentCar(1, 1, "2025-15-01", "2025-10-05");
+    // Generate renadom rentals
+    for (int custId = 1; custId <= 30; ++custId) {
+        for (int carId = 1; carId <= 10; ++carId) {
+            int startMonth = ((custId + carId) % 12) + 1;
+            int startDay = ((custId * carId) % 20) + 1;
+            int duration = ((custId + carId) % 13) + 3;
 
+            char startDate[11];
+            char endDate[11];
+            snprintf(startDate, sizeof(startDate), "2024-%02d-%02d", startMonth, startDay);
+            snprintf(endDate, sizeof(endDate), "2024-%02d-%02d", startMonth, startDay + duration);
 
-    std::cout << "Adding sample data" << std::endl;
+            rentalController.RentCar(custId, carId, startDate, endDate);
+
+            if (++rentalId > 40)
+                break;
+        }
+        if (rentalId > 40)
+            break;
+    }
+
+    std::cout << "Added extended sample data: 30 customers, 25 cars, 40 rentals." << std::endl;
 }
+
 
 int main()
 {
-    addSampleData();
+    // sampleImport();
+    storage.sync_schema();
     MainView menu;
     menu.Run();
 

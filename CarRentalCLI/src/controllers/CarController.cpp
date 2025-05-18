@@ -72,8 +72,6 @@ bool CarController::EditCar(
 /**
  * @brief Removes a car from the storage.
  *
- * This function deletes a car from the storage using the car's unique carID.
- *
  * @param carID The ID of the car to be removed.
  * @return true if the car was successfully removed, false if an error occurred.
  */
@@ -93,8 +91,6 @@ bool CarController::RemoveCar(int carID)
 
 /**
  * @brief Counts the total number of cars in the storage.
- *
- * This function returns the total count of cars currently stored.
  *
  * @return The total number of cars in the storage.
  */
@@ -147,12 +143,10 @@ std::vector<CarModel> CarController::SearchCar(
             c(&RentalModel::startDate) <= endDate &&
             c(&RentalModel::endDate) >= startDate));
 
-    // IDs of unavailable cars
     std::unordered_set<int> unavailableCarIDs;
     for (const auto &rental: conflictingRentals) unavailableCarIDs.insert(
         rental.carID);
 
-    // Remove unavailable
     std::vector<CarModel> availableCars;
     for (const auto &car: allMatchingCars)
     {

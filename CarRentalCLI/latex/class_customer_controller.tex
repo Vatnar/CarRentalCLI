@@ -1,0 +1,209 @@
+\doxysection{Customer\+Controller Class Reference}
+\hypertarget{class_customer_controller}{}\label{class_customer_controller}\index{CustomerController@{CustomerController}}
+
+
+Modifies and reads the Customer table.  
+
+
+
+
+{\ttfamily \#include $<$Customer\+Controller.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_customer_controller_a22512ab471e674e7f862473a66716755}{Add\+Customer}} (const std\+::string \&name, const std\+::string \&tel, const std\+::string \&email)
+\begin{DoxyCompactList}\small\item\em Adds a new customer to the storage. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_customer_controller_ae828ed9ff42834c12ffb9cdca4243d6f}{Edit\+Customer}} (int id, std\+::string \&name, std\+::string \&tel, std\+::string \&email)
+\begin{DoxyCompactList}\small\item\em Edits an existing customer\textquotesingle{}s details. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_customer_controller_a55fbebb0da562a54483af1883590afea}{Remove\+Customer}} (int id)
+\begin{DoxyCompactList}\small\item\em Removes a customer from the storage. \texorpdfstring{$\ast$}{*}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_customer_controller_ab06715d72c63f2f36713c5b3a02496c5}{Count\+Customers}} ()
+\begin{DoxyCompactList}\small\item\em Counts the total number of customers in the storage. \texorpdfstring{$\ast$}{*}. \end{DoxyCompactList}\item 
+std\+::optional$<$ \mbox{\hyperlink{class_customer_model}{Customer\+Model}} $>$ \mbox{\hyperlink{class_customer_controller_a9404c173611d7c1cc8fc2f3ab4ed30e8}{Get\+Customer\+By\+Id}} (int customer\+ID)
+\begin{DoxyCompactList}\small\item\em Retrieves a customer by its ID. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_customer_model}{Customer\+Model}} $>$ \mbox{\hyperlink{class_customer_controller_acb2a99b133f68255a7eca53b7aeaef69}{Search\+Customer}} (const std\+::string \&search\+Phrase)
+\begin{DoxyCompactList}\small\item\em Searches for customers by name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Modifies and reads the Customer table. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_customer_controller_a22512ab471e674e7f862473a66716755}\index{CustomerController@{CustomerController}!AddCustomer@{AddCustomer}}
+\index{AddCustomer@{AddCustomer}!CustomerController@{CustomerController}}
+\doxysubsubsection{\texorpdfstring{AddCustomer()}{AddCustomer()}}
+{\footnotesize\ttfamily \label{class_customer_controller_a22512ab471e674e7f862473a66716755} 
+bool Customer\+Controller\+::\+Add\+Customer (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const std\+::string \&}]{tel}{, }\item[{const std\+::string \&}]{email}{}\end{DoxyParamCaption})}
+
+
+
+Adds a new customer to the storage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name of custoemr \\
+\hline
+{\em tel} & telephone number of customer \\
+\hline
+{\em email} & email of customer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeeded
+\end{DoxyReturn}
+The customer will be assigned a unique customer\+ID upon successful insertion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the customer. \\
+\hline
+{\em tel} & The telephone number of the customer. \\
+\hline
+{\em email} & The email address of the customer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the customer was added successfully, false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_customer_controller_ab06715d72c63f2f36713c5b3a02496c5}\index{CustomerController@{CustomerController}!CountCustomers@{CountCustomers}}
+\index{CountCustomers@{CountCustomers}!CustomerController@{CustomerController}}
+\doxysubsubsection{\texorpdfstring{CountCustomers()}{CountCustomers()}}
+{\footnotesize\ttfamily \label{class_customer_controller_ab06715d72c63f2f36713c5b3a02496c5} 
+int Customer\+Controller\+::\+Count\+Customers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Counts the total number of customers in the storage. \texorpdfstring{$\ast$}{*}. 
+
+\begin{DoxyReturn}{Returns}
+count of customers
+
+The total number of customers in the storage. 
+\end{DoxyReturn}
+\Hypertarget{class_customer_controller_ae828ed9ff42834c12ffb9cdca4243d6f}\index{CustomerController@{CustomerController}!EditCustomer@{EditCustomer}}
+\index{EditCustomer@{EditCustomer}!CustomerController@{CustomerController}}
+\doxysubsubsection{\texorpdfstring{EditCustomer()}{EditCustomer()}}
+{\footnotesize\ttfamily \label{class_customer_controller_ae828ed9ff42834c12ffb9cdca4243d6f} 
+bool Customer\+Controller\+::\+Edit\+Customer (\begin{DoxyParamCaption}\item[{int}]{customer\+ID}{, }\item[{std\+::string \&}]{new\+Name}{, }\item[{std\+::string \&}]{new\+Tel}{, }\item[{std\+::string \&}]{new\+Email}{}\end{DoxyParamCaption})}
+
+
+
+Edits an existing customer\textquotesingle{}s details. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id of customer to edit \\
+\hline
+{\em name} & new name of customer \\
+\hline
+{\em tel} & new telephone number of customer \\
+\hline
+{\em email} & new email of customer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeeded
+\end{DoxyReturn}
+The customer is identified by their customer\+ID, and their name, phone number, and email are updated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+ID} & The ID of the customer to be edited. \\
+\hline
+{\em new\+Name} & The new name for the customer. \\
+\hline
+{\em new\+Tel} & The new phone number for the customer. \\
+\hline
+{\em new\+Email} & The new email address for the customer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the customer was successfully updated, false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_customer_controller_a9404c173611d7c1cc8fc2f3ab4ed30e8}\index{CustomerController@{CustomerController}!GetCustomerById@{GetCustomerById}}
+\index{GetCustomerById@{GetCustomerById}!CustomerController@{CustomerController}}
+\doxysubsubsection{\texorpdfstring{GetCustomerById()}{GetCustomerById()}}
+{\footnotesize\ttfamily \label{class_customer_controller_a9404c173611d7c1cc8fc2f3ab4ed30e8} 
+std\+::optional$<$ \mbox{\hyperlink{class_customer_model}{Customer\+Model}} $>$ Customer\+Controller\+::\+Get\+Customer\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{id}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves a customer by its ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+ID} & id of customer to fetch \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+instance of customermodel with that id
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+ID} & The ID of the customer to retrieve. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \doxylink{class_customer_model}{Customer\+Model} if found, or std\+::nullopt if not found. 
+\end{DoxyReturn}
+\Hypertarget{class_customer_controller_a55fbebb0da562a54483af1883590afea}\index{CustomerController@{CustomerController}!RemoveCustomer@{RemoveCustomer}}
+\index{RemoveCustomer@{RemoveCustomer}!CustomerController@{CustomerController}}
+\doxysubsubsection{\texorpdfstring{RemoveCustomer()}{RemoveCustomer()}}
+{\footnotesize\ttfamily \label{class_customer_controller_a55fbebb0da562a54483af1883590afea} 
+bool Customer\+Controller\+::\+Remove\+Customer (\begin{DoxyParamCaption}\item[{int}]{customer\+ID}{}\end{DoxyParamCaption})}
+
+
+
+Removes a customer from the storage. \texorpdfstring{$\ast$}{*}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id of customer to remove \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if suceeded
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+ID} & The ID of the customer to be removed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the customer was successfully removed, false if an error occurred. 
+\end{DoxyReturn}
+\Hypertarget{class_customer_controller_acb2a99b133f68255a7eca53b7aeaef69}\index{CustomerController@{CustomerController}!SearchCustomer@{SearchCustomer}}
+\index{SearchCustomer@{SearchCustomer}!CustomerController@{CustomerController}}
+\doxysubsubsection{\texorpdfstring{SearchCustomer()}{SearchCustomer()}}
+{\footnotesize\ttfamily \label{class_customer_controller_acb2a99b133f68255a7eca53b7aeaef69} 
+std\+::vector$<$ \mbox{\hyperlink{class_customer_model}{Customer\+Model}} $>$ Customer\+Controller\+::\+Search\+Customer (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{search\+Phrase}{}\end{DoxyParamCaption})}
+
+
+
+Searches for customers by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em search\+Phrase} & phrase to search for "{}"{} is supported \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of customers fitting the query
+\end{DoxyReturn}
+This function searches for customers whose name contains the given search phrase.
+
+
+\begin{DoxyParams}{Parameters}
+{\em search\+Phrase} & The phrase to search for in the customer\textquotesingle{}s name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector of customers matching the search criteria. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/controllers/Customer\+Controller.\+h\item 
+src/controllers/Customer\+Controller.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,68 @@
+\doxysection{CSVController Class Reference}
+\hypertarget{class_c_s_v_controller}{}\label{class_c_s_v_controller}\index{CSVController@{CSVController}}
+
+
+Import and export csv files.  
+
+
+
+
+{\ttfamily \#include $<$CSVController.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_c_s_v_controller_a9c50e6017f08228fdf8a557136b96e8d}{Export\+To\+CSV}} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em Exports all customers, cars, and rentals into a unified CSV file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_c_s_v_controller_a9b9df855063f27a09f92ca630e6f8c19}{Import\+From\+CSV}} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em Imports customers, cars, and rentals from a unified CSV file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Import and export csv files. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_c_s_v_controller_a9c50e6017f08228fdf8a557136b96e8d}\index{CSVController@{CSVController}!ExportToCSV@{ExportToCSV}}
+\index{ExportToCSV@{ExportToCSV}!CSVController@{CSVController}}
+\doxysubsubsection{\texorpdfstring{ExportToCSV()}{ExportToCSV()}}
+{\footnotesize\ttfamily \label{class_c_s_v_controller_a9c50e6017f08228fdf8a557136b96e8d} 
+bool CSVController\+::\+Export\+To\+CSV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Exports all customers, cars, and rentals into a unified CSV file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the CSV file to save (e.\+g., "{}data.\+csv"{}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if export succeeds, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_c_s_v_controller_a9b9df855063f27a09f92ca630e6f8c19}\index{CSVController@{CSVController}!ImportFromCSV@{ImportFromCSV}}
+\index{ImportFromCSV@{ImportFromCSV}!CSVController@{CSVController}}
+\doxysubsubsection{\texorpdfstring{ImportFromCSV()}{ImportFromCSV()}}
+{\footnotesize\ttfamily \label{class_c_s_v_controller_a9b9df855063f27a09f92ca630e6f8c19} 
+bool CSVController\+::\+Import\+From\+CSV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Imports customers, cars, and rentals from a unified CSV file. 
+
+Assumes each row belongs to only one data type. Fields that are not relevant should be empty.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the CSV file to read from (e.\+g., "{}data.\+csv"{}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if import is successful, false otherwise. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/controllers/CSVController.\+h\item 
+src/controllers/CSVController.\+cpp\end{DoxyCompactItemize}

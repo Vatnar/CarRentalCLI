@@ -30,6 +30,7 @@ void CustomerView::Run()
 
 void CustomerView::getName(std::string &name)
 {
+    //
     std::cout << "Enter name: ";
     name = Input::GetString();
     if (name.empty())

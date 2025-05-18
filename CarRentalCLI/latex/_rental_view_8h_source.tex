@@ -1,0 +1,68 @@
+\doxysection{Rental\+View.\+h}
+\hypertarget{_rental_view_8h_source}{}\label{_rental_view_8h_source}\index{include/views/RentalView.h@{include/views/RentalView.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}CarView.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}CustomerView.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}View.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}controllers/CarController.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}controllers/CustomerController.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}controllers/RentalController.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }RentalView\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_view}{View}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ RentalView(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_customer_view}{CustomerView}}\ \&customerView,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_car_view}{CarView}}\ \&carView);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_rental_view_a9e5b784a18b607c415c34f174b15eb5a}{Run}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ getCustomerID();}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ getCarID(\textcolor{keyword}{const}\ std::string\ \&startDate,\ \textcolor{keyword}{const}\ std::string\ \&endDate);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ matchesPattern(\textcolor{keyword}{const}\ std::string\ \&s);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \ \ \ \ std::string\ getEndDate();}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{int}\ getRentalID();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \ \ \ \ std::string\ getStartdate();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ addRental();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ editRental();}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ removeRental();}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ listRentals();}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ std::string\ \ \ \ \ \ \ \ rentalMenu\ =\ R\textcolor{stringliteral}{"{}MENU(}}
+\DoxyCodeLine{00073\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ RENTALS}}
+\DoxyCodeLine{00075\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 1.\ ADD\ NEW\ RENTAL}}
+\DoxyCodeLine{00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 2.\ EDIT\ RENTAL}}
+\DoxyCodeLine{00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 3.\ REMOVE\ RENTAL}}
+\DoxyCodeLine{00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 4.\ LIST\ RENTALS}}
+\DoxyCodeLine{00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ 5.\ RETURN\ TO\ MENU}}
+\DoxyCodeLine{00081\ \textcolor{stringliteral}{==================================}}
+\DoxyCodeLine{00082\ \textcolor{stringliteral}{Please\ enter\ your\ choice:}}
+\DoxyCodeLine{00083\ \textcolor{stringliteral}{)MENU"{};}}
+\DoxyCodeLine{00084\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_rental_controller}{RentalController}}\ \ \ rentalController;}}
+\DoxyCodeLine{00085\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_customer_controller}{CustomerController}}\ customerController;}}
+\DoxyCodeLine{00086\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_customer_view}{CustomerView}}\ \ \ \ \ \ \ customerView;}}
+\DoxyCodeLine{00087\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_car_controller}{CarController}}\ \ \ \ \ \ carController;}}
+\DoxyCodeLine{00088\ \textcolor{stringliteral}{\ \ \ \ \mbox{\hyperlink{class_car_view}{CarView}}\ \ \ \ \ \ \ \ \ \ \ \ carView;}}
+\DoxyCodeLine{00089\ \textcolor{stringliteral}{\};}}
+\DoxyCodeLine{00090\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00091\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00092\ \textcolor{stringliteral}{}}
+
+\end{DoxyCode}

@@ -204,7 +204,7 @@ bool RentalController::EditRental(
 
 
 /**
- * @brief Deletes a rental from the database.
+ * @brief Removes a rental from the database.
  *
  * @param rentalID ID of the rental to remove.
  * @return true if the rental was successfully removed, false otherwise.

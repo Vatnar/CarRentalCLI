@@ -1,0 +1,49 @@
+\doxysection{storage.\+h}
+\hypertarget{storage_8h_source}{}\label{storage_8h_source}\index{include/storage.h@{include/storage.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <sqlite\_orm.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}models/CarModel.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}models/CustomerModel.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}models/rentalModel.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{keyword}{using\ namespace\ }sqlite\_orm;}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ init\_storage()}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{auto}\ storage\ =\ make\_storage(}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}CarRental.sqlite"{}},}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ make\_table(}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Customer"{}},}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}customerID"{}},\ \&CustomerModel::customerID,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ primary\_key().autoincrement()),}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}name"{}},\ \&CustomerModel::name),}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}tel"{}},\ \&CustomerModel::tel),}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}email"{}},\ \&CustomerModel::email)}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ make\_table(}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Car"{}},}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}carID"{}},\ \&CarModel::carID,\ primary\_key().autoincrement()),}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}regNo"{}},\ \&CarModel::regNo),}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}brand"{}},\ \&CarModel::brand),}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}model"{}},\ \&CarModel::model)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ make\_table(}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Rental"{}},}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}rentalID"{}},\ \&RentalModel::rentalID,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ primary\_key().autoincrement()),}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}customerID"{}},\ \&RentalModel::customerID,\ not\_null()),}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}carID"{}},\ \&RentalModel::carID,\ not\_null()),}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}startDate"{}},\ \&RentalModel::startDate),}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ make\_column(\textcolor{stringliteral}{"{}endDate"{}},\ \&RentalModel::endDate)}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ ));}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{return}\ storage;}
+\DoxyCodeLine{00040\ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{using\ }Storage\ \ \ \ \ \ \ =\ \textcolor{keyword}{decltype}(init\_storage());}
+\DoxyCodeLine{00043\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ storage\ =\ init\_storage();}
+
+\end{DoxyCode}
