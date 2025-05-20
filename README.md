@@ -1,1 +1,3 @@
-# CLI Car Rental prosjekt Uia IKT103
+# CLI Car Rental project Uia IKT103
+by Peter Vatnar Andersson (Vatnar) 
+and Emanuel Rønningsland (RealRoem)
